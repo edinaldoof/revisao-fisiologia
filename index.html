@@ -1,0 +1,3255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revisão de Fisiologia — Cardiovascular & Renal</title>
+<meta name="description" content="Banco de questões de fisiologia cardiovascular e renal baseado no Guyton & Hall, com explicação detalhada após cada resposta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#E7EDF3; --bg-2:#DCE5EE; --surface:#FFFFFF; --surface-2:#F3F6FA;
+    --ink:#0E1D32; --ink-soft:#465A71; --ink-faint:#8493A6; --line:#DBE3EC;
+    --cardio:#E12E4B; --cardio-ink:#BD1E3C; --cardio-soft:#FBE5EA;
+    --renal:#0E9AA7; --renal-ink:#0A7C88; --renal-soft:#DBF1F3;
+    --ok:#13905A; --ok-ink:#0E7548; --ok-soft:#E0F3E9;
+    --no:#D23A4D; --no-ink:#AF2436; --no-soft:#FBE5E8;
+    --shadow:0 1px 2px rgba(14,29,50,.05), 0 10px 30px rgba(14,29,50,.08);
+    --shadow-sm:0 1px 2px rgba(14,29,50,.06);
+    --r:16px;
+    --accent:var(--cardio); --accent-ink:var(--cardio-ink); --accent-soft:var(--cardio-soft);
+    --sans:'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --body:'Inter', ui-sans-serif, system-ui, sans-serif;
+    --mono:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  [data-system="cardio"]{--accent:var(--cardio);--accent-ink:var(--cardio-ink);--accent-soft:var(--cardio-soft);}
+  [data-system="renal"]{--accent:var(--renal);--accent-ink:var(--renal-ink);--accent-soft:var(--renal-soft);}
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    font-family:var(--body); color:var(--ink); line-height:1.55;
+    background:
+      radial-gradient(1200px 600px at 110% -10%, rgba(225,46,75,.06), transparent 60%),
+      radial-gradient(1000px 600px at -10% 110%, rgba(14,154,167,.07), transparent 60%),
+      linear-gradient(180deg, var(--bg), var(--bg-2));
+    background-attachment:fixed;
+    min-height:100vh; padding:24px 16px 64px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px; margin:0 auto;}
+  .hidden{display:none !important;}
+
+  /* ---------- Header / ECG signature ---------- */
+  .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px;}
+  .brand{display:flex; align-items:center; gap:10px; min-width:0;}
+  .brand .pulse{width:34px; height:34px; flex:none;}
+  .brand h1{font-family:var(--sans); font-weight:700; font-size:.98rem; letter-spacing:-.01em; line-height:1.1;}
+  .brand small{display:block; color:var(--ink-faint); font-size:.72rem; font-weight:500; letter-spacing:.02em;}
+  .ghost-btn{
+    font-family:var(--body); font-size:.78rem; font-weight:600; color:var(--ink-soft);
+    background:var(--surface); border:1px solid var(--line); border-radius:999px;
+    padding:7px 13px; cursor:pointer; transition:.18s; white-space:nowrap;
+  }
+  .ghost-btn:hover{color:var(--ink); border-color:var(--ink-faint);}
+
+  .ecg-rail{position:relative; height:46px; border-radius:12px; overflow:hidden;
+    background:var(--surface); border:1px solid var(--line); box-shadow:var(--shadow-sm); margin-bottom:6px;}
+  .ecg-rail svg{display:block; width:100%; height:100%;}
+  .ecg-base{stroke:#C9D4DF; stroke-width:2; fill:none; vector-effect:non-scaling-stroke;}
+  .ecg-prog{stroke:var(--accent); stroke-width:2.4; fill:none; vector-effect:non-scaling-stroke; transition:color .3s;}
+  .ecg-clip rect{transition:width .55s cubic-bezier(.4,0,.2,1);}
+  .counter{font-family:var(--mono); font-size:.74rem; color:var(--ink-faint); letter-spacing:.04em;
+    display:flex; justify-content:space-between; padding:2px 2px 0; margin-bottom:18px;}
+  .counter b{color:var(--accent-ink); font-weight:700;}
+
+  /* ---------- Cards ---------- */
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+    box-shadow:var(--shadow); padding:26px 24px;}
+  @media (max-width:520px){ .card{padding:20px 16px;} body{padding:16px 11px 56px;} }
+
+  /* ---------- Start screen ---------- */
+  .hero h2{font-family:var(--sans); font-weight:700; font-size:1.7rem; letter-spacing:-.02em; line-height:1.12;}
+  .hero .lead{color:var(--ink-soft); margin-top:10px; font-size:.96rem; max-width:56ch;}
+  .src-note{font-size:.78rem; color:var(--ink-faint); margin-top:14px; display:flex; gap:7px; align-items:flex-start;}
+  .src-note svg{flex:none; margin-top:2px;}
+  .fmt-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:18px;}
+  .fmt-chip{font-size:.74rem; font-weight:600; color:var(--ink-soft); background:var(--surface-2);
+    border:1px solid var(--line); border-radius:999px; padding:6px 12px;}
+  .fmt-chip b{color:var(--ink);}
+
+  /* size selector */
+  .size-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:22px;}
+  .size-row .lbl2{font-size:.8rem; font-weight:600; color:var(--ink-soft); margin-right:2px;}
+  .size-chip{font-family:var(--sans); font-size:.82rem; font-weight:600; color:var(--ink-soft);
+    background:var(--surface); border:1.5px solid var(--line); border-radius:999px; padding:8px 16px;
+    cursor:pointer; transition:.16s;}
+  .size-chip:hover{border-color:var(--ink-faint); color:var(--ink);}
+  .size-chip.active{background:var(--ink); border-color:var(--ink); color:#fff;}
+  .size-chip:focus-visible{outline:3px solid var(--accent-soft); outline-offset:2px;}
+
+  .syscards{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px;}
+  @media (max-width:520px){ .syscards{grid-template-columns:1fr;} }
+  .syscard{text-align:left; cursor:pointer; background:var(--surface); border:1.5px solid var(--line);
+    border-radius:14px; padding:18px 16px; transition:.18s; position:relative; overflow:hidden;}
+  .syscard:hover{transform:translateY(-2px); box-shadow:var(--shadow); border-color:var(--accent);}
+  .syscard:focus-visible{outline:3px solid var(--accent-soft); outline-offset:2px;}
+  .syscard[data-system="cardio"]{--accent:var(--cardio);--accent-ink:var(--cardio-ink);}
+  .syscard[data-system="renal"]{--accent:var(--renal);--accent-ink:var(--renal-ink);}
+  .syscard .bar{position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--accent);}
+  .syscard h3{font-family:var(--sans); font-weight:700; font-size:1.04rem; color:var(--accent-ink); margin-left:6px;}
+  .syscard .meta{font-family:var(--mono); font-size:.72rem; color:var(--ink-faint); margin:4px 0 10px 6px; letter-spacing:.02em;}
+  .syscard ol{margin:0 0 0 24px; padding:0; color:var(--ink-soft); font-size:.84rem; line-height:1.5;}
+  .syscard ol li{margin:2px 0;}
+
+  .start-all{width:100%; margin-top:16px; font-family:var(--sans); font-weight:700; font-size:1rem;
+    color:#fff; border:none; border-radius:13px; padding:15px; cursor:pointer;
+    background:linear-gradient(120deg, var(--cardio), var(--renal)); transition:.18s; letter-spacing:.01em;}
+  .start-all:hover{filter:brightness(1.05); box-shadow:0 8px 22px rgba(14,29,50,.18);}
+  .start-all:focus-visible{outline:3px solid #fff; outline-offset:-5px;}
+
+  /* ---------- Question ---------- */
+  .qhead{display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:14px;}
+  .pill{font-size:.7rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    padding:5px 11px; border-radius:999px; background:var(--accent-soft); color:var(--accent-ink);}
+  .topic{font-size:.82rem; font-weight:600; color:var(--ink-soft);}
+  .typetag{margin-left:auto; font-family:var(--mono); font-size:.68rem; font-weight:700; letter-spacing:.05em;
+    color:var(--ink-faint); text-transform:uppercase;}
+
+  .stem{font-family:var(--sans); font-weight:600; font-size:1.18rem; line-height:1.4; letter-spacing:-.01em;}
+  .substem{color:var(--ink-soft); font-weight:500; font-size:.9rem; margin-top:6px;}
+  .val{font-family:var(--mono); font-weight:700; color:var(--accent-ink); font-size:.95em;}
+
+  /* statements list (seq + comb) */
+  .stmts{margin-top:18px; display:flex; flex-direction:column; gap:9px;}
+  .stmt{display:flex; align-items:flex-start; gap:12px; padding:13px 14px; border:1.5px solid var(--line);
+    border-radius:12px; background:var(--surface-2); transition:.18s;}
+  .stmt .num{font-family:var(--mono); font-weight:700; font-size:.82rem; color:var(--ink-faint);
+    flex:none; min-width:24px; text-align:center; padding-top:2px;}
+  .stmt .txt{font-size:.92rem; color:var(--ink); flex:1; line-height:1.45;}
+  .vf-toggle{display:flex; gap:6px; flex:none;}
+  .vf-toggle button{font-family:var(--sans); font-weight:700; font-size:.85rem; width:38px; height:38px;
+    border-radius:9px; border:1.5px solid var(--line); background:var(--surface); color:var(--ink-soft);
+    cursor:pointer; transition:.14s;}
+  .vf-toggle button:hover:not(:disabled){border-color:var(--accent); color:var(--accent-ink);}
+  .vf-toggle button[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .vf-toggle button:focus-visible{outline:3px solid var(--accent-soft); outline-offset:2px;}
+  .stmt.right{background:var(--ok-soft); border-color:var(--ok);}
+  .stmt.wrong{background:var(--no-soft); border-color:var(--no);}
+  .stmt .verdict{font-family:var(--mono); font-weight:700; font-size:.72rem; flex:none; padding-top:3px; min-width:74px; text-align:right;}
+  .stmt.right .verdict{color:var(--ok-ink);}
+  .stmt.wrong .verdict{color:var(--no-ink);}
+
+  /* single V/F */
+  .vf-big{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:20px;}
+  .vf-big button{font-family:var(--sans); font-weight:700; font-size:1.05rem; padding:18px;
+    border-radius:13px; border:1.5px solid var(--line); background:var(--surface); color:var(--ink);
+    cursor:pointer; transition:.16s;}
+  .vf-big button:hover:not(:disabled){border-color:var(--accent); color:var(--accent-ink); transform:translateY(-1px);}
+  .vf-big button:focus-visible{outline:3px solid var(--accent-soft); outline-offset:2px;}
+  .vf-big button.sel-ok{background:var(--ok-soft); border-color:var(--ok); color:var(--ok-ink);}
+  .vf-big button.sel-no{background:var(--no-soft); border-color:var(--no); color:var(--no-ink);}
+  .vf-big button.show-ok{border-color:var(--ok); color:var(--ok-ink); box-shadow:inset 0 0 0 1px var(--ok);}
+
+  /* comb options */
+  .opts{margin-top:18px; display:flex; flex-direction:column; gap:9px;}
+  .opt{display:flex; align-items:center; gap:13px; width:100%; text-align:left; cursor:pointer;
+    padding:14px 15px; border:1.5px solid var(--line); border-radius:12px; background:var(--surface);
+    color:var(--ink); transition:.15s; font-family:var(--body);}
+  .opt:hover:not(:disabled){border-color:var(--accent); transform:translateY(-1px); box-shadow:var(--shadow-sm);}
+  .opt:focus-visible{outline:3px solid var(--accent-soft); outline-offset:2px;}
+  .opt .lt{font-family:var(--sans); font-weight:700; font-size:.85rem; width:30px; height:30px; flex:none;
+    display:grid; place-items:center; border-radius:8px; background:var(--surface-2); color:var(--ink-soft);}
+  .opt .ot{font-size:.96rem; font-weight:500; letter-spacing:.01em;}
+  .opt.sel-ok{background:var(--ok-soft); border-color:var(--ok);}
+  .opt.sel-ok .lt{background:var(--ok); color:#fff;}
+  .opt.sel-no{background:var(--no-soft); border-color:var(--no);}
+  .opt.sel-no .lt{background:var(--no); color:#fff;}
+  .opt.show-ok{border-color:var(--ok); box-shadow:inset 0 0 0 1px var(--ok);}
+  .opt.show-ok .lt{background:var(--ok); color:#fff;}
+
+  /* feedback + explanation */
+  .feedback{margin-top:20px; border-radius:13px; padding:16px 17px; border:1.5px solid; }
+  .feedback.good{background:var(--ok-soft); border-color:var(--ok);}
+  .feedback.bad{background:var(--no-soft); border-color:var(--no);}
+  .fb-head{display:flex; align-items:center; gap:9px; font-family:var(--sans); font-weight:700; font-size:.98rem;}
+  .feedback.good .fb-head{color:var(--ok-ink);}
+  .feedback.bad .fb-head{color:var(--no-ink);}
+  .fb-head .ic{width:22px; height:22px; flex:none;}
+  .seq-answer{font-family:var(--mono); font-size:.82rem; font-weight:700; margin-top:8px; letter-spacing:.06em;}
+  .feedback.good .seq-answer{color:var(--ok-ink);} .feedback.bad .seq-answer{color:var(--no-ink);}
+  .expl{margin-top:11px; font-size:.9rem; line-height:1.55; color:var(--ink);}
+  .expl .lab{display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:.66rem; font-weight:700;
+    letter-spacing:.07em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:5px;}
+
+  .actions{display:flex; justify-content:flex-end; align-items:center; gap:12px; margin-top:22px;}
+  .hint{margin-right:auto; font-size:.8rem; color:var(--ink-faint);}
+  .primary{font-family:var(--sans); font-weight:700; font-size:.95rem; color:#fff; border:none; border-radius:11px;
+    padding:13px 24px; cursor:pointer; background:var(--accent); transition:.16s; letter-spacing:.01em;}
+  .primary:hover:not(:disabled){filter:brightness(1.05); box-shadow:0 6px 16px rgba(14,29,50,.16);}
+  .primary:disabled{opacity:.4; cursor:not-allowed;}
+  .primary:focus-visible{outline:3px solid var(--accent-soft); outline-offset:2px;}
+
+  /* ---------- Results ---------- */
+  .score-top{text-align:center; padding:8px 0 4px;}
+  .ring{width:148px; height:148px; margin:0 auto 6px;}
+  .ring .pct{font-family:var(--sans); font-weight:700; font-size:2rem; fill:var(--ink);}
+  .ring .lbl{font-family:var(--mono); font-size:.62rem; fill:var(--ink-faint); letter-spacing:.08em;}
+  .verdict-msg{font-family:var(--sans); font-weight:700; font-size:1.2rem; letter-spacing:-.01em;}
+  .verdict-sub{color:var(--ink-soft); font-size:.92rem; margin-top:4px;}
+
+  .break-h{font-family:var(--mono); font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-faint); margin:26px 0 12px;}
+  .trow{display:flex; align-items:center; gap:11px; padding:9px 0; border-bottom:1px solid var(--line);}
+  .trow:last-child{border-bottom:none;}
+  .dot{width:9px; height:9px; border-radius:50%; flex:none;}
+  .trow .tn{flex:1; font-size:.9rem; color:var(--ink);}
+  .trow .tf{font-family:var(--mono); font-size:.8rem; font-weight:700; color:var(--ink-soft);}
+  .bar-track{height:6px; border-radius:99px; background:var(--surface-2); flex:0 0 90px; overflow:hidden;}
+  .bar-fill{height:100%; border-radius:99px;}
+
+  .res-actions{display:flex; gap:11px; margin-top:26px; flex-wrap:wrap;}
+  .res-actions button{flex:1; min-width:140px; font-family:var(--sans); font-weight:700; font-size:.93rem;
+    padding:13px; border-radius:11px; cursor:pointer; transition:.16s;}
+  .btn-fill{color:#fff; border:none; background:linear-gradient(120deg, var(--cardio), var(--renal));}
+  .btn-fill:hover{filter:brightness(1.05);}
+  .btn-out{color:var(--ink); background:var(--surface); border:1.5px solid var(--line);}
+  .btn-out:hover{border-color:var(--ink-faint);}
+
+  /* review */
+  .rev-item{border:1px solid var(--line); border-left-width:4px; border-radius:12px; padding:16px 17px; margin-top:13px; background:var(--surface);}
+  .rev-item[data-system="cardio"]{border-left-color:var(--cardio);}
+  .rev-item[data-system="renal"]{border-left-color:var(--renal);}
+  .rev-top{display:flex; align-items:center; gap:9px; margin-bottom:9px;}
+  .rev-badge{width:22px; height:22px; flex:none;}
+  .rev-topic{font-size:.78rem; font-weight:600; color:var(--ink-soft);}
+  .rev-q{font-family:var(--sans); font-weight:600; font-size:1rem; line-height:1.38;}
+  .rev-list{margin:9px 0 0 0; padding:0; list-style:none; font-size:.88rem; color:var(--ink-soft);}
+  .rev-list li{padding:3px 0 3px 0; display:flex; gap:8px;}
+  .rev-list .rn{font-family:var(--mono); font-weight:700; color:var(--ink-faint); min-width:22px;}
+  .rev-ans{font-family:var(--mono); font-size:.8rem; font-weight:700; margin-top:10px; letter-spacing:.04em; color:var(--ok-ink);}
+  .rev-your{font-family:var(--mono); font-size:.78rem; font-weight:600; margin-top:3px; letter-spacing:.04em;}
+  .rev-your.ok{color:var(--ok-ink);} .rev-your.no{color:var(--no-ink);}
+  .rev-expl{font-size:.86rem; color:var(--ink); margin-top:9px; line-height:1.5; padding-top:9px; border-top:1px dashed var(--line);}
+
+  footer{text-align:center; font-size:.74rem; color:var(--ink-faint); margin-top:26px; line-height:1.5;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <svg class="pulse" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="19" fill="#fff" stroke="#DBE3EC"/>
+        <path d="M5 21 H13 L15 14 L18 27 L21 11 L24 24 L26 21 H35" fill="none" stroke="#E12E4B" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <h1>Revisão de Fisiologia</h1>
+        <small>Sistema cardiovascular &amp; renal</small>
+      </div>
+    </div>
+    <button class="ghost-btn hidden" id="home-btn">Trocar de bloco</button>
+  </div>
+
+  <!-- ECG progress rail (hidden on start) -->
+  <div id="progress-zone" class="hidden">
+    <div class="ecg-rail">
+      <svg id="ecg" viewBox="0 0 1000 46" preserveAspectRatio="none" aria-hidden="true">
+        <path id="ecg-base" class="ecg-base"></path>
+        <clipPath id="ecg-clip" class="ecg-clip"><rect id="ecg-rect" x="0" y="0" height="46" width="0"></rect></clipPath>
+        <path id="ecg-prog" class="ecg-prog" clip-path="url(#ecg-clip)"></path>
+      </svg>
+    </div>
+    <div class="counter"><span>Questão <b id="c-cur">1</b> de <span id="c-tot">23</span></span><span id="c-blk">Bloco completo</span></div>
+  </div>
+
+  <!-- ============ START ============ -->
+  <section id="screen-start" class="card hero">
+    <h2>Teste seus conhecimentos</h2>
+    <p class="lead">Banco de questões de revisão sobre os sistemas <b>cardiovascular</b> e <b>renal</b>, elaboradas a partir do Guyton &amp; Hall, com explicação detalhada após cada resposta. Escolha o tamanho do teste e o bloco que deseja praticar.</p>
+    <div class="fmt-row">
+      <span class="fmt-chip"><b>Verdadeiro / Falso</b></span>
+      <span class="fmt-chip"><b>Sequência V-F</b> (julgue os itens)</span>
+      <span class="fmt-chip"><b>Afirmativas corretas</b> (1, 3 e 4…)</span>
+    </div>
+
+    <div class="size-row" role="group" aria-label="Tamanho do teste">
+      <span class="lbl2">Questões por teste:</span>
+      <button class="size-chip" data-n="10">10</button>
+      <button class="size-chip active" data-n="20">20</button>
+      <button class="size-chip" data-n="0">Todas</button>
+    </div>
+
+    <div class="syscards">
+      <button class="syscard" data-system="cardio" data-mode="cardio">
+        <span class="bar"></span>
+        <h3>Cardiovascular</h3>
+        <div class="meta" id="meta-cardio">6 temas · — questões</div>
+        <ol>
+          <li>Eletrofisiologia do coração</li>
+          <li>Contratilidade miocárdica</li>
+          <li>Ciclo cardíaco</li>
+          <li>Eletrocardiograma</li>
+          <li>Hemodinâmica e pressão arterial</li>
+          <li>Regulação da PA (curto e médio prazo)</li>
+        </ol>
+      </button>
+      <button class="syscard" data-system="renal" data-mode="renal">
+        <span class="bar"></span>
+        <h3>Renal</h3>
+        <div class="meta" id="meta-renal">3 temas · — questões</div>
+        <ol>
+          <li>Filtração glomerular</li>
+          <li>Manejo tubular renal</li>
+          <li>Rim e a regulação do volume</li>
+        </ol>
+      </button>
+    </div>
+    <button class="start-all" data-mode="full">Revisão completa &nbsp;·&nbsp; <span id="meta-full">— questões</span></button>
+
+    <p class="src-note">
+      <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3.5A1.5 1.5 0 0 1 3.5 2H7v12H3.5A1.5 1.5 0 0 1 2 12.5zM9 2h3.5A1.5 1.5 0 0 1 14 3.5v9A1.5 1.5 0 0 1 12.5 14H9z" fill="#8493A6"/></svg>
+      Questões e explicações elaboradas a partir do conteúdo do <b>Guyton &amp; Hall — Tratado de Fisiologia Médica</b> (13ª ed.).
+    </p>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="screen-quiz" class="card hidden" data-system="cardio">
+    <div class="qhead">
+      <span class="pill" id="q-sys">Cardiovascular</span>
+      <span class="topic" id="q-topic">—</span>
+      <span class="typetag" id="q-type">V / F</span>
+    </div>
+    <div id="q-body"></div>
+    <div id="q-feedback"></div>
+    <div class="actions">
+      <span class="hint" id="q-hint"></span>
+      <button class="primary" id="q-action" disabled>Confirmar</button>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section id="screen-result" class="card hidden">
+    <div class="score-top">
+      <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#E7EDF3" stroke-width="11"/>
+        <circle id="ring-fg" cx="60" cy="60" r="52" fill="none" stroke="url(#rg)" stroke-width="11"
+          stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" transform="rotate(-90 60 60)"/>
+        <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#E12E4B"/><stop offset="1" stop-color="#0E9AA7"/></linearGradient></defs>
+        <text id="ring-pct" class="pct" x="60" y="58" text-anchor="middle" dominant-baseline="middle">0%</text>
+        <text class="lbl" x="60" y="76" text-anchor="middle">ACERTOS</text>
+      </svg>
+      <div class="verdict-msg" id="res-msg">—</div>
+      <div class="verdict-sub" id="res-sub">—</div>
+    </div>
+
+    <div class="break-h">Desempenho por tema</div>
+    <div id="res-topics"></div>
+
+    <div class="res-actions">
+      <button class="btn-out" id="res-review">Revisar respostas</button>
+      <button class="btn-out" id="res-home">Trocar de bloco</button>
+      <button class="btn-fill" id="res-again">Refazer</button>
+    </div>
+  </section>
+
+  <!-- ============ REVIEW ============ -->
+  <section id="screen-review" class="hidden">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+        <h2 style="font-family:var(--sans);font-weight:700;font-size:1.3rem;letter-spacing:-.01em;">Gabarito comentado</h2>
+        <button class="ghost-btn" id="rev-back">Voltar ao resultado</button>
+      </div>
+      <p style="color:var(--ink-soft);font-size:.9rem;margin-top:6px;">Confira a resposta correta e a explicação de cada questão.</p>
+    </div>
+    <div id="rev-list"></div>
+    <div class="card" style="margin-top:13px;display:flex;gap:11px;flex-wrap:wrap;">
+      <button class="btn-out" id="rev-home" style="flex:1;min-width:140px;font-family:var(--sans);font-weight:700;padding:13px;border-radius:11px;cursor:pointer;">Trocar de bloco</button>
+      <button class="btn-fill" id="rev-again" style="flex:1;min-width:140px;font-family:var(--sans);font-weight:700;padding:13px;border-radius:11px;border:none;color:#fff;cursor:pointer;">Refazer</button>
+    </div>
+  </section>
+
+  <footer>
+    Ferramenta de estudo · questões autorais baseadas no conteúdo do Guyton &amp; Hall, 13ª ed.<br>
+    Use como revisão — não substitui a leitura do livro.
+  </footer>
+</div>
+
+<script>
+/* =========================================================
+   DADOS — questões (V/F, sequência V-F, afirmativas corretas)
+   Banco gerado a partir do Guyton & Hall (13ª ed.) e verificado.
+   'seq': answers[] em booleanos (true=V, false=F).
+   'comb': statements[] numeradas; options[] são conjuntos de
+   números; correct = conjunto verdadeiro.
+   ========================================================= */
+const QUESTIONS = [
+  {
+    "system": "cardio",
+    "topic": "Eletrofisiologia do coração",
+    "type": "seq",
+    "stem": "Sobre o nodo sinusal (sinoatrial) e sua ritmicidade automática, julgue os itens:",
+    "statements": [
+      "O potencial de repouso da membrana da fibra sinusal é de aproximadamente -55 a -60 milivolts, menos negativo que os -85 a -90 milivolts da fibra muscular ventricular.",
+      "No nível de -55 milivolts da fibra nodal, os canais rápidos de sódio já se encontram em sua maioria inativados (bloqueados), de modo que apenas os canais lentos de sódio-cálcio podem deflagrar o potencial de ação.",
+      "O limiar de voltagem para ativação dos canais de cálcio do tipo L e disparo do potencial de ação sinusal é de cerca de -40 milivolts.",
+      "O nodo sinusal apresenta frequência intrínseca de descarga de 40 a 60 vezes por minuto, menor que a das fibras de Purkinje."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "Itens 1, 2 e 3 são verdadeiros conforme o Guyton. O item 4 é falso: a frequência normal do nodo sinusal é de <b>70 a 80</b> vezes por minuto, sendo MAIOR que a do nodo A-V (40-60/min) e a das fibras de Purkinje (15-40/min). Por descarregar mais rápido, o nodo sinusal é o marca-passo normal do coração."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrofisiologia do coração",
+    "type": "seq",
+    "stem": "Sobre os retardos e tempos de condução do impulso cardíaco, julgue os itens:",
+    "statements": [
+      "O impulso atinge o nodo A-V cerca de 0,03 segundo após sua origem no nodo sinusal.",
+      "O retardo total no nodo A-V e no sistema do feixe A-V é de aproximadamente 0,13 segundo.",
+      "A velocidade de condução nas fibras de Purkinje é de 1,5 a 4,0 m/s, cerca de seis vezes maior que a do músculo ventricular comum.",
+      "O retardo no nodo A-V serve para acelerar a passagem do impulso aos ventrículos, fazendo-os contrair simultaneamente aos átrios."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "Itens 1, 2 e 3 corretos. O item 4 é falso: o retardo no nodo A-V tem função oposta, ele <b>impede</b> que o impulso passe rápido demais aos ventrículos, permitindo que os átrios se contraiam e esvaziem seu conteúdo nos ventrículos ANTES da contração ventricular (cerca de 1/6 de segundo antes)."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrofisiologia do coração",
+    "type": "seq",
+    "stem": "Sobre o controle autonômico da ritmicidade e condução cardíacas, julgue os itens:",
+    "statements": [
+      "A acetilcolina liberada pelas terminações vagais aumenta a permeabilidade da membrana ao potássio, causando hiperpolarização das fibras condutoras.",
+      "A estimulação vagal intensa pode levar a potencial de repouso sinusal de -65 a -75 milivolts, em vez dos -55 a -60 milivolts normais.",
+      "A norepinefrina atua sobre receptores adrenérgicos beta 1, aumentando a permeabilidade ao sódio e cálcio e elevando a frequência cardíaca.",
+      "A estimulação simpática máxima pode triplicar a força de contração e duplicar a frequência cardíaca."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "Itens 1, 2 e 3 verdadeiros. O item 4 é falso: o Guyton afirma o inverso, a estimulação simpática máxima pode praticamente <b>triplicar a frequência cardíaca</b> e <b>duplicar a força de contração</b>."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrofisiologia do coração",
+    "type": "comb",
+    "stem": "Sobre as fases do potencial de ação da célula muscular ventricular, considere as afirmativas:",
+    "statements": [
+      "Na fase 0 (despolarização), os canais rápidos de sódio abrem e o potencial de membrana alcança cerca de +20 milivolts.",
+      "Na fase 2 (platô), os canais de cálcio abrem e a permeabilidade ao potássio diminui.",
+      "Na fase 3 (repolarização rápida), os canais de cálcio se fecham e os canais lentos de potássio se abrem.",
+      "O potencial de membrana de repouso (fase 4) tem valor médio aproximado de -90 milivolts.",
+      "Na fase 1 os canais lentos de cálcio se fecham abruptamente, encerrando o potencial de ação em cerca de 1 milissegundo."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "expl": "As afirmativas 1, 2, 3 e 4 estão corretas conforme as fases descritas no Guyton. A afirmativa 5 é falsa: na fase 1 ocorre o fechamento dos canais rápidos de <b>sódio</b> (não de cálcio) com breve repolarização inicial; o encerramento em ~1 ms é característica do músculo esquelético, não do miocárdio, cujo platô dura ~0,2 segundo."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrofisiologia do coração",
+    "type": "comb",
+    "stem": "Sobre o sistema de Purkinje e a transmissão do impulso nos ventrículos, considere as afirmativas:",
+    "statements": [
+      "As fibras de Purkinje contêm poucas miofibrilas, de modo que pouco ou nada se contraem durante a transmissão do impulso.",
+      "A alta velocidade de condução das fibras de Purkinje deve-se à elevada permeabilidade das junções comunicantes nos discos intercalados.",
+      "O feixe A-V normalmente conduz potenciais de ação retrogradamente dos ventrículos para os átrios.",
+      "A velocidade de transmissão pelo músculo ventricular comum é de 0,3 a 0,5 m/s, cerca de um sexto da das fibras de Purkinje.",
+      "As fibras de Purkinje são muito calibrosas, maiores que as fibras musculares ventriculares normais."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "expl": "As afirmativas 1, 2, 4 e 5 são verdadeiras. A afirmativa 3 é falsa: uma característica especial do feixe A-V é a <b>incapacidade</b>, exceto em estados anormais, de conduzir o impulso retrogradamente dos ventrículos para os átrios, permitindo apenas condução anterógrada e impedindo reentrada."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrofisiologia do coração",
+    "type": "comb",
+    "stem": "Sobre o acoplamento excitação-contração no miocárdio e os túbulos T, considere as afirmativas:",
+    "statements": [
+      "Os íons cálcio que entram pelos túbulos T ativam os canais de liberação de cálcio (receptores de rianodina) do retículo sarcoplasmático.",
+      "O retículo sarcoplasmático do miocárdio é menos desenvolvido que o do músculo esquelético e não armazena cálcio suficiente para a contração completa.",
+      "Os túbulos T do músculo cardíaco têm diâmetro cinco vezes maior que os do músculo esquelético, equivalendo a volume 25 vezes maior.",
+      "No interior dos túbulos T existem mucopolissacarídeos com carga eletronegativa que se ligam aos íons cálcio.",
+      "Diferentemente do esquelético, o miocárdio não depende do cálcio extracelular para a contração, usando apenas o cálcio do retículo sarcoplasmático."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "expl": "As afirmativas 1, 2, 3 e 4 são verdadeiras. A afirmativa 5 é falsa: o miocárdio <b>depende</b> do cálcio adicional proveniente dos túbulos T (líquido extracelular); sem esse Ca²⁺ extra a força de contração ficaria muito reduzida, pois o retículo sarcoplasmático cardíaco é pouco desenvolvido."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrofisiologia do coração",
+    "type": "comb",
+    "stem": "Sobre marca-passos, bloqueio A-V e a síndrome de Stokes-Adams, considere as afirmativas:",
+    "statements": [
+      "Um marca-passo localizado em qualquer ponto que não o nodo sinusal é denominado marca-passo ectópico.",
+      "No bloqueio A-V, os átrios continuam a se contrair na frequência sinusal, enquanto o sistema ventricular de Purkinje assume frequência de 15 a 40 batimentos por minuto.",
+      "Após bloqueio A-V repentino, o sistema de Purkinje só inicia a emissão de impulsos após 5 a 20 segundos, devido à supressão por overdrive prévio.",
+      "A condução lenta no nodo A-V deve-se ao reduzido número de junções comunicantes entre as células das vias de condução.",
+      "Na síndrome de Stokes-Adams a pessoa desmaia somente após cerca de 60 segundos de parada do bombeamento ventricular."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "expl": "As afirmativas 1, 2, 3 e 4 são verdadeiras conforme o Guyton. A afirmativa 5 é falsa: na síndrome de Stokes-Adams a pessoa desmaia após <b>4 a 5 segundos</b> (não 60), em virtude da falta de fluxo sanguíneo para o cérebro durante os 5 a 20 segundos sem bombeamento ventricular."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrofisiologia do coração",
+    "type": "vf",
+    "statement": "O platô do potencial de ação da fibra ventricular é mantido principalmente pela abertura prolongada dos canais lentos de cálcio do tipo L (canais de cálcio-sódio), que permanecem abertos por vários décimos de segundo, e pela diminuição da permeabilidade da membrana ao potássio.",
+    "answer": true,
+    "expl": "Verdadeiro. Segundo o Guyton, o platô resulta de dois fatores: a abertura mais lenta e prolongada dos canais de <b>Ca²⁺</b> tipo L (cálcio-sódio), que mantêm o influxo de Ca²⁺ e Na⁺ por vários décimos de segundo, e a redução da permeabilidade ao <b>K⁺</b> em cerca de 5 vezes, que impede o retorno rápido ao nível basal."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrofisiologia do coração",
+    "type": "vf",
+    "statement": "O período refratário normal do ventrículo é de aproximadamente 0,15 segundo, sendo mais curto que o do músculo atrial, cujo período refratário é de cerca de 0,25 a 0,30 segundo.",
+    "answer": false,
+    "expl": "Falso. Os valores estão invertidos. O período refratário normal do <b>ventrículo</b> é de 0,25 a 0,30 segundo (equivalente à duração do platô), enquanto o do músculo <b>atrial</b> é bem mais curto, cerca de 0,15 segundo."
+  },
+  {
+    "system": "cardio",
+    "topic": "Contratilidade miocárdica",
+    "type": "seq",
+    "stem": "Sobre o acoplamento excitação-contração e o papel do cálcio na contratilidade miocárdica, julgue os itens:",
+    "statements": [
+      "Além do cálcio liberado pelo retículo sarcoplasmático, grande quantidade de íons cálcio adicionais difunde-se para o sarcoplasma a partir dos próprios túbulos T no momento do potencial de ação.",
+      "O retículo sarcoplasmático do miocárdio é mais desenvolvido que o do músculo esquelético e armazena cálcio em quantidade plenamente suficiente para a contração completa, dispensando o cálcio extracelular.",
+      "Os túbulos T do músculo cardíaco têm diâmetro cerca de cinco vezes maior que os do músculo esquelético, o que corresponde a um volume aproximadamente 25 vezes maior.",
+      "Ao final do platô, o cálcio do sarcoplasma é bombeado de volta ao retículo sarcoplasmático por uma bomba de cálcio ATPase e removido da célula também por um trocador de sódio-cálcio."
+    ],
+    "answers": [
+      true,
+      false,
+      true,
+      true
+    ],
+    "expl": "Itens I, III e IV são verdadeiros conforme o Guyton: o <b>Ca²⁺</b> extra vem dos túbulos T; estes têm diâmetro 5x maior (volume ~25x maior); e o relaxamento envolve a bomba de <b>Ca²⁺</b>-ATPase e o trocador <b>Na⁺</b>-<b>Ca²⁺</b>. O item II é falso: o retículo sarcoplasmático do miocárdio é <b>menos</b> desenvolvido e não armazena cálcio suficiente, dependendo do cálcio dos túbulos T."
+  },
+  {
+    "system": "cardio",
+    "topic": "Contratilidade miocárdica",
+    "type": "seq",
+    "stem": "Sobre os efeitos dos íons potássio e cálcio e da temperatura sobre a contratilidade e o funcionamento cardíaco, julgue os itens:",
+    "statements": [
+      "O excesso de potássio no líquido extracelular tende a dilatar e tornar flácido o coração, diminuindo a frequência dos batimentos.",
+      "A elevação da concentração de potássio para apenas 8 a 12 mEq/L, 2 a 3 vezes o valor normal, pode causar fraqueza acentuada do coração, ritmo anormal e morte.",
+      "O excesso de íons cálcio produz contrações espásticas do coração, efeito praticamente oposto ao do excesso de potássio.",
+      "A redução da temperatura corporal aumenta a frequência cardíaca, enquanto a febre reduz acentuadamente a frequência."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "Itens I, II e III são verdadeiros: o excesso de <b>K⁺</b> dilata e enfraquece o coração e, em 8-12 mEq/L, pode causar morte; o excesso de <b>Ca²⁺</b> causa contrações espásticas. O item IV é falso e inverte o efeito: a febre (temperatura aumentada) <b>eleva</b> a frequência cardíaca, e a redução da temperatura a <b>diminui</b>."
+  },
+  {
+    "system": "cardio",
+    "topic": "Contratilidade miocárdica",
+    "type": "seq",
+    "stem": "Sobre o potencial de ação do miocárdio ventricular e suas implicações para a contração, julgue os itens:",
+    "statements": [
+      "O platô do potencial de ação ventricular resulta da maior permeabilidade ao cálcio combinada à redução da permeabilidade ao potássio.",
+      "A presença do platô faz a contração ventricular durar até cerca de 15 vezes mais que a do músculo esquelético.",
+      "O potencial de ação ventricular é causado exclusivamente pela abertura dos canais rápidos de sódio, à semelhança do músculo esquelético.",
+      "Os canais de cálcio do tipo L (lentos) permanecem abertos por vários décimos de segundo, mantendo o período prolongado de despolarização."
+    ],
+    "answers": [
+      true,
+      true,
+      false,
+      true
+    ],
+    "expl": "Itens I, II e IV são verdadeiros: o platô decorre da maior entrada de <b>Ca²⁺</b> e da menor saída de <b>K⁺</b>, prolonga a contração em até 15x e depende dos canais lentos de <b>Ca²⁺</b> abertos por décimos de segundo. O item III é falso: o potencial de ação miocárdico depende de <b>dois</b> tipos de canais, os rápidos de <b>Na⁺</b> e os lentos de cálcio (cálcio-sódio)."
+  },
+  {
+    "system": "cardio",
+    "topic": "Contratilidade miocárdica",
+    "type": "comb",
+    "stem": "Sobre os mecanismos que aumentam a eficácia do bombeamento e a contratilidade cardíaca, considere as afirmativas:",
+    "statements": [
+      "A combinação de estimulação simpática e inibição parassimpática pode aumentar a força de contração (contratilidade) em até cerca de duas vezes a normal.",
+      "A hipertrofia cardíaca, como em corredores de maratona, pode aumentar a massa do coração em até 50% a 75%.",
+      "A estimulação vagal forte aumenta a força de contração ventricular em até duas vezes.",
+      "A excitação nervosa máxima pode elevar o platô da curva de débito cardíaco para cerca do dobro da curva normal, em torno de 25 L/min.",
+      "O cálcio extracelular é irrelevante para a contratilidade do miocárdio, pois todo o cálcio contrátil provém do retículo sarcoplasmático."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4
+    ],
+    "expl": "São verdadeiras as afirmativas 1, 2 e 4: a estimulação simpática com inibição vagal dobra a contratilidade; a hipertrofia do maratonista aumenta a massa em 50-75%; e a excitação máxima eleva o platô da curva de débito a ~25 L/min. A 3 é falsa (a estimulação vagal <b>reduz</b> a força) e a 5 é falsa (o miocárdio depende do <b>Ca²⁺</b> extracelular dos túbulos T)."
+  },
+  {
+    "system": "cardio",
+    "topic": "Contratilidade miocárdica",
+    "type": "comb",
+    "stem": "Sobre o mecanismo de Frank-Starling e a relação entre distensão e contratilidade, considere as afirmativas:",
+    "statements": [
+      "Quando maior quantidade de sangue flui para o coração, a distensão das paredes faz o músculo cardíaco contrair-se com mais força, ejetando o sangue adicional.",
+      "A distensão do nodo sinusal na parede do átrio direito eleva por até 10% a 15% a frequência cardíaca.",
+      "O átrio direito distendido desencadeia o reflexo de Bainbridge, que aumenta a frequência cardíaca.",
+      "Pela lei de Frank-Starling, o coração é o controlador principal do débito cardíaco em condições normais, independentemente do retorno venoso.",
+      "A distensão das câmaras cardíacas reduz a força de contração, pois o estiramento excessivo enfraquece as fibras."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3
+    ],
+    "expl": "São verdadeiras as afirmativas 1, 2 e 3: a distensão das paredes aumenta a força contrátil (Frank-Starling); o estiramento do nodo sinusal eleva a frequência em 10-15%; e o reflexo de Bainbridge também a acelera. A 4 é falsa, pois normalmente o débito é controlado pelo <b>retorno venoso</b>, não pelo coração; a 5 é falsa, pois a distensão (dentro dos limites fisiológicos) <b>aumenta</b> a força."
+  },
+  {
+    "system": "cardio",
+    "topic": "Contratilidade miocárdica",
+    "type": "comb",
+    "stem": "Sobre a duração da contração, o período refratário e as propriedades sinciciais do miocárdio, considere as afirmativas:",
+    "statements": [
+      "A duração da contração ventricular é de cerca de 0,3 segundo, enquanto a do músculo atrial é de aproximadamente 0,2 segundo.",
+      "O período refratário normal do ventrículo é de 0,25 a 0,30 segundo, correspondendo aproximadamente à duração do platô do potencial de ação.",
+      "As contrações prematuras do miocárdio produzem somação das ondas, da mesma forma que no músculo esquelético.",
+      "O período refratário do músculo atrial (cerca de 0,15 segundo) é mais curto que o ventricular.",
+      "Nos discos intercalados, as junções comunicantes (gap junctions) permitem rápida difusão de íons, fazendo o miocárdio funcionar como um sincício."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "expl": "São verdadeiras 1, 2, 4 e 5: a contração ventricular dura ~0,3 s e a atrial ~0,2 s; o período refratário ventricular é de 0,25-0,30 s (ligado ao platô); o refratário atrial (~0,15 s) é mais curto; e as gap junctions tornam o miocárdio um sincício. A 3 é falsa: o Guyton ressalta que as contrações prematuras <b>não</b> produzem somação de ondas no miocárdio, diferentemente do músculo esquelético."
+  },
+  {
+    "system": "cardio",
+    "topic": "Contratilidade miocárdica",
+    "type": "comb",
+    "stem": "Sobre fatores que tornam o coração hipereficaz ou hipoeficaz como bomba, considere as afirmativas:",
+    "statements": [
+      "A estimulação nervosa e a hipertrofia do músculo cardíaco são fatores capazes de tornar o coração hipereficaz.",
+      "A obstrução de artéria coronária com infarto do miocárdio é fator que torna o coração hipoeficaz.",
+      "A miocardite, inflamação do músculo cardíaco, reduz a capacidade de bombeamento, causando hipoeficácia.",
+      "O nível do platô da curva normal de débito cardíaco é de cerca de 13 L/min, aproximadamente 2,5 vezes o débito normal de ~5 L/min.",
+      "A inibição da estimulação nervosa do coração torna o coração hipereficaz."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "expl": "São verdadeiras 1, 2, 3 e 4: estimulação nervosa e hipertrofia tornam o coração hipereficaz; infarto coronário e miocardite o tornam hipoeficaz; e o platô normal da curva de débito é ~13 L/min (~2,5x os ~5 L/min normais). A 5 é falsa: a <b>inibição</b> da estimulação nervosa torna o coração <b>hipoeficaz</b>, não hipereficaz."
+  },
+  {
+    "system": "cardio",
+    "topic": "Contratilidade miocárdica",
+    "type": "vf",
+    "statement": "Diferentemente do músculo esquelético, a força de contração do miocárdio depende fortemente da concentração de íons cálcio no líquido extracelular, a ponto de um coração colocado em solução livre de cálcio rapidamente parar de bater.",
+    "answer": true,
+    "expl": "Segundo o Guyton, os túbulos T do miocárdio se abrem diretamente para o líquido extracelular e fornecem <b>Ca²⁺</b> adicional para a contração; por isso, em solução sem cálcio o coração logo para. No músculo esquelético, a força quase não é afetada por variações moderadas do cálcio extracelular, pois o <b>Ca²⁺</b> vem quase inteiramente do retículo sarcoplasmático."
+  },
+  {
+    "system": "cardio",
+    "topic": "Contratilidade miocárdica",
+    "type": "vf",
+    "statement": "A estimulação simpática potente pode aumentar a força de contração cardíaca até cerca do dobro do normal, ao passo que um estímulo vagal forte pode reduzir a força de contração miocárdica em apenas 20% a 30%.",
+    "answer": true,
+    "expl": "O Guyton afirma que estímulos simpáticos aumentam a força contrátil até o <b>dobro</b> do normal, enquanto a estimulação vagal forte reduz a força em apenas <b>20% a 30%</b>, porque as fibras vagais distribuem-se principalmente nos átrios e muito pouco nos ventrículos, onde se gera a força de contração."
+  },
+  {
+    "system": "cardio",
+    "topic": "Ciclo cardíaco",
+    "type": "seq",
+    "stem": "Sobre o enchimento ventricular e a função dos átrios como pré-bombas durante o ciclo cardíaco, julgue os itens:",
+    "statements": [
+      "Cerca de 80% do sangue fluem diretamente dos átrios para os ventrículos antes da contração atrial, e a contração atrial acrescenta os 20% adicionais ao enchimento.",
+      "O período de enchimento rápido ventricular ocorre aproximadamente durante o primeiro terço da diástole.",
+      "A contração atrial (função de pré-bomba) é indispensável em repouso, pois sem ela o débito cardíaco cai cerca de 80%.",
+      "Durante o último terço da diástole, os átrios se contraem, dando impulso adicional responsável por cerca de 20% do enchimento ventricular total."
+    ],
+    "answers": [
+      true,
+      true,
+      false,
+      true
+    ],
+    "expl": "Guyton: os átrios funcionam como pré-bomba (primer pump), aumentando a eficácia em até <b>20%</b>; ~80% do enchimento é passivo. O enchimento rápido é no <b>primeiro terço</b> da diástole e a contração atrial ocorre no último terço. O item 3 é falso: o coração pode operar sem os 20% atriais, pois tem reserva de bombear 300-400% a mais que o necessário em repouso."
+  },
+  {
+    "system": "cardio",
+    "topic": "Ciclo cardíaco",
+    "type": "seq",
+    "stem": "Sobre os volumes ventriculares e a fração de ejeção, conforme o Guyton, julgue os itens:",
+    "statements": [
+      "O volume diastólico final normal do ventrículo é de aproximadamente 110 a 120 mL.",
+      "O débito sistólico (stroke volume) normal corresponde a aproximadamente 70 mL.",
+      "O volume sistólico final normal é de cerca de 40 a 50 mL.",
+      "A fração de ejeção normal equivale a aproximadamente 0,4 (ou 40%)."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "Guyton: volume diastólico final ~<b>110-120 mL</b>; o ventrículo ejeta ~<b>70 mL</b> (débito sistólico), restando ~40-50 mL (volume sistólico final). A fração de ejeção normal é ~<b>0,6 (60%)</b>, e não 0,4, sendo a fração do volume diastólico final que é ejetada."
+  },
+  {
+    "system": "cardio",
+    "topic": "Ciclo cardíaco",
+    "type": "seq",
+    "stem": "Sobre a relação entre o eletrocardiograma e os eventos mecânicos do ciclo cardíaco, julgue os itens:",
+    "statements": [
+      "A onda P é causada pela disseminação da despolarização pelos átrios e precede a contração atrial.",
+      "O complexo QRS surge cerca de 0,16 segundo após o início da onda P e inicia-se pouco antes da sístole ventricular.",
+      "A onda T representa a despolarização ventricular e surge no início da sístole ventricular.",
+      "A onda T surge pouco antes do final da contração ventricular, representando a repolarização dos ventrículos."
+    ],
+    "answers": [
+      true,
+      true,
+      false,
+      true
+    ],
+    "expl": "Guyton: a onda P (despolarização atrial) precede a contração atrial; o QRS surge ~<b>0,16 s</b> após o início da P e pouco antes da sístole ventricular. A onda T representa a <b>repolarização</b> (não despolarização) ventricular, surgindo pouco antes do fim da contração. Itens 1, 2 e 4 verdadeiros; o item 3 é falso."
+  },
+  {
+    "system": "cardio",
+    "topic": "Ciclo cardíaco",
+    "type": "comb",
+    "stem": "Sobre o mecanismo de Frank-Starling e a regulação intrínseca do bombeamento cardíaco, considere as afirmativas:",
+    "statements": [
+      "Dentro de limites fisiológicos, o coração bombeia todo o sangue que a ele retorna pelas veias.",
+      "Quanto mais o miocárdio é distendido durante o enchimento, maior é a força de contração, pois a superposição entre actina e miosina se aproxima do ponto ideal.",
+      "A distensão das paredes do átrio esquerdo aumenta diretamente a frequência cardíaca em 10% a 20%, contribuindo de forma modesta.",
+      "O mecanismo de Frank-Starling depende exclusivamente da inervação simpática para aumentar a força de contração.",
+      "O mecanismo de Frank-Starling é uma propriedade exclusiva do miocárdio, não observada em outros músculos estriados."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3
+    ],
+    "expl": "Guyton: Frank-Starling afirma que o coração bombeia todo o sangue que a ele retorna (1) por maior superposição actina-miosina ao distender (2); a distensão do átrio esquerdo aumenta a FC em <b>10-20%</b>, contribuição modesta frente ao próprio Frank-Starling (3). É falso que dependa exclusivamente do simpático (é mecanismo intrínseco) (4), e essa capacidade é característica de <b>todos os músculos estriados</b>, não exclusiva do miocárdio (5)."
+  },
+  {
+    "system": "cardio",
+    "topic": "Ciclo cardíaco",
+    "type": "comb",
+    "stem": "Sobre as valvas cardíacas e a função dos músculos papilares, considere as afirmativas:",
+    "statements": [
+      "As valvas A-V (tricúspide e mitral) e as semilunares abrem e fecham passivamente, segundo os gradientes de pressão.",
+      "As valvas A-V, finas e membranosas, quase não requerem pressão retrógrada para se fechar, enquanto as semilunares requerem fluxo retrógrado rápido por alguns milissegundos.",
+      "Os músculos papilares contraem-se junto com as paredes ventriculares e fecham ativamente as valvas A-V.",
+      "Os músculos papilares puxam as extremidades das valvas A-V em direção aos ventrículos, evitando o abaulamento excessivo para os átrios durante a sístole.",
+      "A velocidade de ejeção do sangue pelas valvas semilunares é maior que pelas valvas A-V, pois aquelas têm aberturas menores."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "expl": "Guyton: as valvas abrem/fecham passivamente (1); valvas A-V precisam de pouca pressão retrógrada e as semilunares de fluxo retrógrado rápido (2); os papilares NÃO fecham as valvas, mas impedem o abaulamento excessivo (4, sendo o item 3 falso); as semilunares têm aberturas menores e maior velocidade de ejeção (5)."
+  },
+  {
+    "system": "cardio",
+    "topic": "Ciclo cardíaco",
+    "type": "comb",
+    "stem": "Sobre as pressões na curva aórtica e o período de ejeção ventricular esquerdo, considere as afirmativas:",
+    "statements": [
+      "A valva aórtica abre-se quando a pressão no ventrículo esquerdo ultrapassa pouco acima de 80 mmHg.",
+      "A pressão sistólica na aorta atinge cerca de 120 mmHg durante a ejeção.",
+      "A pressão diastólica aórtica cai para cerca de 80 mmHg, equivalente a dois terços da pressão sistólica máxima.",
+      "Cerca de 60% do sangue do ventrículo no final da diástole são ejetados durante a sístole.",
+      "Aproximadamente 70% da ejeção ocorre durante os dois terços finais do período de ejeção (ejeção lenta)."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "expl": "Guyton: a valva aórtica abre-se acima de ~<b>80 mmHg</b> (1); a pressão sistólica aórtica chega a ~<b>120 mmHg</b> (2); a diastólica cai a ~80 mmHg, dois terços da máxima (3); ~<b>60%</b> do volume é ejetado (4). O item 5 é falso: ~<b>70%</b> da ejeção ocorre no <b>primeiro terço</b> (ejeção rápida), e só 30% nos dois terços finais."
+  },
+  {
+    "system": "cardio",
+    "topic": "Ciclo cardíaco",
+    "type": "comb",
+    "stem": "Sobre o diagrama volume-pressão, o trabalho cardíaco e os conceitos de pré-carga e pós-carga, considere as afirmativas:",
+    "statements": [
+      "A área delimitada pela alça do diagrama volume-pressão (EW) representa a produção efetiva de trabalho externo do ventrículo durante o ciclo.",
+      "A pré-carga é geralmente considerada como a pressão diastólica final quando o ventrículo está cheio.",
+      "A pós-carga do ventrículo é a pressão na aorta à saída do ventrículo.",
+      "A eficiência máxima de contração do coração normal oscila entre 20% e 25%.",
+      "Aproximadamente 70% a 90% da energia para a contração derivam normalmente do metabolismo oxidativo dos ácidos graxos."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "expl": "Todas verdadeiras conforme o Guyton: a área da alça (EW) é o trabalho externo efetivo (1); pré-carga = pressão diastólica final (2); pós-carga = pressão na aorta à saída do ventrículo (3); eficiência máxima normal de <b>20-25%</b> (4); <b>70-90%</b> da energia vem da oxidação de ácidos graxos, com 10-30% de lactato e glicose (5)."
+  },
+  {
+    "system": "cardio",
+    "topic": "Ciclo cardíaco",
+    "type": "vf",
+    "statement": "Durante a contração isovolumétrica (isométrica), todas as válvulas cardíacas estão fechadas e o volume ventricular permanece constante, sendo necessários cerca de 0,02 a 0,03 segundo para que o ventrículo gere pressão suficiente para abrir as válvulas semilunares.",
+    "answer": true,
+    "expl": "Segundo o Guyton, logo após o início da contração ventricular a pressão sobe e fecha as valvas A-V; são necessários mais <b>0,02 a 0,03 s</b> para abrir as semilunares contra a pressão arterial. Nesse período o músculo aumenta a tensão sem encurtar, com volume inalterado."
+  },
+  {
+    "system": "cardio",
+    "topic": "Ciclo cardíaco",
+    "type": "vf",
+    "statement": "A incisura (incisura dicrótica) na curva de pressão aórtica ocorre no momento da abertura da valva aórtica, refletindo o aumento abrupto do fluxo anterógrado para a aorta.",
+    "answer": false,
+    "expl": "Falso. Conforme o Guyton, a incisura ocorre no momento do <b>fechamento</b> da valva aórtica, sendo causada por breve período de fluxo retrógrado imediatamente antes do fechamento, seguido da cessação abrupta desse refluxo."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrocardiograma",
+    "type": "seq",
+    "stem": "Sobre a calibração de voltagem e tempo e as voltagens normais do ECG segundo o Guyton, julgue os itens:",
+    "statements": [
+      "No ECG padrão, cada 10 linhas horizontais correspondem a 1 milivolt.",
+      "Com velocidade de impressão de 25 mm/s, cada segmento de 5 mm (entre linhas verticais escuras) representa 0,20 segundo, e cada subdivisão menor corresponde a 0,04 segundo.",
+      "Registrada nos membros (braços ou braço e perna), a voltagem do complexo QRS é geralmente de 3 a 4 milivolts do pico da onda R ao ponto mais baixo da onda S.",
+      "O potencial de ação monofásico registrado diretamente na membrana da fibra muscular cardíaca é de cerca de 110 milivolts."
+    ],
+    "answers": [
+      true,
+      true,
+      false,
+      true
+    ],
+    "expl": "Item 3 é FALSO: nos membros a voltagem do QRS é de <b>1,0 a 1,5 mV</b>; os 3 a 4 mV ocorrem quando o eletródio é colocado diretamente sobre os ventrículos. Os demais reproduzem os valores do Guyton: 10 linhas = 1 mV, 5 mm = 0,20 s (subdivisão = 0,04 s) e potencial de ação monofásico de 110 mV."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrocardiograma",
+    "type": "seq",
+    "stem": "Sobre os intervalos e a determinação da frequência cardíaca pelo ECG, julgue os itens:",
+    "statements": [
+      "O intervalo P-Q (ou P-R) normal é de cerca de 0,16 segundo e corresponde ao tempo entre o início da estimulação elétrica dos átrios e o início da estimulação dos ventrículos.",
+      "O intervalo Q-T tem normalmente cerca de 0,35 segundo.",
+      "Um intervalo de 1 segundo entre dois batimentos sucessivos corresponde a uma frequência cardíaca de 60 batimentos por minuto.",
+      "Um intervalo normal de cerca de 0,83 segundo entre dois complexos QRS sucessivos corresponde a uma frequência cardíaca de aproximadamente 100 batimentos por minuto."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "Item 4 é FALSO: 60/0,83 resulta em cerca de <b>72 batimentos/min</b>, não 100. Os demais são exatos no Guyton: P-Q normal ~0,16 s, Q-T ~0,35 s, e frequência = inverso do intervalo (1 s → 60 bpm)."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrocardiograma",
+    "type": "seq",
+    "stem": "Sobre as derivações eletrocardiográficas e a lei de Einthoven, julgue os itens:",
+    "statements": [
+      "Na derivação I, o terminal negativo do eletrocardiógrafo é conectado ao braço direito e o positivo ao braço esquerdo, ficando o eixo em 0 grau.",
+      "Na derivação II, o terminal negativo é conectado ao braço direito e o positivo à perna esquerda, ficando o eixo em torno de +60°.",
+      "A lei de Einthoven afirma que o potencial da derivação II é igual à soma dos potenciais das derivações I e III.",
+      "Na derivação unipolar aumentada aVR, o registro normal é semelhante ao das demais derivações dos membros, sem inversão."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "Item 4 é FALSO: o registro de <b>aVR é invertido</b> em relação às outras derivações, por causa das conexões de polaridade. Os demais reproduzem o Guyton: derivação I (eixo 0°), derivação II (eixo ~+60°) e a lei de Einthoven (DI + DIII = DII)."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrocardiograma",
+    "type": "comb",
+    "stem": "Sobre o fluxo da corrente ao redor do coração durante a despolarização ventricular, considere as afirmativas:",
+    "statements": [
+      "O impulso cardíaco chega primeiro ao septo ventricular e depois se propaga para as superfícies internas do restante dos ventrículos, tornando a parte interna eletronegativa.",
+      "Durante quase todo o ciclo de despolarização, o fluxo médio da corrente é negativo em direção à base do coração e positivo em direção ao ápice.",
+      "Pouco antes de a despolarização se completar, a direção média do fluxo da corrente se inverte por cerca de 0,01 segundo, porque a base é a última parte a se despolarizar.",
+      "Os pulmões, cheios de ar, são isolantes elétricos e impedem que a corrente cardíaca atinja a superfície do corpo.",
+      "Em condições normais, a base do coração permanece eletronegativa durante a maior parte do processo de despolarização ventricular."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "expl": "A afirmativa 4 é FALSA: o Guyton afirma que mesmo os <b>pulmões conduzem eletricidade em grau surpreendente</b> e o coração está suspenso em meio condutor. As afirmativas 1, 2, 3 e 5 são verdadeiras: a base permanece negativa e o ápice positivo durante quase toda a despolarização, com breve inversão de ~0,01 s no final."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrocardiograma",
+    "type": "comb",
+    "stem": "Sobre a análise vetorial do ECG e o vetor QRS médio, considere as afirmativas:",
+    "statements": [
+      "Um vetor é uma seta que aponta na direção do potencial elétrico, com a ponta voltada para a direção positiva, e seu comprimento é proporcional à voltagem.",
+      "No coração normal, o vetor QRS médio tem direção em torno de +59°.",
+      "Quando o vetor cardíaco está praticamente perpendicular ao eixo da derivação, a voltagem registrada nessa derivação será muito alta.",
+      "Quando o vetor cardíaco tem quase o mesmo eixo da derivação, praticamente toda a voltagem do vetor será registrada.",
+      "Um vetor exatamente horizontal direcionado para o lado esquerdo da pessoa está na direção de 0 grau."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "expl": "A afirmativa 3 é FALSA: quando o vetor está <b>perpendicular</b> ao eixo da derivação, a voltagem registrada é muito <b>baixa</b> (não alta). As afirmativas 1, 2, 4 e 5 reproduzem corretamente o Guyton: vetor QRS médio normal ~+59°, referência 0° à esquerda na horizontal, e registro máximo quando vetor e eixo coincidem."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrocardiograma",
+    "type": "comb",
+    "stem": "Sobre a onda T ventricular e a sequência de repolarização dos ventrículos, considere as afirmativas:",
+    "statements": [
+      "A repolarização ventricular começa cerca de 0,15 segundo após a despolarização e se completa em aproximadamente 0,35 segundo.",
+      "A superfície externa dos ventrículos, especialmente perto do ápice, é a primeira porção a se repolarizar, enquanto as áreas endocárdicas se repolarizam por último.",
+      "Postula-se que a repolarização tardia do endocárdio se deve à alta pressão sanguínea intraventricular durante a contração, que reduz o fluxo sanguíneo coronariano para o endocárdio.",
+      "Como o ápice se repolariza primeiro, a extremidade positiva do vetor de repolarização aponta para o ápice e a onda T normal é positiva nas derivações bipolares dos membros.",
+      "A onda T tem voltagem maior que o complexo QRS por causa de sua longa duração."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "expl": "A afirmativa 5 é FALSA: a onda T tem voltagem <b>menor</b> que o complexo QRS, em parte por causa de sua duração prolongada. As afirmativas 1 a 4 são verdadeiras: a repolarização inicia ~0,15 s após e termina ~0,35 s, começa pelo epicárdio apical e termina no endocárdio (por redução do fluxo coronariano endocárdico na contração), gerando onda T positiva."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrocardiograma",
+    "type": "comb",
+    "stem": "Sobre a despolarização e a repolarização atriais (ondas P e T atrial), considere as afirmativas:",
+    "statements": [
+      "A despolarização dos átrios começa no nodo sinusal, próximo à entrada da veia cava superior, e se espalha em todas as direções.",
+      "A onda P atrial é geralmente positiva nas três derivações bipolares padrão dos membros.",
+      "A propagação da despolarização pelo músculo atrial é mais lenta que nos ventrículos, pois os átrios não possuem sistema de Purkinje para condução rápida.",
+      "O vetor de repolarização atrial tem a mesma direção do vetor de despolarização atrial, tornando a onda T atrial positiva.",
+      "A onda T atrial é frequentemente encoberta pelo complexo QRS, que é muito maior, sendo raramente observada no ECG."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "expl": "A afirmativa 4 é FALSA: nos átrios a região do nodo sinusal se repolariza primeiro, de modo que o vetor de repolarização atrial é <b>oposto</b> ao de despolarização (contrário ao que ocorre nos ventrículos), tornando a onda T atrial usualmente <b>negativa</b>. As demais reproduzem o Guyton: início no nodo sinusal, onda P positiva, ausência de Purkinje atrial e ocultação da T atrial pelo QRS."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrocardiograma",
+    "type": "vf",
+    "statement": "No eletrocardiograma normal, tanto a onda P quanto o complexo QRS são ondas de despolarização, enquanto a onda T é uma onda de repolarização.",
+    "answer": true,
+    "expl": "Segundo o Guyton, a <b>onda P</b> resulta da despolarização atrial e o <b>complexo QRS</b> da despolarização ventricular (ambas ondas de despolarização); a <b>onda T</b> é gerada quando os ventrículos se restabelecem da despolarização, sendo, portanto, uma onda de repolarização."
+  },
+  {
+    "system": "cardio",
+    "topic": "Eletrocardiograma",
+    "type": "vf",
+    "statement": "Quando o músculo ventricular está completamente polarizado ou completamente despolarizado, nenhum potencial é registrado no ECG.",
+    "answer": true,
+    "expl": "O Guyton enfatiza que o ECG só registra potencial quando o músculo está <b>em parte polarizado e em parte despolarizado</b>, pois somente nessa condição a corrente flui de uma região para outra e atinge a superfície do corpo. Com o músculo totalmente polarizado ou totalmente despolarizado, não há diferença de potencial a registrar."
+  },
+  {
+    "system": "cardio",
+    "topic": "Hemodinâmica e determinantes da pressão arterial",
+    "type": "seq",
+    "stem": "Sobre as pressões e velocidades nas diferentes partes da circulação segundo o Guyton, julgue os itens:",
+    "statements": [
+      "A pressão média na aorta é de cerca de 100 mmHg, alternando entre sistólica de 120 mmHg e diastólica de 80 mmHg.",
+      "A velocidade média do sangue na aorta em repouso é de cerca de 33 cm/s, enquanto nos capilares é cerca de mil vezes menor (em torno de 0,3 mm/s).",
+      "A pressão capilar funcional média na maioria dos leitos é de aproximadamente 17 mmHg, variando de cerca de 35 mmHg na extremidade arteriolar a 10 mmHg na venosa.",
+      "A pressão arterial pulmonar média é semelhante à da aorta, em torno de 100 mmHg, pois o fluxo pulmonar é igual ao sistêmico."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "Os três primeiros itens reproduzem valores do Guyton. O quarto é falso: embora o fluxo pulmonar iguale o sistêmico, a pressão arterial pulmonar média é muito menor (cerca de <b>16 mmHg</b>), pois o sistema pulmonar opera sob baixas pressões."
+  },
+  {
+    "system": "cardio",
+    "topic": "Hemodinâmica e determinantes da pressão arterial",
+    "type": "seq",
+    "stem": "Sobre a lei de Ohm aplicada à hemodinâmica e a resistência vascular, julgue os itens:",
+    "statements": [
+      "O fluxo sanguíneo é diretamente proporcional à diferença de pressão entre as extremidades do vaso e inversamente proporcional à resistência.",
+      "Se ambas as extremidades de um vaso estiverem a 100 mmHg, sem gradiente, não haverá fluxo apesar da pressão elevada.",
+      "A resistência periférica total normal é de aproximadamente 1 URP, calculada a partir de débito de ~100 mL/s e gradiente de ~100 mmHg.",
+      "Cerca de dois terços da resistência sistêmica total ao fluxo residem nos capilares, devido à sua enorme área de secção transversa."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "Os três primeiros refletem a lei de Ohm (F = ΔP/R) e os valores do livro. O quarto é falso: cerca de <b>dois terços</b> da resistência sistêmica residem nas <b>arteríolas</b>, não nos capilares, em razão da lei da quarta potência aplicada ao seu pequeno diâmetro."
+  },
+  {
+    "system": "cardio",
+    "topic": "Hemodinâmica e determinantes da pressão arterial",
+    "type": "seq",
+    "stem": "Sobre distensibilidade e complacência vascular segundo o Guyton, julgue os itens:",
+    "statements": [
+      "As veias são, em média, cerca de oito vezes mais distensíveis que as artérias de diâmetro comparável.",
+      "A complacência de uma veia sistêmica é cerca de 24 vezes maior que a da artéria correspondente.",
+      "Complacência é igual à distensibilidade multiplicada pelo volume do vaso.",
+      "Pequenos aumentos da pressão venosa fazem as veias armazenarem apenas alguns mililitros de sangue, dada sua baixa capacitância."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "Os três primeiros são corretos: a complacência venosa é ~24 vezes maior (8 de distensibilidade × 3 de volume). O quarto é falso: pequenos aumentos da pressão venosa fazem as veias armazenarem <b>0,5 a 1,0 litro</b> de sangue extra, atuando como reservatório de grande capacidade."
+  },
+  {
+    "system": "cardio",
+    "topic": "Hemodinâmica e determinantes da pressão arterial",
+    "type": "comb",
+    "stem": "Sobre fluxo laminar, turbulento e o número de Reynolds, considere as afirmativas:",
+    "statements": [
+      "No fluxo laminar há perfil parabólico de velocidade, com o sangue do centro do vaso fluindo mais rápido que o adjacente à parede.",
+      "A tendência à turbulência é diretamente proporcional à velocidade, ao diâmetro e à densidade do sangue, e inversamente proporcional à viscosidade.",
+      "Quando o número de Reynolds supera cerca de 2.000, ocorre turbulência mesmo em vasos retos e lisos.",
+      "A resistência ao fluxo no regime turbulento é menor que no laminar, pois os redemoinhos facilitam o avanço do sangue.",
+      "O perfil parabólico ocorre porque as moléculas que tocam a parede praticamente não se movem, e cada camada interna desliza mais rápido sobre a anterior."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "expl": "A afirmativa 4 é falsa: a resistência no fluxo <b>turbulento é maior</b> que no laminar, pois os redemoinhos aumentam muito o atrito total. As demais reproduzem corretamente o número de Reynolds (turbulência acima de ~2.000 em vasos lisos) e o perfil parabólico."
+  },
+  {
+    "system": "cardio",
+    "topic": "Hemodinâmica e determinantes da pressão arterial",
+    "type": "comb",
+    "stem": "Sobre os determinantes da pressão de pulso e seus traçados anormais, considere as afirmativas:",
+    "statements": [
+      "A pressão de pulso normal no adulto jovem é de cerca de 40 mmHg (sistólica ~120 e diastólica ~80 mmHg).",
+      "A pressão de pulso é determinada, em termos aproximados, pela razão entre o débito sistólico e a complacência da árvore arterial.",
+      "Na arteriosclerose a pressão de pulso aumenta porque as artérias endurecidas tornam-se menos complacentes.",
+      "Na estenose aórtica a pressão de pulso aumenta acentuadamente devido ao jato de alta velocidade pela valva.",
+      "Na insuficiência aórtica não aparece a incisura no traçado do pulso aórtico, porque a valva aórtica não se fecha completamente."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "expl": "A afirmativa 4 é falsa: na <b>estenose aórtica</b> a pressão de pulso fica <b>diminuída</b>, pela redução do fluxo ejetado pela valva estenótica. As demais estão corretas: pressão de pulso ≈ débito sistólico / complacência, e na insuficiência aórtica falta a incisura."
+  },
+  {
+    "system": "cardio",
+    "topic": "Hemodinâmica e determinantes da pressão arterial",
+    "type": "comb",
+    "stem": "Sobre resistências em série e em paralelo e a condutância vascular, considere as afirmativas:",
+    "statements": [
+      "Em vasos dispostos em série, o fluxo por cada vaso é o mesmo e a resistência total é a soma das resistências individuais.",
+      "Em circuitos paralelos, a resistência total é menor que a de qualquer vaso isolado, pois cada via acrescenta condutância.",
+      "A condutância é o recíproco exato da resistência.",
+      "A amputação de um membro ou a remoção de um rim, ao retirar um circuito paralelo, reduz a resistência vascular periférica total.",
+      "A condutância aumenta em proporção direta à quarta potência do diâmetro do vaso no fluxo laminar."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "expl": "A afirmativa 4 é falsa: remover um circuito paralelo (amputação, nefrectomia) reduz a condutância e o fluxo total, porém <b>aumenta</b> a resistência vascular periférica total. As demais estão corretas, incluindo a relação da condutância com o diâmetro elevado à quarta potência."
+  },
+  {
+    "system": "cardio",
+    "topic": "Hemodinâmica e determinantes da pressão arterial",
+    "type": "comb",
+    "stem": "Sobre viscosidade, hematócrito e autorregulação do fluxo sanguíneo, considere as afirmativas:",
+    "statements": [
+      "A viscosidade do sangue normal é cerca de três vezes maior que a da água, devido principalmente ao grande número de eritrócitos.",
+      "O hematócrito médio é de cerca de 42 no homem adulto e de cerca de 38 na mulher.",
+      "Na policitemia, com hematócrito de 60 a 70, a viscosidade pode chegar a cerca de 10 vezes a da água.",
+      "A autorregulação mantém o fluxo tecidual relativamente constante na faixa de pressão arterial entre cerca de 70 e 175 mmHg.",
+      "O aumento da pressão arterial provoca aumento proporcional e sustentado do fluxo na maioria dos tecidos, sem ajuste compensatório da resistência."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "expl": "A afirmativa 5 é falsa: o aumento da pressão dispara <b>aumentos compensatórios da resistência</b> (autorregulação), de modo que o fluxo varia bem menos que o esperado. As demais reproduzem os valores do Guyton: viscosidade ~3×, hematócrito 42/38, policitemia ~10× e faixa de autorregulação 70-175 mmHg."
+  },
+  {
+    "system": "cardio",
+    "topic": "Hemodinâmica e determinantes da pressão arterial",
+    "type": "vf",
+    "statement": "Segundo a lei de Poiseuille, o fluxo sanguíneo por um vaso é diretamente proporcional à quarta potência do raio, de modo que um aumento de quatro vezes no diâmetro da arteríola pode elevar o fluxo em até 256 vezes.",
+    "answer": true,
+    "expl": "Pela lei de Poiseuille, o fluxo é proporcional a <b>r⁴</b>. Como 4⁴ = 256, um aumento de quatro vezes no diâmetro multiplica o fluxo por 256 vezes, o que confere às arteríolas grande poder de controle do fluxo tecidual."
+  },
+  {
+    "system": "cardio",
+    "topic": "Hemodinâmica e determinantes da pressão arterial",
+    "type": "vf",
+    "statement": "A pressão arterial média é simplesmente a média aritmética entre a pressão sistólica e a diastólica, pois sístole e diástole ocupam frações iguais do ciclo cardíaco nas frequências normais.",
+    "answer": false,
+    "expl": "Falso. Nas frequências normais a diástole ocupa fração maior do ciclo, de modo que a pressão diastólica determina cerca de <b>60%</b> e a sistólica cerca de <b>40%</b> da pressão arterial média; portanto ela fica mais próxima da diastólica, não na média aritmética simples."
+  },
+  {
+    "system": "cardio",
+    "topic": "Mecanismos de regulação da pressão arterial",
+    "type": "seq",
+    "stem": "Sobre o reflexo barorreceptor e os barorreceptores arteriais, julgue os itens:",
+    "statements": [
+      "Os barorreceptores do seio carotídeo não são estimulados por pressões entre 0 e cerca de 50 a 60 mmHg, respondendo de modo progressivamente mais rápido acima desses níveis até o máximo em torno de 180 mmHg.",
+      "Os sinais dos barorreceptores carotídeos trafegam pelos nervos de Hering até os nervos glossofaríngeos e chegam ao núcleo do trato solitário no bulbo.",
+      "O aumento da pressão arterial excita os barorreceptores, o que estimula o centro vasoconstritor bulbar e inibe o centro vagal, elevando ainda mais a pressão.",
+      "Os barorreceptores tendem a se reprogramar para o nível de pressão a que estão expostos após 1 a 2 dias, o que limita sua atuação no controle a longo prazo."
+    ],
+    "answers": [
+      true,
+      true,
+      false,
+      true
+    ],
+    "expl": "Item 3 é falso: a alta pressão excita os barorreceptores, que <b>inibem</b> o centro vasoconstritor e <b>excitam</b> o centro vagal, causando queda reflexa da PA (vasodilatação e redução do débito cardíaco). Os demais estão corretos conforme o Guyton, incluindo a reprogramação em 1 a 2 dias."
+  },
+  {
+    "system": "cardio",
+    "topic": "Mecanismos de regulação da pressão arterial",
+    "type": "seq",
+    "stem": "Sobre o sistema vasoconstritor simpático e o centro vasomotor, julgue os itens:",
+    "statements": [
+      "O tônus vasoconstritor simpático mantém os vasos em constrição parcial contínua por meio de impulsos de cerca de meio a dois por segundo.",
+      "A anestesia espinal total, ao bloquear o tônus vasoconstritor, faz a pressão arterial cair de cerca de 100 para 50 mmHg.",
+      "A norepinefrina é o principal neurotransmissor vasoconstritor simpático, agindo sobre receptores alfa-adrenérgicos da musculatura vascular lisa.",
+      "O efeito vasoconstritor simpático é especialmente potente no músculo esquelético e no cérebro, e muito menos intenso nos rins e na pele."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "Item 4 é falso: o efeito vasoconstritor simpático é especialmente intenso nos <b>rins, intestinos, baço e pele</b>, e muito menos potente no músculo esquelético e no cérebro. Os demais itens reproduzem dados do Guyton (impulsos de 0,5 a 2/s; queda de 100 para 50 mmHg; norepinefrina sobre receptores alfa)."
+  },
+  {
+    "system": "cardio",
+    "topic": "Mecanismos de regulação da pressão arterial",
+    "type": "seq",
+    "stem": "Sobre os reflexos atriais, os receptores de baixa pressão e os quimiorreceptores, julgue os itens:",
+    "statements": [
+      "O reflexo de Bainbridge, desencadeado pelo estiramento atrial, pode aumentar a frequência cardíaca em até 40% a 60%, com sinais aferentes pelos nervos vagos.",
+      "O reflexo quimiorreceptor torna-se controlador potente da pressão arterial somente quando esta cai abaixo de cerca de 80 mmHg.",
+      "O estiramento atrial provoca dilatação reflexa das arteríolas aferentes renais e diminuição da secreção de hormônio antidiurético, aumentando a perda de líquido pelos rins.",
+      "Os receptores de baixa pressão dos átrios e artérias pulmonares são capazes de detectar diretamente a pressão arterial sistêmica."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "Item 4 é falso: os receptores de baixa pressão <b>não</b> detectam a pressão arterial sistêmica, mas sim elevações nas áreas de baixa pressão causadas por aumento do volume sanguíneo. Os demais itens estão corretos: Bainbridge (40-60%), quimiorreceptores potentes abaixo de 80 mmHg, e o 'reflexo de volume' atrial."
+  },
+  {
+    "system": "cardio",
+    "topic": "Mecanismos de regulação da pressão arterial",
+    "type": "comb",
+    "stem": "Sobre o sistema rim-líquidos corporais e a diurese/natriurese de pressão no controle a longo prazo da pressão arterial, considere as afirmativas:",
+    "statements": [
+      "A elevação da pressão arterial por apenas alguns mmHg pode duplicar o débito renal de água (diurese de pressão) e a eliminação de sal (natriurese de pressão).",
+      "Os dois determinantes principais da pressão arterial a longo prazo são o grau de desvio da curva de débito renal e o nível de ingestão de água e de sal.",
+      "O mecanismo rim-líquidos corporais proporciona um ganho de feedback quase infinito, retornando a pressão sempre ao ponto de equilíbrio.",
+      "A curva de débito renal crônico é menos íngreme (mais plana) que a curva aguda, tornando a pressão muito sensível à ingestão de sal em pessoas normais.",
+      "Um aumento agudo da resistência periférica total, com função renal normal mantida, eleva permanentemente a pressão arterial a longo prazo."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3
+    ],
+    "expl": "Afirmativas 1, 2 e 3 são verdadeiras. A 4 é falsa: a curva crônica é <b>mais íngreme</b> que a aguda, o que torna a maioria das pessoas insensível ao sal. A 5 é falsa: com função renal normal, o aumento da RPT eleva a PA de forma aguda, mas ela retorna ao normal em cerca de 1 dia, pois o ponto de equilíbrio é ditado pelos rins."
+  },
+  {
+    "system": "cardio",
+    "topic": "Mecanismos de regulação da pressão arterial",
+    "type": "comb",
+    "stem": "Sobre o sistema renina-angiotensina no controle da pressão arterial, considere as afirmativas:",
+    "statements": [
+      "A renina é uma enzima liberada pelas células justaglomerulares quando a pressão arterial cai, e não é uma substância vasoativa.",
+      "A enzima conversora de angiotensina converte angiotensina I (10 aminoácidos) em angiotensina II (8 aminoácidos), conversão que ocorre em grande parte nos pulmões.",
+      "A angiotensina II é vasoconstritor potente que persiste no sangue por apenas 1 a 2 minutos, sendo inativada pelas angiotensinases.",
+      "A angiotensina II eleva a pressão apenas por vasoconstrição aguda, sem efeito sobre a excreção renal de sal e água.",
+      "O sistema renina-angiotensina vasoconstritor é mais rápido que os reflexos nervosos, ativando-se em poucos segundos."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3
+    ],
+    "expl": "Afirmativas 1, 2 e 3 são verdadeiras. A 4 é falsa: a angiotensina II também reduz a excreção renal de sal e água (efeito direto e via aldosterona), sendo este efeito a longo prazo ainda mais potente. A 5 é falsa: o sistema renina-angiotensina precisa de cerca de <b>20 minutos</b> para ser ativado, sendo mais lento que os reflexos nervosos."
+  },
+  {
+    "system": "cardio",
+    "topic": "Mecanismos de regulação da pressão arterial",
+    "type": "comb",
+    "stem": "Sobre a hipertensão por sobrecarga de volume e suas alterações hemodinâmicas sequenciais, considere as afirmativas:",
+    "statements": [
+      "No primeiro estágio, o aumento do volume de líquido eleva o débito cardíaco, e essa elevação é a causa inicial da hipertensão.",
+      "No segundo estágio, o débito cardíaco retorna a níveis próximos do normal, enquanto a resistência periférica total aumenta de forma secundária.",
+      "O aumento secundário da resistência periférica total decorre do mecanismo de autorregulação do fluxo sanguíneo.",
+      "O aumento da resistência periférica total é a causa primária da hipertensão por sobrecarga de volume, precedendo a elevação da pressão.",
+      "A redução da massa renal a 30% do normal associada a alta ingestão de sal pode reproduzir experimentalmente esse tipo de hipertensão."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "expl": "Afirmativas 1, 2, 3 e 5 são verdadeiras. A 4 é falsa: o aumento da RPT ocorre <b>após</b> o desenvolvimento da hipertensão, sendo secundário a ela (via autorregulação) e não sua causa — a causa inicial é o aumento do débito cardíaco por sobrecarga de volume."
+  },
+  {
+    "system": "cardio",
+    "topic": "Mecanismos de regulação da pressão arterial",
+    "type": "comb",
+    "stem": "Sobre a resposta isquêmica do SNC, a reação de Cushing e as ondas de pressão arterial, considere as afirmativas:",
+    "statements": [
+      "Acredita-se que a resposta isquêmica do SNC decorra do acúmulo de dióxido de carbono no centro vasomotor por causa do fluxo sanguíneo lento.",
+      "A resposta isquêmica do SNC pode elevar a pressão arterial média até cerca de 250 mmHg por até 10 minutos.",
+      "A reação de Cushing é um tipo especial de resposta isquêmica do SNC desencadeada pelo aumento da pressão do líquido cefalorraquidiano que comprime as artérias cerebrais.",
+      "As ondas vasomotoras (ondas de Mayer) decorrem da oscilação reflexa de mecanismos de controle da pressão, como o reflexo barorreceptor, quando há ganho elevado e retardo.",
+      "As ondas respiratórias da pressão arterial costumam ser muito maiores (10 a 40 mmHg) que as ondas vasomotoras."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "expl": "Afirmativas 1, 2, 3 e 4 são verdadeiras. A 5 é falsa: as <b>ondas respiratórias</b> são pequenas (cerca de 4 a 6 mmHg em respiração normal), enquanto as <b>ondas vasomotoras (de Mayer)</b> é que podem atingir 10 a 40 mmHg, oscilando mais lentamente."
+  },
+  {
+    "system": "cardio",
+    "topic": "Mecanismos de regulação da pressão arterial",
+    "type": "vf",
+    "statement": "O controle nervoso é o mecanismo mais rápido de regulação da pressão arterial, podendo duplicar a pressão em 5 a 10 segundos por meio da ativação simultânea das funções vasoconstritoras e cardioaceleradoras do simpático.",
+    "answer": true,
+    "expl": "Segundo o Guyton, a resposta nervosa inicia-se em poucos segundos e frequentemente <b>duplica a pressão em 5 a 10 segundos</b>; a inibição súbita pode reduzi-la à metade em 10 a 40 segundos. É o mecanismo mais rápido de controle da PA."
+  },
+  {
+    "system": "cardio",
+    "topic": "Mecanismos de regulação da pressão arterial",
+    "type": "vf",
+    "statement": "A resposta isquêmica do SNC é um dos mecanismos normais de regulação minuto a minuto da pressão arterial, atuando de forma significativa já na faixa normal de pressão em torno de 100 mmHg.",
+    "answer": false,
+    "expl": "Falso. A resposta isquêmica do SNC <b>não</b> é mecanismo normal de regulação; só se torna significativa quando a PA cai abaixo de 60 mmHg, com estimulação máxima sob pressões de <b>15 a 20 mmHg</b>. Funciona como sistema de emergência, a 'última cartada' do controle pressórico."
+  },
+  {
+    "system": "renal",
+    "topic": "Filtração glomerular",
+    "type": "seq",
+    "stem": "Sobre as forças que determinam a pressão efetiva de filtração glomerular (valores médios estimados para o ser humano), julgue os itens:",
+    "statements": [
+      "A pressão hidrostática glomerular é de cerca de 60 mmHg e favorece a filtração.",
+      "A pressão hidrostática na cápsula de Bowman é de cerca de 18 mmHg e se opõe à filtração.",
+      "A pressão coloidosmótica nos capilares glomerulares é de cerca de 32 mmHg e favorece a filtração.",
+      "A pressão efetiva de filtração resultante é de aproximadamente +10 mmHg."
+    ],
+    "answers": [
+      true,
+      true,
+      false,
+      true
+    ],
+    "expl": "A pressão efetiva de filtração é calculada como <b>60 − 18 − 32 = +10 mmHg</b>. A pressão coloidosmótica nos capilares glomerulares (~32 mmHg) <b>se opõe</b> à filtração, e não a favorece, tornando o item III falso."
+  },
+  {
+    "system": "renal",
+    "topic": "Filtração glomerular",
+    "type": "seq",
+    "stem": "Sobre a membrana capilar glomerular e a filtrabilidade dos solutos, julgue os itens:",
+    "statements": [
+      "A membrana capilar glomerular possui três camadas principais: endotélio capilar, membrana basal e camada de células epiteliais (podócitos).",
+      "A filtrabilidade dos solutos é diretamente relacionada ao seu tamanho molecular.",
+      "Eletrólitos como o sódio e pequenos compostos orgânicos como a glicose têm filtrabilidade de 1,0, sendo filtrados tão livremente quanto a água.",
+      "Para um mesmo raio molecular, moléculas com carga positiva são filtradas mais rapidamente que moléculas com carga negativa."
+    ],
+    "answers": [
+      true,
+      false,
+      true,
+      true
+    ],
+    "expl": "A membrana tem três camadas (endotélio, membrana basal e podócitos). A filtrabilidade é <b>inversamente</b> relacionada ao tamanho (item II falso): Na⁺ e glicose têm filtrabilidade 1,0, enquanto a albumina tem apenas 0,005. As cargas negativas da barreira repelem moléculas negativas, de modo que moléculas positivas são filtradas mais facilmente."
+  },
+  {
+    "system": "renal",
+    "topic": "Filtração glomerular",
+    "type": "seq",
+    "stem": "Sobre o fluxo sanguíneo renal e o consumo de oxigênio pelos rins, julgue os itens:",
+    "statements": [
+      "O fluxo sanguíneo para ambos os rins é de cerca de 1.100 mL/min, aproximadamente 22% do débito cardíaco.",
+      "O fluxo sanguíneo para a medula renal corresponde a apenas 1 a 2% do fluxo sanguíneo renal total.",
+      "O consumo de oxigênio renal varia proporcionalmente à reabsorção de sódio pelos túbulos renais.",
+      "Se a filtração glomerular cessar completamente, o consumo de oxigênio renal cai a zero."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "O fluxo renal é ~<b>1.100 mL/min (≈22% do débito cardíaco)</b>; a medula recebe apenas <b>1 a 2%</b>. O consumo de O₂ acompanha a reabsorção ativa de Na⁺. Se a FG cessar, o consumo de O₂ não chega a zero, mas cai para cerca de <b>um quarto do normal</b>, refletindo o metabolismo basal das células renais (item IV falso)."
+  },
+  {
+    "system": "renal",
+    "topic": "Filtração glomerular",
+    "type": "comb",
+    "stem": "Sobre a influência das resistências arteriolares na FG, considere as afirmativas:",
+    "statements": [
+      "O aumento da resistência da arteríola aferente reduz a pressão hidrostática glomerular e diminui a FG.",
+      "A dilatação da arteríola aferente eleva tanto a pressão hidrostática glomerular quanto a FG.",
+      "A constrição moderada da arteríola eferente tende a elevar a FG.",
+      "A constrição grave da arteríola eferente (aumento de mais de três vezes na resistência) eleva ainda mais a FG.",
+      "A constrição arteriolar eferente reduz o fluxo sanguíneo renal e eleva a fração de filtração e a pressão coloidosmótica glomerular."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "expl": "A constrição eferente tem efeito <b>bifásico</b>: moderada eleva a FG, mas grave (>3x) a <b>reduz</b>, pois o aumento da pressão coloidosmótica (efeito Donnan) supera o aumento da pressão hidrostática. Logo o item IV é falso. Os itens I, II, III e V são corretos."
+  },
+  {
+    "system": "renal",
+    "topic": "Filtração glomerular",
+    "type": "comb",
+    "stem": "Sobre o controle hormonal e autacoide da circulação renal, considere as afirmativas:",
+    "statements": [
+      "A norepinefrina, a epinefrina e a endotelina provocam constrição dos vasos renais e diminuem a FG.",
+      "A angiotensina II provoca constrição preferencial das arteríolas eferentes na maioria das condições fisiológicas.",
+      "O óxido nítrico derivado do endotélio diminui a resistência vascular renal e aumenta a FG.",
+      "As prostaglandinas aumentam a resistência vascular renal e tendem a diminuir a FG.",
+      "O aumento dos níveis de angiotensina II eleva a pressão hidrostática glomerular enquanto reduz o fluxo sanguíneo renal."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "expl": "Norepinefrina, epinefrina e endotelina são vasoconstritores que reduzem a FG. A angiotensina II contrai preferencialmente a arteríola eferente, elevando a PG e reduzindo o fluxo renal. O óxido nítrico vasodilata e aumenta a FG. As prostaglandinas <b>reduzem</b> a resistência vascular e tendem a <b>aumentar</b> a FG (item IV falso)."
+  },
+  {
+    "system": "renal",
+    "topic": "Filtração glomerular",
+    "type": "comb",
+    "stem": "Sobre a autorregulação da FG e o feedback tubuloglomerular, considere as afirmativas:",
+    "statements": [
+      "A FG e o fluxo sanguíneo renal são mantidos relativamente constantes na faixa de pressão arterial entre cerca de 75-80 e 160-180 mmHg.",
+      "O complexo justaglomerular é formado pelas células da mácula densa e pelas células justaglomerulares das paredes das arteríolas aferente e eferente.",
+      "A diminuição da concentração de cloreto de sódio na mácula densa causa constrição das arteríolas aferentes e reduz a liberação de renina.",
+      "A diminuição da concentração de cloreto de sódio na mácula densa aumenta a liberação de renina, levando à formação de angiotensina II que contrai a arteríola eferente.",
+      "O mecanismo miogênico consiste na contração do músculo liso vascular em resposta ao estiramento da parede, mediada por entrada de íons cálcio."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "expl": "A autorregulação mantém a FG quase constante entre ~75 e 160-180 mmHg. O complexo justaglomerular reúne mácula densa e células justaglomerulares. A queda de NaCl na mácula densa <b>dilata</b> a arteríola aferente e <b>aumenta</b> a liberação de renina (item III falso); a angiotensina II resultante contrai a eferente. O mecanismo miogênico depende da entrada de Ca²⁺ com o estiramento."
+  },
+  {
+    "system": "renal",
+    "topic": "Filtração glomerular",
+    "type": "comb",
+    "stem": "Sobre os determinantes da FG, a importância da autorregulação e fatores que alteram a filtração, considere as afirmativas:",
+    "statements": [
+      "A FG é, em média, cerca de 20% do fluxo plasmático renal, valor expresso como fração de filtração de 0,2.",
+      "O líquido filtrado nos capilares glomerulares é essencialmente livre de proteínas e desprovido de hemácias.",
+      "Na ausência de autorregulação, um pequeno aumento da pressão arterial (de 100 para 125 mmHg) elevaria a FG em cerca de 25%.",
+      "A obstrução do trato urinário (por exemplo, cálculos renais) aumenta a pressão na cápsula de Bowman e reduz a FG.",
+      "A ingestão rica em proteínas reduz o fluxo sanguíneo renal e a FG por aumento da reabsorção de sódio no túbulo proximal."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "expl": "A fração de filtração é ~<b>0,2 (20%)</b> e o filtrado é livre de proteínas e hemácias. Sem autorregulação, a FG subiria ~25% (de 180 para 225 L/dia). A obstrução urinária eleva PB e reduz a FG. A ingestão rica em proteínas <b>aumenta</b> (não reduz) o fluxo renal e a FG em 20-30%, pois a maior reabsorção de Na⁺ com aminoácidos baixa o NaCl na mácula densa e dilata a aferente (item V falso)."
+  },
+  {
+    "system": "renal",
+    "topic": "Filtração glomerular",
+    "type": "vf",
+    "statement": "No ser humano adulto médio, a taxa de filtração glomerular (FG) é de cerca de 125 mL/min, ou aproximadamente 180 L/dia, sendo que mais de 99% do líquido filtrado normalmente é reabsorvido.",
+    "answer": true,
+    "expl": "Segundo o Guyton, a FG é de cerca de <b>125 mL/min (180 L/dia)</b>, mas apenas cerca de 1 a 1,5 L é excretado por dia, de modo que mais de <b>99%</b> do filtrado é reabsorvido pelos túbulos."
+  },
+  {
+    "system": "renal",
+    "topic": "Filtração glomerular",
+    "type": "vf",
+    "statement": "A pressão coloidosmótica das proteínas plasmáticas nos capilares glomerulares é uma força que favorece a filtração glomerular.",
+    "answer": false,
+    "expl": "Falso. A pressão coloidosmótica das proteínas plasmáticas nos capilares (pG ≈ 32 mmHg) <b>se opõe</b> à filtração. As forças que favorecem a filtração são a pressão hidrostática glomerular (PG ≈ 60 mmHg) e a pressão coloidosmótica na cápsula de Bowman (pB ≈ 0)."
+  },
+  {
+    "system": "renal",
+    "topic": "Manejo tubular renal",
+    "type": "seq",
+    "stem": "Sobre o transporte máximo (Tm) de glicose e o manejo tubular da glicose segundo o Guyton, julgue os itens:",
+    "statements": [
+      "O transporte máximo médio para glicose no adulto é de cerca de 375 mg/min, enquanto a carga filtrada normal é de aproximadamente 125 mg/min.",
+      "O limiar para glicose é alcançado exatamente no mesmo ponto em que se atinge o transporte máximo global dos rins.",
+      "A diferença entre o limiar e o transporte máximo deve-se ao fato de nem todos os néfrons terem o mesmo transporte máximo para glicose.",
+      "Cerca de 90% da glicose filtrada são reabsorvidos pelo cotransportador SGLT2 no segmento inicial (S1) do túbulo proximal."
+    ],
+    "answers": [
+      true,
+      false,
+      true,
+      true
+    ],
+    "expl": "O Tm da glicose é ~<b>375 mg/min</b> e a carga filtrada normal ~<b>125 mg/min</b> (item 1 V). O limiar surge ANTES de o Tm ser atingido, pois os néfrons têm Tm heterogêneos (item 2 F; item 3 V). O <b>SGLT2</b> reabsorve ~90% da glicose no segmento S1 (item 4 V)."
+  },
+  {
+    "system": "renal",
+    "topic": "Manejo tubular renal",
+    "type": "seq",
+    "stem": "Sobre os mecanismos de transporte na alça de Henle ascendente espessa, julgue os itens:",
+    "statements": [
+      "A movimentação de sódio através da membrana luminal é mediada essencialmente pelo cotransportador de 1-sódio, 2-cloreto, 1-potássio (NKCC2).",
+      "O segmento ascendente espesso é altamente permeável à água, reabsorvendo grandes volumes hídricos.",
+      "O lúmen tubular apresenta carga ligeiramente positiva (cerca de +8 mV), o que favorece a reabsorção paracelular de cátions como Mg²⁺ e Ca²⁺.",
+      "Os diuréticos de alça, como a furosemida e a bumetanida, inibem a ação do cotransportador de sódio, 2-cloreto, potássio."
+    ],
+    "answers": [
+      true,
+      false,
+      true,
+      true
+    ],
+    "expl": "O cotransportador <b>1-Na⁺, 2-Cl⁻, 1-K⁺</b> medeia o transporte luminal (item 1 V). O ramo ascendente espesso é praticamente <b>impermeável à água</b> (item 2 F). O retrovazamento de K⁺ gera lúmen com cerca de <b>+8 mV</b>, dirigindo reabsorção paracelular de Mg²⁺ e Ca²⁺ (item 3 V). Os diuréticos de alça inibem o NKCC2 (item 4 V)."
+  },
+  {
+    "system": "renal",
+    "topic": "Manejo tubular renal",
+    "type": "seq",
+    "stem": "Sobre as células principais e intercaladas do túbulo distal final e do túbulo coletor cortical, julgue os itens:",
+    "statements": [
+      "As células principais reabsorvem sódio do lúmen e secretam íons potássio para o lúmen tubular.",
+      "As células intercaladas tipo A secretam íons hidrogênio enquanto reabsorvem bicarbonato, sendo especialmente importantes na acidose.",
+      "A amilorida e o triantereno são antagonistas do receptor de mineralocorticoides que competem com a aldosterona.",
+      "As células intercaladas tipo B secretam bicarbonato para o lúmen e reabsorvem ativamente íons hidrogênio na alcalose."
+    ],
+    "answers": [
+      true,
+      true,
+      false,
+      true
+    ],
+    "expl": "As células principais reabsorvem Na⁺ e secretam K⁺ (item 1 V). As intercaladas tipo A secretam H⁺ e reabsorvem HCO₃⁻ na acidose (item 2 V). Amilorida e triantereno são <b>bloqueadores do canal de sódio</b>, não antagonistas de aldosterona (espironolactona/eplerenona é que são) (item 3 F). As tipo B secretam HCO₃⁻ na alcalose (item 4 V)."
+  },
+  {
+    "system": "renal",
+    "topic": "Manejo tubular renal",
+    "type": "comb",
+    "stem": "Sobre os mecanismos de transporte tubular ativo e passivo segundo o Guyton, considere as afirmativas:",
+    "statements": [
+      "A bomba sódio-potássio ATPase na membrana basolateral cria carga intracelular negativa de cerca de -70 mV e mantém baixa concentração intracelular de sódio.",
+      "A reabsorção de glicose pelo túbulo proximal é exemplo de transporte ativo secundário, dependente do gradiente de sódio gerado pela Na⁺-K⁺ ATPase.",
+      "A secreção de íons hidrogênio no túbulo proximal ocorre por contratransporte sódio-hidrogênio na membrana luminal.",
+      "O transporte ativo primário não requer energia derivada do metabolismo, sendo independente da hidrólise de ATP.",
+      "A reabsorção de proteínas pelo túbulo proximal ocorre por pinocitose, considerada uma forma de transporte ativo por consumir energia."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "expl": "A Na⁺-K⁺ ATPase cria -70 mV e baixo Na⁺ intracelular (1 V); a glicose é transporte ativo secundário (2 V); o H⁺ é secretado por contratransporte Na⁺-H⁺ luminal (3 V); a pinocitose é transporte ativo (5 V). A afirmativa 4 é FALSA, pois o transporte ativo primário é justamente acoplado à hidrólise de ATP."
+  },
+  {
+    "system": "renal",
+    "topic": "Manejo tubular renal",
+    "type": "comb",
+    "stem": "Sobre o controle hormonal da reabsorção tubular renal, considere as afirmativas:",
+    "statements": [
+      "A aldosterona aumenta a reabsorção de NaCl e água e estimula a secreção de K⁺ e H⁺, agindo primariamente nas células principais do túbulo coletor cortical.",
+      "A angiotensina II é considerada talvez o hormônio retentor de sódio mais potente do organismo e contrai as arteríolas eferentes.",
+      "O peptídeo natriurético atrial (PNA) aumenta a reabsorção de sódio e água, sobretudo nos ductos coletores.",
+      "O ADH aumenta a permeabilidade à água do túbulo distal final, túbulos e ductos coletores, ligando-se a receptores V2 e mobilizando aquaporina-2.",
+      "O hormônio da paratireoide (PTH) aumenta a reabsorção de cálcio e inibe a reabsorção de fosfato pelo túbulo proximal."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "expl": "Aldosterona (1 V), angiotensina II (2 V), ADH via V2/AQP-2 (4 V) e PTH (5 V) estão corretos. A afirmativa 3 é FALSA: o PNA <b>diminui</b> a reabsorção de Na⁺ e água, aumentando a excreção (efeito natriurético)."
+  },
+  {
+    "system": "renal",
+    "topic": "Manejo tubular renal",
+    "type": "comb",
+    "stem": "Sobre o uso de métodos de depuração para quantificar a função renal segundo o Guyton, considere as afirmativas:",
+    "statements": [
+      "A inulina é filtrada livremente e não é reabsorvida nem secretada, sendo usada para estimar a filtração glomerular (FG ~125 mL/min).",
+      "A depuração do PAH é usada para estimar o fluxo plasmático renal, pois cerca de 90% do PAH é depurado do plasma.",
+      "Se a depuração de uma substância for maior do que a depuração de inulina, essa substância está sendo reabsorvida pelos túbulos.",
+      "A concentração plasmática de creatinina é inversamente proporcional à FG; uma queda da FG para 50% eleva a creatinina plasmática para cerca do dobro.",
+      "A fração de filtração é calculada como FG dividida pelo FPR, resultando em aproximadamente 0,19 (FG 125 / FPR 650 mL/min)."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "expl": "Inulina mede FG (1 V); PAH (~90% depurado) estima o FPR (2 V); creatinina plasmática é inversamente proporcional à FG e dobra quando a FG cai 50% (4 V); fração de filtração = 125/650 ≈ <b>0,19</b> (5 V). A afirmativa 3 é FALSA: depuração MAIOR que a da inulina indica <b>secreção</b>, não reabsorção."
+  },
+  {
+    "system": "renal",
+    "topic": "Manejo tubular renal",
+    "type": "comb",
+    "stem": "Sobre a regulação da reabsorção tubular e as forças físicas dos capilares peritubulares, considere as afirmativas:",
+    "statements": [
+      "O equilíbrio glomerulotubular faz com que a intensidade absoluta de reabsorção proximal aumente quando a carga filtrada aumenta, mantendo a fração reabsorvida em torno de 65%.",
+      "A pressão efetiva de reabsorção nos capilares peritubulares é de cerca de 10 mmHg, favorecendo o movimento de líquido do interstício para o sangue.",
+      "O aumento da fração de filtração eleva a pressão coloidosmótica dos capilares peritubulares e tende a aumentar a reabsorção.",
+      "A constrição da arteríola eferente aumenta a pressão hidrostática dos capilares peritubulares, reduzindo a reabsorção tubular.",
+      "Mesmo pequenos aumentos da pressão arterial podem causar aumentos acentuados da excreção de sódio e água (natriurese e diurese pressóricas)."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "expl": "Equilíbrio glomerulotubular (~65%) (1 V); pressão efetiva de reabsorção ~<b>10 mmHg</b> (2 V); aumento da fração de filtração eleva a pressão coloidosmótica peritubular e a reabsorção (3 V); natriurese/diurese pressóricas (5 V). A afirmativa 4 é FALSA: a constrição eferente <b>diminui</b> a pressão hidrostática peritubular e <b>aumenta</b> a reabsorção."
+  },
+  {
+    "system": "renal",
+    "topic": "Manejo tubular renal",
+    "type": "vf",
+    "statement": "No túbulo proximal, cerca de 65% da carga filtrada de sódio e de água é reabsorvida antes de o filtrado chegar à alça de Henle, enquanto aproximadamente 25% das cargas filtradas de sódio, cloreto e potássio são reabsorvidas na alça de Henle, em sua maior parte no segmento ascendente espesso.",
+    "answer": true,
+    "expl": "Segundo o Guyton, o túbulo proximal reabsorve cerca de <b>65%</b> de Na⁺ e água, e a alça de Henle reabsorve aproximadamente <b>25%</b> das cargas filtradas de Na⁺, Cl⁻ e K⁺, predominantemente no ramo ascendente espesso."
+  },
+  {
+    "system": "renal",
+    "topic": "Manejo tubular renal",
+    "type": "vf",
+    "statement": "A água é sempre reabsorvida pelos túbulos renais por transporte ativo primário ligado à hidrólise de ATP, independentemente da reabsorção de solutos.",
+    "answer": false,
+    "expl": "Falso. A água é <b>sempre</b> reabsorvida por mecanismo físico passivo, a <b>osmose</b>, nunca por transporte ativo. Sua reabsorção está acoplada principalmente à reabsorção de Na⁺."
+  },
+  {
+    "system": "renal",
+    "topic": "Rim e a regulação do volume",
+    "type": "seq",
+    "stem": "Sobre a capacidade de concentração e diluição da urina pelos rins humanos, segundo o Guyton, julgue os itens:",
+    "statements": [
+      "Diante de excesso de água no corpo, o rim pode excretar urina com osmolaridade tão baixa quanto 50 mOsm/L, cerca de um sexto da osmolaridade do líquido extracelular normal.",
+      "Em déficit hídrico, o rim humano pode produzir urina com osmolaridade máxima de 1.200 a 1.400 mOsm/L, 4 a 5 vezes a osmolaridade do plasma.",
+      "O filtrado glomerular recém-formado é hipotônico em relação ao plasma, com osmolaridade em torno de 100 mOsm/L.",
+      "O volume urinário obrigatório de um indivíduo que precisa excretar 600 miliosmóis/dia, com capacidade máxima de concentração de 1.200 mOsm/L, é de cerca de 0,5 litro."
+    ],
+    "answers": [
+      true,
+      true,
+      false,
+      true
+    ],
+    "expl": "O item 3 é falso: o filtrado glomerular recém-formado é <b>isosmótico</b> ao plasma (~300 mOsm/L), não hipotônico. Os demais estão corretos: urina mínima de 50 mOsm/L, máxima de 1.200-1.400 mOsm/L, e volume obrigatório = 600 mOsm ÷ 1.200 mOsm/L = 0,5 L."
+  },
+  {
+    "system": "renal",
+    "topic": "Rim e a regulação do volume",
+    "type": "seq",
+    "stem": "Sobre as alterações de osmolaridade do líquido tubular ao longo dos segmentos do néfron, julgue os itens:",
+    "statements": [
+      "No túbulo proximal são reabsorvidos cerca de 65% dos eletrólitos filtrados, e como a membrana é muito permeável à água (via AQP-1), a osmolaridade permanece em torno de 300 mOsm/L.",
+      "No ramo descendente da alça de Henle a água é reabsorvida por osmose, de modo que o líquido tubular se torna progressivamente mais concentrado em direção à medula interna.",
+      "Na porção inicial do túbulo distal, o líquido pode ser diluído até cerca de 50 mOsm/L, pois esse segmento transporta NaCl ativamente, mas é relativamente impermeável à água.",
+      "Nos ductos coletores medulares internos, na presença de altos níveis de ADH, o líquido tubular atinge osmolaridade próxima a 1.200-1.400 mOsm/L."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "expl": "Todos os itens estão corretos segundo o Guyton. O túbulo proximal reabsorve ~<b>65%</b> dos eletrólitos com permeabilidade alta à água (AQP-1); o ramo descendente concentra o líquido por reabsorção osmótica de água; o túbulo distal inicial dilui até ~50 mOsm/L; e os ductos coletores medulares internos, sob alto ADH, equilibram-se com o interstício (~1.200-1.400 mOsm/L)."
+  },
+  {
+    "system": "renal",
+    "topic": "Rim e a regulação do volume",
+    "type": "seq",
+    "stem": "Sobre o sistema de feedback osmorreceptor-ADH e a secreção de ADH, julgue os itens:",
+    "statements": [
+      "O aumento da osmolaridade do líquido extracelular provoca o murchamento das células osmorreceptoras no hipotálamo anterior, estimulando a liberação de ADH.",
+      "Os núcleos supraópticos sintetizam cerca de cinco sextos do ADH total liberado pela hipófise, e os núcleos paraventriculares, o sexto restante.",
+      "O ADH é consideravelmente mais sensível a pequenas alterações da osmolaridade do que a variações percentuais similares do volume sanguíneo.",
+      "A náusea inibe fortemente a secreção de ADH, enquanto o álcool a estimula de forma acentuada."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "O item 4 está invertido: a <b>náusea</b> é um estímulo potente que <b>aumenta</b> o ADH (até 100 vezes após vômito), enquanto o <b>álcool inibe</b> a liberação de ADH (causando diurese). Os demais estão corretos: murchamento osmorreceptor estimula ADH; síntese 5/6 supraópticos e 1/6 paraventriculares; e variação osmolar de ~1% já eleva o ADH, ao passo que o volume só o eleva após queda de ~10%."
+  },
+  {
+    "system": "renal",
+    "topic": "Rim e a regulação do volume",
+    "type": "comb",
+    "stem": "Sobre o mecanismo multiplicador de contracorrente e a geração do interstício medular hiperosmótico, considere as afirmativas:",
+    "statements": [
+      "O transporte ativo de NaCl para fora do ramo ascendente espesso pode gerar gradiente osmótico de cerca de 200 mOsm/L entre o lúmen e o interstício.",
+      "Sozinho, o transporte ativo de NaCl pelo ramo ascendente seria capaz de elevar a osmolaridade medular até 1.200-1.400 mOsm/L sem auxílio do fluxo de líquido pela alça.",
+      "A ureia contribui com cerca de 40% a 50% (500 a 600 mOsm/L) da osmolaridade do interstício medular quando a urina está maximamente concentrada.",
+      "O ramo descendente da alça de Henle é muito permeável à água e pouco permeável ao NaCl e à ureia, equilibrando-se osmoticamente com o interstício.",
+      "O fluxo sanguíneo medular é alto, demandando mais de 50% do fluxo sanguíneo renal total, o que ajuda a manter a hiperosmolaridade."
+    ],
+    "options": [
+      [
+        1,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        3,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      3,
+      4
+    ],
+    "expl": "Corretas: 1 (gradiente único de ~<b>200 mOsm/L</b> pela bomba do ramo ascendente espesso), 3 (ureia = 40-50%, ou 500-600 mOsm/L) e 4 (ramo descendente permeável à água, equilibra-se com o interstício). A 2 é falsa: o transporte ativo isolado gera apenas ~200 mOsm/L; é a repetição com o influxo contínuo de líquido (a 'multiplicação') que eleva a osmolaridade. A 5 é falsa: o fluxo medular é <b>baixo</b> (menos de 5% do fluxo renal total)."
+  },
+  {
+    "system": "renal",
+    "topic": "Rim e a regulação do volume",
+    "type": "comb",
+    "stem": "Sobre a recirculação e o papel da ureia na concentração urinária, considere as afirmativas:",
+    "statements": [
+      "Os transportadores UT-A1 e UT-A3, ativados pelo ADH, facilitam a difusão de ureia para fora dos ductos coletores medulares internos.",
+      "Indivíduos com dieta rica em proteínas concentram a urina de forma mais satisfatória do que indivíduos com dieta pobre em proteínas.",
+      "O ramo espesso da alça de Henle, o túbulo distal e o túbulo coletor cortical são altamente permeáveis à ureia, reabsorvendo-a quase completamente.",
+      "A desnutrição está associada à baixa concentração de ureia no interstício medular e à diminuição da capacidade de concentração urinária.",
+      "O transportador UT-A2 facilita a secreção passiva de ureia para dentro do ramo delgado descendente da alça de Henle."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        1,
+        2,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "expl": "Corretas: 1, 2, 4 e 5. Os transportadores <b>UT-A1 e UT-A3</b> (ativados pelo ADH) levam ureia para o interstício medular; dieta rica em proteína melhora a concentração urinária e a desnutrição a piora; e o <b>UT-A2</b> facilita a entrada de ureia no ramo delgado. A 3 é falsa: esses segmentos são <b>relativamente impermeáveis à ureia</b>, e é justamente essa impermeabilidade que concentra a ureia rumo aos ductos coletores medulares."
+  },
+  {
+    "system": "renal",
+    "topic": "Rim e a regulação do volume",
+    "type": "comb",
+    "stem": "Sobre o sistema rim-líquidos corporais no controle da pressão arterial e a natriurese/diurese de pressão, considere as afirmativas:",
+    "statements": [
+      "A elevação da pressão arterial em alguns mmHg pode duplicar o débito renal de água (diurese de pressão) e a eliminação de sal (natriurese de pressão).",
+      "O ponto de equilíbrio é determinado pelo cruzamento da curva de débito renal de água e sal com a linha de ingestão total de água e sal.",
+      "Sob pressão arterial de 50 mmHg o débito urinário é praticamente nulo, enquanto sob 200 mmHg pode ser cerca de seis a oito vezes o normal.",
+      "O aumento da resistência periférica total fora dos rins eleva a pressão arterial de forma permanente a longo prazo, mesmo com função renal normal.",
+      "A curva de débito renal crônico é menos íngreme (mais plana) do que a curva aguda."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        3,
+        4
+      ],
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3
+    ],
+    "expl": "Corretas: 1, 2 e 3. Pequenas elevações de pressão duplicam o débito de água e sal; o ponto de equilíbrio é o cruzamento das curvas de débito e ingestão; e o débito vai de praticamente nulo a 50 mmHg até 6-8x o normal a 200 mmHg. A 4 é falsa: o aumento da resistência periférica total fora dos rins <b>não</b> mantém a pressão elevada a longo prazo se a função renal não se alterar (a pressão retorna ao normal em cerca de 1 dia). A 5 é falsa: a curva crônica é <b>muito mais íngreme</b> que a aguda."
+  },
+  {
+    "system": "renal",
+    "topic": "Rim e a regulação do volume",
+    "type": "comb",
+    "stem": "Sobre o controle da osmolaridade, da concentração de sódio e o mecanismo da sede, considere as afirmativas:",
+    "statements": [
+      "A concentração plasmática de sódio é normalmente regulada entre 140 e 145 mEq/L, com média em torno de 142 mEq/L.",
+      "A angiotensina II e a aldosterona são os principais mecanismos de feedback que controlam a concentração de sódio no líquido extracelular, sobrepondo-se ao ADH e à sede.",
+      "Um aumento da concentração de sódio de apenas cerca de 2 mEq/L acima do normal ativa o mecanismo da sede (limiar para a ingestão de água).",
+      "A angiotensina II estimula a sede atuando sobre o órgão subfornical e o órgão vasculoso da lâmina terminal, fora da barreira hematoencefálica.",
+      "Como a ureia se difunde facilmente pelas membranas celulares, ela exerce pressão osmótica pouco efetiva em condições estáveis."
+    ],
+    "options": [
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      3,
+      4,
+      5
+    ],
+    "expl": "Corretas: 1, 3, 4 e 5. O sódio plasmático é regulado entre <b>140-145 mEq/L</b> (média ~142); o limiar da sede é ~<b>2 mEq/L</b> acima do normal; a angiotensina II estimula a sede em órgãos circunventriculares sem barreira hematoencefálica; e a ureia, por se difundir bem, é osmoticamente pouco efetiva. A 2 é falsa: angiotensina II e aldosterona têm <b>pequeno efeito sobre a concentração de sódio</b> (pois aumentam sódio e água proporcionalmente); o sistema <b>ADH-sede</b> é o feedback mais potente e se sobrepõe a eles."
+  },
+  {
+    "system": "renal",
+    "topic": "Rim e a regulação do volume",
+    "type": "vf",
+    "statement": "Na ausência do hormônio antidiurético (ADH), o ramo ascendente espesso da alça de Henle perde sua impermeabilidade à água e passa a reabsorvê-la junto com o sódio, cloreto e potássio.",
+    "answer": false,
+    "expl": "Falso. O ramo ascendente espesso da alça de Henle é <b>praticamente impermeável à água mesmo na presença de ADH</b>. Ele reabsorve ativamente Na⁺, Cl⁻ e K⁺ sem acompanhamento de água, diluindo o líquido tubular para cerca de 100 mOsm/L, independentemente do nível de ADH."
+  },
+  {
+    "system": "renal",
+    "topic": "Rim e a regulação do volume",
+    "type": "vf",
+    "statement": "Os vasa recta funcionam como trocadores por contracorrente, em formato de U, que não geram a hiperosmolaridade medular, mas evitam sua dissipação.",
+    "answer": true,
+    "expl": "Verdadeiro. Segundo o Guyton, o formato em <b>U</b> dos vasa recta minimiza a remoção de solutos do interstício medular. Eles <b>não geram</b> a hiperosmolaridade (essa é produzida pelo multiplicador de contracorrente da alça de Henle), apenas a preservam, ajudados também pelo fluxo sanguíneo medular baixo (menos de 5% do fluxo renal total)."
+  }
+];
+
+/* =========================== ENGINE =========================== */
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+const SYS_LABEL = {cardio:'Cardiovascular', renal:'Renal'};
+const TYPE_LABEL = {vf:'V / F', seq:'Sequência V-F', comb:'Afirmativas corretas'};
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let chosenCount = 20;   // questões por teste (0 = todas)
+
+function romanize(n){ return ['I','II','III','IV','V','VI','VII','VIII','IX','X'][n-1] || String(n); }
+function listPt(arr){
+  arr = arr.slice();
+  if(arr.length===1) return String(arr[0]);
+  const last = arr.pop();
+  return arr.join(', ') + ' e ' + last;
+}
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+function setEq(a,b){ if(a.length!==b.length) return false; const s=new Set(a); return b.every(x=>s.has(x)); }
+function seqStr(boolArr){ return boolArr.map(b=>b?'V':'F').join(' – '); }
+
+let session = null;
+
+/* metadata counts on start screen */
+(function fillMeta(){
+  const c = QUESTIONS.filter(q=>q.system==='cardio').length;
+  const r = QUESTIONS.filter(q=>q.system==='renal').length;
+  $('#meta-cardio').textContent = '6 temas · ' + c + ' questões';
+  $('#meta-renal').textContent  = '3 temas · ' + r + ' questões';
+  $('#meta-full').textContent   = (c+r) + ' questões';
+})();
+
+function buildSession(mode){
+  let items = QUESTIONS.filter(q => mode==='full' ? true : q.system===mode);
+  items = shuffle(items);
+  if(chosenCount>0 && items.length>chosenCount) items = items.slice(0, chosenCount);
+  // prepara cópia com opções embaralhadas (comb)
+  items = items.map(q=>{
+    const it = Object.assign({}, q);
+    if(q.type==='comb'){
+      const opts = q.options.map(nums => ({ nums, ok: setEq(nums, q.correct) }));
+      it._opts = shuffle(opts);
+    }
+    return it;
+  });
+  session = { mode, items, idx:0, responses:new Array(items.length).fill(null) };
+}
+
+function show(screen){
+  ['start','quiz','result','review'].forEach(s=> $('#screen-'+s).classList.toggle('hidden', s!==screen));
+  $('#progress-zone').classList.toggle('hidden', !(screen==='quiz'));
+  $('#home-btn').classList.toggle('hidden', screen==='start');
+  window.scrollTo({top:0, behavior: reduceMotion ? 'auto':'smooth'});
+}
+
+/* ---------- ECG progress ---------- */
+function buildEcgPath(n, w=1000, h=46){
+  const mid = h*0.56;
+  const beat = w/n;
+  let d = 'M0 '+mid.toFixed(1);
+  for(let i=0;i<n;i++){
+    const x0=i*beat, p=f=>(x0+beat*f).toFixed(1);
+    d += ' L '+p(0.10)+' '+mid.toFixed(1);
+    d += ' Q '+p(0.16)+' '+(mid-h*0.16).toFixed(1)+' '+p(0.22)+' '+mid.toFixed(1); // P
+    d += ' L '+p(0.40)+' '+mid.toFixed(1);
+    d += ' L '+p(0.43)+' '+(mid+h*0.12).toFixed(1);   // Q
+    d += ' L '+p(0.47)+' '+(h*0.10).toFixed(1);        // R
+    d += ' L '+p(0.51)+' '+(mid+h*0.26).toFixed(1);    // S
+    d += ' L '+p(0.55)+' '+mid.toFixed(1);
+    d += ' L '+p(0.68)+' '+mid.toFixed(1);
+    d += ' Q '+p(0.78)+' '+(mid-h*0.22).toFixed(1)+' '+p(0.88)+' '+mid.toFixed(1); // T
+    d += ' L '+p(1.0)+' '+mid.toFixed(1);
+  }
+  return d;
+}
+function initEcg(){
+  const d = buildEcgPath(session.items.length);
+  $('#ecg-base').setAttribute('d', d);
+  $('#ecg-prog').setAttribute('d', d);
+  $('#ecg-rect').setAttribute('width', 0);
+}
+function updateEcg(){
+  const frac = (session.idx + (session.responses[session.idx] ? 1 : 0)) / session.items.length;
+  $('#ecg-rect').setAttribute('width', Math.max(0, Math.min(1000, frac*1000)));
+}
+
+/* ---------- render question ---------- */
+function renderQuestion(){
+  const it = session.items[session.idx];
+  $('#screen-quiz').dataset.system = it.system;
+  $('#q-sys').textContent = SYS_LABEL[it.system];
+  $('#q-topic').textContent = it.topic;
+  $('#q-type').textContent = TYPE_LABEL[it.type];
+  $('#c-cur').textContent = session.idx+1;
+  $('#c-tot').textContent = session.items.length;
+  $('#c-blk').textContent = session.mode==='full' ? 'Revisão completa' : SYS_LABEL[session.mode];
+  updateEcg();
+
+  $('#q-feedback').innerHTML = '';
+  const action = $('#q-action');
+  const hint = $('#q-hint');
+  hint.textContent = '';
+  const body = $('#q-body');
+
+  if(it.type==='vf'){
+    body.innerHTML =
+      '<div class="stem">'+it.statement+'</div>'+
+      '<div class="vf-big">'+
+        '<button data-v="true">Verdadeiro</button>'+
+        '<button data-v="false">Falso</button>'+
+      '</div>';
+    action.textContent = 'Confirmar';
+    action.disabled = true;
+    action.classList.add('hidden');           // VF confirma no clique direto
+    $$('.vf-big button', body).forEach(b=>{
+      b.addEventListener('click', ()=> answerVF(b.dataset.v==='true', body));
+    });
+  }
+  else if(it.type==='seq'){
+    let rows = it.statements.map((s,i)=>
+      '<div class="stmt" data-i="'+i+'">'+
+        '<span class="num">'+romanize(i+1)+'</span>'+
+        '<span class="txt">'+s+'</span>'+
+        '<span class="vf-toggle">'+
+          '<button data-i="'+i+'" data-v="true" aria-label="Verdadeiro">V</button>'+
+          '<button data-i="'+i+'" data-v="false" aria-label="Falso">F</button>'+
+        '</span>'+
+      '</div>').join('');
+    body.innerHTML = '<div class="stem">'+it.stem+'</div>'+
+      '<p class="substem">Marque cada afirmativa como V (verdadeira) ou F (falsa).</p>'+
+      '<div class="stmts">'+rows+'</div>';
+    const picks = new Array(it.statements.length).fill(null);
+    body._picks = picks;
+    $$('.vf-toggle button', body).forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const i=+b.dataset.i, v=b.dataset.v==='true';
+        picks[i]=v;
+        const grp = b.parentElement;
+        $$('button',grp).forEach(x=> x.setAttribute('aria-pressed', x===b ? 'true':'false'));
+        action.disabled = picks.includes(null);
+      });
+    });
+    action.textContent = 'Conferir';
+    action.classList.remove('hidden');
+    action.disabled = true;
+  }
+  else if(it.type==='comb'){
+    let stmts = it.statements.map((s,i)=>
+      '<div class="stmt"><span class="num">'+(i+1)+'.</span><span class="txt">'+s+'</span></div>').join('');
+    let opts = it._opts.map((o,i)=>
+      '<button class="opt" data-i="'+i+'">'+
+        '<span class="lt">'+String.fromCharCode(97+i)+'</span>'+
+        '<span class="ot">'+listPt(o.nums)+'</span>'+
+      '</button>').join('');
+    body.innerHTML = '<div class="stem">'+it.stem+'</div>'+
+      '<div class="stmts">'+stmts+'</div>'+
+      '<p class="substem" style="margin-top:14px;">Assinale a alternativa que contém apenas as afirmativas corretas:</p>'+
+      '<div class="opts">'+opts+'</div>';
+    action.classList.add('hidden');
+    $$('.opt', body).forEach(b=>{
+      b.addEventListener('click', ()=> answerComb(+b.dataset.i, body));
+    });
+  }
+}
+
+/* ---------- grading ---------- */
+function lockAll(body){ $$('button', body).forEach(b=> b.disabled = true); }
+
+function feedbackBox(correct, extraHTML, expl){
+  const icCheck = '<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#13905A"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const icX = '<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#D23A4D"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  return '<div class="feedback '+(correct?'good':'bad')+'">'+
+    '<div class="fb-head">'+(correct?icCheck:icX)+(correct?'Resposta correta':'Resposta incorreta')+'</div>'+
+    (extraHTML||'')+
+    '<div class="expl"><span class="lab">'+
+      '<svg width="11" height="11" viewBox="0 0 16 16"><path d="M2 3.5A1.5 1.5 0 0 1 3.5 2H7v12H3.5A1.5 1.5 0 0 1 2 12.5zM9 2h3.5A1.5 1.5 0 0 1 14 3.5v9A1.5 1.5 0 0 1 12.5 14H9z" fill="#8493A6"/></svg>'+
+      'Explicação · Guyton &amp; Hall</span>'+expl+'</div>'+
+  '</div>';
+}
+
+function afterAnswer(){
+  updateEcg();
+  const last = session.idx === session.items.length-1;
+  const a = $('#q-action');
+  a.classList.remove('hidden');
+  a.disabled = false;
+  a.textContent = last ? 'Ver resultado' : 'Próxima questão';
+  a.onclick = ()=>{ if(last){ showResults(); } else { session.idx++; renderQuestion(); } };
+  $('#q-feedback').scrollIntoView({behavior: reduceMotion?'auto':'smooth', block:'nearest'});
+}
+
+function answerVF(userVal, body){
+  const it = session.items[session.idx];
+  const correct = userVal === it.answer;
+  $$('.vf-big button', body).forEach(b=>{
+    const v = b.dataset.v==='true';
+    if(v === it.answer) b.classList.add(v===userVal ? 'sel-ok' : 'show-ok');
+    if(v === userVal && !correct) b.classList.add('sel-no');
+  });
+  lockAll(body);
+  session.responses[session.idx] = { correct, userDisplay:(userVal?'Verdadeiro':'Falso'), correctDisplay:(it.answer?'Verdadeiro':'Falso') };
+  $('#q-feedback').innerHTML = feedbackBox(correct, '', it.expl);
+  afterAnswer();
+}
+
+function answerComb(choiceIdx, body){
+  const it = session.items[session.idx];
+  const chosen = it._opts[choiceIdx];
+  const correct = chosen.ok;
+  $$('.opt', body).forEach((b,i)=>{
+    const o = it._opts[i];
+    if(o.ok) b.classList.add(i===choiceIdx ? 'sel-ok' : 'show-ok');
+    if(i===choiceIdx && !o.ok) b.classList.add('sel-no');
+  });
+  lockAll(body);
+  const correctNums = it.correct;
+  session.responses[session.idx] = { correct, userDisplay:listPt(chosen.nums), correctDisplay:listPt(correctNums) };
+  const extra = '<div class="seq-answer">Corretas: '+listPt(correctNums)+'</div>';
+  $('#q-feedback').innerHTML = feedbackBox(correct, extra, it.expl);
+  afterAnswer();
+}
+
+function gradeSeq(body){
+  const it = session.items[session.idx];
+  const picks = body._picks;
+  let hits = 0;
+  $$('.stmt', body).forEach(row=>{
+    const i = +row.dataset.i;
+    const ok = picks[i] === it.answers[i];
+    if(ok) hits++;
+    row.classList.add(ok ? 'right' : 'wrong');
+    const v = document.createElement('span');
+    v.className = 'verdict';
+    v.textContent = it.answers[i] ? 'é V' : 'é F';
+    if(!ok) v.textContent = (it.answers[i]?'V':'F') + ' (não ' + (picks[i]?'V':'F') + ')';
+    row.appendChild(v);
+    $$('.vf-toggle button', row).forEach(b=> b.disabled = true);
+  });
+  const allCorrect = hits === it.answers.length;
+  session.responses[session.idx] = {
+    correct: allCorrect,
+    userDisplay: seqStr(picks),
+    correctDisplay: seqStr(it.answers),
+    partial: hits + '/' + it.answers.length
+  };
+  const extra = '<div class="seq-answer">Sequência correta: '+seqStr(it.answers)+
+    '  ·  você acertou '+hits+' de '+it.answers.length+'</div>';
+  $('#q-feedback').innerHTML = feedbackBox(allCorrect, extra, it.expl);
+  afterAnswer();
+}
+
+/* ---------- results ---------- */
+function showResults(){
+  const total = session.items.length;
+  const hits = session.responses.filter(r=>r && r.correct).length;
+  const pct = Math.round(hits/total*100);
+
+  // ring
+  const circ = 2*Math.PI*52;
+  const fg = $('#ring-fg');
+  fg.style.transition = reduceMotion ? 'none' : 'stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)';
+  fg.setAttribute('stroke-dashoffset', circ);
+  $('#ring-pct').textContent = '0%';
+  show('result');
+  requestAnimationFrame(()=> setTimeout(()=>{
+    fg.setAttribute('stroke-dashoffset', circ*(1-hits/total));
+    // count up
+    let cur=0; const step = Math.max(1, Math.round(pct/24));
+    const t = setInterval(()=>{ cur+=step; if(cur>=pct){cur=pct; clearInterval(t);} $('#ring-pct').textContent=cur+'%'; }, reduceMotion?9999:28);
+    if(reduceMotion) $('#ring-pct').textContent = pct+'%';
+  }, 60));
+
+  let msg, sub;
+  if(pct>=90){ msg='Excelente domínio!'; sub='Você acertou '+hits+' de '+total+'. Conteúdo muito bem fixado.'; }
+  else if(pct>=70){ msg='Bom desempenho.'; sub='Você acertou '+hits+' de '+total+'. Reveja os temas em vermelho abaixo.'; }
+  else if(pct>=50){ msg='No caminho certo.'; sub='Você acertou '+hits+' de '+total+'. Vale revisar os pontos que errou.'; }
+  else { msg='Hora de revisar.'; sub='Você acertou '+hits+' de '+total+'. Releia os temas e refaça o questionário.'; }
+  $('#res-msg').textContent = msg;
+  $('#res-sub').textContent = sub;
+
+  // por tema
+  const order = [];
+  const map = {};
+  session.items.forEach((it,i)=>{
+    if(!map[it.topic]){ map[it.topic]={sys:it.system, hit:0, tot:0}; order.push(it.topic); }
+    map[it.topic].tot++;
+    if(session.responses[i] && session.responses[i].correct) map[it.topic].hit++;
+  });
+  $('#res-topics').innerHTML = order.map(t=>{
+    const d=map[t]; const p=Math.round(d.hit/d.tot*100);
+    const col = d.sys==='cardio' ? 'var(--cardio)' : 'var(--renal)';
+    return '<div class="trow">'+
+      '<span class="dot" style="background:'+col+'"></span>'+
+      '<span class="tn">'+t+'</span>'+
+      '<span class="bar-track"><span class="bar-fill" style="width:'+p+'%;background:'+col+'"></span></span>'+
+      '<span class="tf">'+d.hit+'/'+d.tot+'</span>'+
+    '</div>';
+  }).join('');
+}
+
+/* ---------- review ---------- */
+function buildReview(){
+  const badgeOk = '<svg class="rev-badge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#13905A"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const badgeNo = '<svg class="rev-badge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#D23A4D"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  $('#rev-list').innerHTML = session.items.map((it,i)=>{
+    const r = session.responses[i] || {correct:false,userDisplay:'—',correctDisplay:'—'};
+    let stmtsHTML = '';
+    if(it.type==='vf'){
+      stmtsHTML = '<div class="rev-q">'+it.statement+'</div>';
+    } else {
+      const isSeq = it.type==='seq';
+      stmtsHTML = '<div class="rev-q">'+it.stem+'</div><ul class="rev-list">'+
+        it.statements.map((s,j)=> '<li><span class="rn">'+(isSeq?romanize(j+1):(j+1)+'.')+'</span><span>'+s+'</span></li>').join('')+
+        '</ul>';
+    }
+    let ansLine = '<div class="rev-ans">Resposta correta: '+r.correctDisplay+'</div>';
+    let yourCls = r.correct ? 'ok' : 'no';
+    let yourLine = '<div class="rev-your '+yourCls+'">Sua resposta: '+r.userDisplay+
+      (it.type==='seq' && r.partial ? ' ('+r.partial+' afirmativas)' : '')+
+      '  ·  '+(r.correct?'acertou':'errou')+'</div>';
+    return '<div class="rev-item" data-system="'+it.system+'">'+
+      '<div class="rev-top">'+(r.correct?badgeOk:badgeNo)+'<span class="rev-topic">'+it.topic+' · '+TYPE_LABEL[it.type]+'</span></div>'+
+      stmtsHTML + ansLine + yourLine +
+      '<div class="rev-expl">'+it.expl+'</div>'+
+    '</div>';
+  }).join('');
+}
+
+/* ---------- wiring ---------- */
+function startMode(mode){ buildSession(mode); initEcg(); renderQuestion(); show('quiz'); }
+
+$$('.size-chip').forEach(b=> b.addEventListener('click', ()=>{
+  $$('.size-chip').forEach(x=> x.classList.remove('active'));
+  b.classList.add('active');
+  chosenCount = +b.dataset.n;
+}));
+
+$$('.syscard').forEach(b=> b.addEventListener('click', ()=> startMode(b.dataset.mode)));
+$('.start-all').addEventListener('click', e=> startMode(e.currentTarget.dataset.mode));
+
+// q-action handles Conferir (seq); other types set their own onclick in afterAnswer
+$('#q-action').addEventListener('click', ()=>{
+  const it = session.items[session.idx];
+  if(it.type==='seq' && !session.responses[session.idx]){
+    gradeSeq($('#q-body'));
+  }
+});
+
+$('#home-btn').addEventListener('click', ()=> show('start'));
+$('#res-home').addEventListener('click', ()=> show('start'));
+$('#res-again').addEventListener('click', ()=> startMode(session.mode));
+$('#res-review').addEventListener('click', ()=>{ buildReview(); show('review'); });
+$('#rev-back').addEventListener('click', ()=> showResults());
+$('#rev-home').addEventListener('click', ()=> show('start'));
+$('#rev-again').addEventListener('click', ()=> startMode(session.mode));
+
+// keyboard: 1-5 select, V/F keys, Enter advances
+document.addEventListener('keydown', e=>{
+  if($('#screen-quiz').classList.contains('hidden')) return;
+  const it = session.items[session.idx];
+  const answered = !!session.responses[session.idx];
+  if((e.key==='Enter'||e.key==='ArrowRight') && answered){ e.preventDefault(); $('#q-action').click(); return; }
+  if(answered) return;
+  const body = $('#q-body');
+  if(it.type==='vf'){
+    if(e.key.toLowerCase()==='v') $$('.vf-big button',body)[0].click();
+    if(e.key.toLowerCase()==='f') $$('.vf-big button',body)[1].click();
+  } else if(it.type==='comb'){
+    const n = parseInt(e.key,10);
+    const opts = $$('.opt',body);
+    if(n>=1 && n<=opts.length) opts[n-1].click();
+    const lc = e.key.toLowerCase().charCodeAt(0)-97;
+    if(lc>=0 && lc<opts.length && e.key.length===1 && /[a-e]/.test(e.key.toLowerCase())) opts[lc].click();
+  }
+});
+</script>
+</body>
+</html>
