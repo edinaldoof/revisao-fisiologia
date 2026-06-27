@@ -1,8 +1,9 @@
 # Revisão de Fisiologia — Cardiovascular & Renal
 
-Ferramenta de estudo (quiz) de fisiologia médica, com **81 questões** de revisão
-elaboradas a partir do conteúdo do **Guyton & Hall — Tratado de Fisiologia Médica
-(13ª ed.)** e verificadas contra o livro.
+Ferramenta de estudo (quiz) de fisiologia médica, com **139 questões** de revisão
+de nível para estudante de medicina, elaboradas a partir do conteúdo do
+**Guyton & Hall — Tratado de Fisiologia Médica (13ª ed.)**, verificadas contra o
+livro e com explicações detalhadas.
 
 🔗 **Acesse online:** https://edinaldoof.github.io/revisao-fisiologia/
 
@@ -25,16 +26,19 @@ Cobre os 9 temas do edital, com explicação detalhada após cada resposta:
 
 ## Formatos de questão
 
+- **Múltipla escolha** — assinale a alternativa correta (A–E)
+- **Ordenação** — coloque os itens na sequência correta
 - **Verdadeiro / Falso** — afirmação única
 - **Sequência V-F** — julgue os itens
 - **Afirmativas corretas** — assinale a alternativa correta (1, 3 e 4…)
 
 ## Como usar
 
-É uma página estática única (`index.html`), sem dependências. Basta abrir no
-navegador ou acessar o link do GitHub Pages. Escolha o tamanho do teste
-(10, 20 ou todas), o bloco (cardiovascular, renal ou completo), responda e
-confira o desempenho por tema e o gabarito comentado.
+É uma página estática única (`index.html`), sem dependências, **responsiva
+(mobile e desktop)**. Basta abrir no navegador ou acessar o link do GitHub Pages.
+Escolha o tamanho do teste (10, 20 ou todas), o bloco (cardiovascular, renal ou
+completo), responda e confira o desempenho por tema e o gabarito comentado.
+As questões e as alternativas são **embaralhadas a cada tentativa**.
 
 ---
 
