@@ -1,6 +1,6 @@
 # Revisão de Fisiologia — Cardiovascular & Renal
 
-Ferramenta de estudo (quiz) de fisiologia médica, com **108 questões** de nível
+Ferramenta de estudo (quiz) de fisiologia médica, com **156 questões** de nível
 prova de residência/concurso, com cenários clínicos e farmacológicos, elaboradas
 a partir do conteúdo do **Guyton & Hall — Tratado de Fisiologia Médica (13ª ed.)**
 e tendo como referência de nível e estilo os **simulados de fisiologia** fornecidos,
@@ -25,6 +25,12 @@ Cobre os 9 temas do edital, com explicação detalhada após cada resposta:
 1. Filtração glomerular
 2. Manejo tubular renal
 3. Rim e a regulação do volume
+
+**Digestão & Absorção**
+1. Digestão e absorção de carboidratos
+2. Digestão e absorção de proteínas
+3. Digestão e absorção de lipídios
+4. Secreções e hormônios gastrointestinais
 
 ## Formatos de questão
 

@@ -14,6 +14,7 @@
     --ink:#0E1D32; --ink-soft:#465A71; --ink-faint:#8493A6; --line:#DBE3EC;
     --cardio:#E12E4B; --cardio-ink:#BD1E3C; --cardio-soft:#FBE5EA;
     --renal:#0E9AA7; --renal-ink:#0A7C88; --renal-soft:#DBF1F3;
+    --gastro:#C9781E; --gastro-ink:#9A5712; --gastro-soft:#FaECD7;
     --ok:#13905A; --ok-ink:#0E7548; --ok-soft:#E0F3E9;
     --no:#D23A4D; --no-ink:#AF2436; --no-soft:#FBE5E8;
     --shadow:0 1px 2px rgba(14,29,50,.05), 0 10px 30px rgba(14,29,50,.08);
@@ -26,6 +27,7 @@
   }
   [data-system="cardio"]{--accent:var(--cardio);--accent-ink:var(--cardio-ink);--accent-soft:var(--cardio-soft);}
   [data-system="renal"]{--accent:var(--renal);--accent-ink:var(--renal-ink);--accent-soft:var(--renal-soft);}
+  [data-system="gastro"]{--accent:var(--gastro);--accent-ink:var(--gastro-ink);--accent-soft:var(--gastro-soft);}
 
   *{box-sizing:border-box;margin:0;padding:0;}
   html{-webkit-text-size-adjust:100%;}
@@ -99,6 +101,8 @@
   .syscard:focus-visible{outline:3px solid var(--accent-soft); outline-offset:2px;}
   .syscard[data-system="cardio"]{--accent:var(--cardio);--accent-ink:var(--cardio-ink);}
   .syscard[data-system="renal"]{--accent:var(--renal);--accent-ink:var(--renal-ink);}
+  .syscard[data-system="gastro"]{--accent:var(--gastro);--accent-ink:var(--gastro-ink);}
+  .syscard.wide{grid-column:1 / -1;}
   .syscard .bar{position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--accent);}
   .syscard h3{font-family:var(--sans); font-weight:700; font-size:1.04rem; color:var(--accent-ink); margin-left:6px;}
   .syscard .meta{font-family:var(--mono); font-size:.72rem; color:var(--ink-faint); margin:4px 0 10px 6px; letter-spacing:.02em;}
@@ -241,6 +245,7 @@
   .rev-item{border:1px solid var(--line); border-left-width:4px; border-radius:12px; padding:16px 17px; margin-top:13px; background:var(--surface);}
   .rev-item[data-system="cardio"]{border-left-color:var(--cardio);}
   .rev-item[data-system="renal"]{border-left-color:var(--renal);}
+  .rev-item[data-system="gastro"]{border-left-color:var(--gastro);}
   .rev-top{display:flex; align-items:center; gap:9px; margin-bottom:9px;}
   .rev-badge{width:22px; height:22px; flex:none;}
   .rev-topic{font-size:.78rem; font-weight:600; color:var(--ink-soft);}
@@ -391,6 +396,17 @@
           <li>Filtração glomerular</li>
           <li>Manejo tubular renal</li>
           <li>Rim e a regulação do volume</li>
+        </ol>
+      </button>
+      <button class="syscard wide" data-system="gastro" data-mode="gastro">
+        <span class="bar"></span>
+        <h3>Digestão &amp; Absorção</h3>
+        <div class="meta" id="meta-gastro">4 temas · — questões</div>
+        <ol>
+          <li>Digestão e absorção de carboidratos</li>
+          <li>Digestão e absorção de proteínas</li>
+          <li>Digestão e absorção de lipídios</li>
+          <li>Secreções e hormônios gastrointestinais</li>
         </ol>
       </button>
     </div>
@@ -2828,13 +2844,1051 @@ const QUESTIONS = [
     "statement": "Com mecanismos de ADH e sede intactos, angiotensina II e aldosterona podem aumentar a quantidade total de sódio no líquido extracelular, mas geralmente têm pequeno efeito sobre a concentração plasmática de sódio porque aumentam também a reabsorção de água e o volume extracelular.",
     "answer": true,
     "expl": "A afirmação é verdadeira. Angiotensina II e aldosterona são importantes para regular a excreção renal de sódio e podem expandir a quantidade total de Na⁺ no líquido extracelular. Entretanto, como a água acompanha em grande parte a retenção de sódio, o volume extracelular também aumenta, limitando a alteração da concentração plasmática de sódio. Além disso, qualquer tendência de aumento da osmolaridade ativa sede e ADH, que diluem o líquido extracelular de volta ao normal. Por isso, mesmo variações grandes de ingestão de sódio alteram pouco a concentração plasmática quando ADH e sede funcionam, enquanto o bloqueio simultâneo desses mecanismos torna o controle osmolar precário."
+  },
+  {
+    "id": "fca2c665f3",
+    "system": "gastro",
+    "topic": "Digestão e absorção de carboidratos",
+    "type": "mc",
+    "stem": "Um lactente apresenta distensão abdominal e diarreia aquosa após ingestão de leite, com melhora quando a lactose é retirada da dieta. Considerando a digestão normal dos carboidratos, qual alteração explica mais diretamente o quadro?",
+    "options": [
+      "Deficiência de lactase na borda em escova, impedindo a hidrólise da lactose em glicose e galactose",
+      "Deficiência de amilase pancreática, impedindo a hidrólise da lactose em maltose",
+      "Defeito primário do GLUT5, impedindo o cotransporte de lactose com Na⁺",
+      "Inibição da pepsina gástrica, impedindo a digestão inicial dos dissacarídeos no estômago",
+      "Ausência de sais biliares, impedindo a formação de micelas de lactose"
+    ],
+    "correct": 0,
+    "expl": "A lactose é um dissacarídeo que precisa ser clivado pela <b>lactase da borda em escova</b> em glicose e galactose antes da absorção. O Guyton descreve que os enterócitos das vilosidades contêm lactase, sucrase, maltase e α-dextrinase, responsáveis pela hidrólise final dos carboidratos em monossacarídeos. A amilase pancreática digere amido, glicogênio e pequenos polímeros, mas não é a enzima que cliva lactose em seus monossacarídeos. O GLUT5 participa da absorção de frutose por difusão facilitada, não de lactose intacta. Pepsina atua sobre proteínas em meio ácido, e sais biliares são relevantes para lipídios, não para a digestão da lactose."
+  },
+  {
+    "id": "3f31f8060c",
+    "system": "gastro",
+    "topic": "Digestão e absorção de carboidratos",
+    "type": "mc",
+    "stem": "Em um experimento com mucosa jejunal isolada, a bomba Na⁺-K⁺-ATPase basolateral dos enterócitos é bloqueada. Qual consequência é esperada para a absorção de carboidratos?",
+    "options": [
+      "Redução importante da absorção de glicose e galactose por perda do gradiente de Na⁺ que impulsiona o cotransporte",
+      "Aumento da absorção de glicose por maior acúmulo de Na⁺ no lúmen intestinal",
+      "Bloqueio seletivo da absorção de frutose, pois ela depende diretamente do cotransporte com Na⁺",
+      "Conversão luminal de glicose em frutose para permitir absorção por difusão simples",
+      "Absorção normal de glicose, pois sua entrada apical depende exclusivamente de difusão facilitada"
+    ],
+    "correct": 0,
+    "expl": "A glicose e a galactose são absorvidas por <b>transporte ativo secundário acoplado ao Na⁺</b>. A força motriz desse processo é gerada pela Na⁺-K⁺-ATPase basolateral, que mantém baixa a concentração intracelular de Na⁺ e permite a entrada apical conjunta de Na⁺ e glicose. Se essa bomba é bloqueada, o gradiente de Na⁺ se dissipa e a absorção de glicose e galactose cai intensamente. A frutose não usa esse mecanismo, pois entra por difusão facilitada não acoplada ao sódio. A glicose não é normalmente absorvida por difusão simples nem precisa ser convertida em frutose para atravessar o epitélio."
+  },
+  {
+    "id": "9fafb45a76",
+    "system": "gastro",
+    "topic": "Digestão e absorção de carboidratos",
+    "type": "mc",
+    "stem": "Um paciente com esvaziamento gástrico muito ácido para o duodeno apresenta queda do pH duodenal abaixo de 4,5. Segundo o Guyton, qual resposta fisiológica é mais diretamente desencadeada por esse estímulo?",
+    "options": [
+      "Liberação de secretina por células S, estimulando secreção pancreática aquosa rica em HCO₃⁻",
+      "Liberação de gastrina por células G, estimulando principalmente secreção pancreática de lipase",
+      "Liberação de CCK por células I, inibindo a secreção de enzimas pancreáticas",
+      "Ativação da lactase luminal, neutralizando diretamente o ácido clorídrico",
+      "Secreção de pepsina pelo pâncreas, bloqueando a atividade amilolítica"
+    ],
+    "correct": 0,
+    "expl": "O quimo ácido no duodeno, especialmente quando o pH cai abaixo de 4,5 a 5,0, estimula a liberação de <b>secretina</b> pelas células S. A secretina leva o pâncreas a secretar grande volume de solução aquosa rica em HCO₃⁻, que neutraliza o HCl no duodeno. Essa neutralização também estabelece pH adequado, aproximadamente neutro ou ligeiramente alcalino, para as enzimas pancreáticas. A gastrina é ligada principalmente à secreção de ácido gástrico e ao crescimento da mucosa gástrica. A CCK estimula enzimas pancreáticas e contração da vesícula biliar, mas seu principal estímulo são produtos de gordura e proteínas, não o ácido como único estímulo potente para secretina."
+  },
+  {
+    "id": "7c871731dc",
+    "system": "gastro",
+    "topic": "Digestão e absorção de carboidratos",
+    "type": "mc",
+    "stem": "Após ressecção extensa do íleo distal, um paciente desenvolve fezes volumosas e gordurosas. Qual mecanismo fisiológico explica melhor a má absorção de gordura nesse contexto?",
+    "options": [
+      "Redução da recirculação entero-hepática dos sais biliares, prejudicando formação de micelas e transporte de lipídios à borda em escova",
+      "Inibição direta da maltase da borda em escova, impedindo formação de monoglicerídeos",
+      "Aumento da absorção portal de triglicerídeos de cadeia longa, causando perda fecal compensatória de lipídios",
+      "Bloqueio da conversão de pepsinogênio em pepsina, impedindo a emulsificação de gorduras",
+      "Ausência de absorção de água no cólon, que impede a lipase pancreática de agir"
+    ],
+    "correct": 0,
+    "expl": "O Guyton descreve que cerca de 94% dos sais biliares são reabsorvidos no intestino delgado, com transporte ativo importante no íleo distal, retornando ao fígado pela circulação porta. Se essa recirculação é comprometida, há menos sais biliares disponíveis no lúmen para emulsificar gorduras e formar <b>micelas</b>. As micelas carreiam ácidos graxos, monoglicerídeos, colesterol e outros lipídios até a borda em escova; sem elas, a absorção de gordura cai de cerca de 97% para 40% a 50%. Maltase atua sobre carboidratos, não sobre monoglicerídeos. Pepsina digere proteínas em meio ácido e não emulsifica gorduras; triglicerídeos de cadeia longa são normalmente reesterificados e transportados como quilomícrons pela linfa, não diretamente pelo sangue porta."
+  },
+  {
+    "id": "7c59246c13",
+    "system": "gastro",
+    "topic": "Digestão e absorção de carboidratos",
+    "type": "mc",
+    "stem": "Um paciente com pancreatite aguda grave evolui com autodigestão pancreática. Qual sequência fisiopatológica está mais de acordo com o mecanismo descrito no Guyton?",
+    "options": [
+      "Lesão ou obstrução ductal leva ao acúmulo de secreção pancreática; o inibidor de tripsina torna-se insuficiente; a tripsina ativa proteases que digerem o pâncreas",
+      "O ácido gástrico ativa diretamente quimotripsinogênio dentro das células parietais, iniciando digestão pancreática",
+      "A secretina converte lipase em tripsina ativa, produzindo necrose por digestão de carboidratos",
+      "A ausência de bile ativa a amilase pancreática dentro do ducto cístico, digerindo o pâncreas",
+      "A lactase da borda em escova ativa tripsinogênio nos ácinos pancreáticos, causando autodigestão"
+    ],
+    "correct": 0,
+    "expl": "As enzimas proteolíticas pancreáticas são sintetizadas como formas inativas, como tripsinogênio, quimotripsinogênio e procarboxipolipeptidase. As mesmas células acinares secretam <b>inibidor de tripsina</b>, que impede a ativação prematura da tripsina dentro do pâncreas. Quando há lesão grave ou bloqueio do ducto, secreções podem se acumular e o inibidor se tornar insuficiente, permitindo ativação enzimática e autodigestão pancreática. A enterocinase intestinal ativa o tripsinogênio no lúmen intestinal, não a lactase nem o ácido gástrico dentro das células parietais. Secretina estimula secreção ductal rica em bicarbonato, e bile não ativa amilase pancreática."
+  },
+  {
+    "id": "17309c5463",
+    "system": "gastro",
+    "topic": "Digestão e absorção de carboidratos",
+    "type": "comb",
+    "stem": "Em relação à absorção intestinal de nutrientes, selecione a combinação que contém apenas afirmações corretas.",
+    "statements": [
+      "Glicose e galactose são absorvidas por mecanismo de cotransporte com Na⁺ dependente do gradiente mantido pela Na⁺-K⁺-ATPase basolateral.",
+      "Frutose é absorvida principalmente por difusão facilitada não acoplada ao Na⁺, com transporte mais lento que o de glicose ou galactose.",
+      "A maioria dos produtos finais absorvidos da digestão proteica chega ao sangue como proteínas inteiras.",
+      "Ácidos graxos de cadeia curta e média podem ser absorvidos diretamente para o sangue porta.",
+      "Os quilomícrons formados nos enterócitos entram preferencialmente nos capilares sanguíneos das vilosidades antes de alcançar a veia porta."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        5
+      ],
+      [
+        3,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4
+    ],
+    "expl": "As afirmações 1 e 2 estão corretas: glicose e galactose usam cotransporte com Na⁺, enquanto a frutose atravessa por difusão facilitada não acoplada ao sódio e em velocidade menor. A afirmação 4 também é correta, pois ácidos graxos de cadeia curta e média são mais hidrossolúveis e podem difundir-se diretamente para o sangue nos capilares das vilosidades. A afirmação 3 é incorreta porque mais de 99% dos produtos finais absorvidos das proteínas são aminoácidos, e proteínas inteiras raramente são absorvidas. A afirmação 5 é incorreta para lipídios de cadeia longa, pois os triglicerídeos reesterificados são incorporados em quilomícrons que entram nos lactíferos e seguem pela linfa. Portanto, apenas a combinação 1, 2 e 4 é inteiramente compatível com o Guyton."
+  },
+  {
+    "id": "e7a115509e",
+    "system": "gastro",
+    "topic": "Digestão e absorção de carboidratos",
+    "type": "comb",
+    "stem": "Sobre secreções pancreáticas, biliares e intestinais envolvidas na digestão, selecione a combinação que contém apenas afirmações corretas.",
+    "statements": [
+      "A secretina estimula principalmente as células ductais pancreáticas a secretarem grande volume de solução aquosa rica em HCO₃⁻.",
+      "A CCK estimula principalmente as células acinares pancreáticas a secretarem enzimas digestivas.",
+      "A bile digere triglicerídeos por conter lipase hepática em alta concentração.",
+      "As criptas de Lieberkühn secretam líquido semelhante ao extracelular, enquanto muitas enzimas digestivas relevantes ficam nos enterócitos das vilosidades.",
+      "A enterocinase da mucosa intestinal ativa o tripsinogênio em tripsina após contato do quimo com a mucosa."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        4,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "expl": "As afirmações 1 e 2 são corretas e distinguem os efeitos principais da secretina e da CCK no pâncreas. A secretina estimula secreção ductal de água e HCO₃⁻, enquanto a CCK estimula a secreção acinar de enzimas digestivas, sobretudo quando há produtos de gorduras e proteínas no duodeno. A afirmação 4 é correta porque as criptas de Lieberkühn secretam grande volume de líquido aquoso, mas as enzimas digestivas do intestino delgado ficam principalmente nos enterócitos, especialmente na borda em escova das vilosidades. A afirmação 5 também é correta: a enterocinase ativa o tripsinogênio em tripsina no intestino, e a tripsina ativa outras proenzimas proteolíticas. A afirmação 3 é falsa, pois a bile não contém enzimas digestivas; ela emulsifica gorduras e facilita absorção por sais biliares e lecitina."
+  },
+  {
+    "id": "d32ab30251",
+    "system": "gastro",
+    "topic": "Digestão e absorção de carboidratos",
+    "type": "seq",
+    "stem": "Julgue as afirmações sobre enzimas digestivas e produtos finais da digestão.",
+    "statements": [
+      "A amilase pancreática hidrolisa amidos, glicogênio e outros carboidratos, exceto celulose, formando principalmente dissacarídeos e alguns trissacarídeos.",
+      "A pepsina gástrica completa a digestão da maioria das proteínas até aminoácidos livres antes da chegada ao duodeno.",
+      "A carboxipolipeptidase pancreática pode liberar aminoácidos individuais dos terminais carboxila de polipeptídeos.",
+      "A lipase pancreática hidrolisa grande parte dos triglicerídeos em ácidos graxos livres e 2-monoglicerídeos."
+    ],
+    "answers": [
+      true,
+      false,
+      true,
+      true
+    ],
+    "expl": "A primeira afirmação é verdadeira: a amilase pancreática atua sobre amidos, glicogênio e carboidratos semelhantes, mas não sobre a celulose, para a qual não há enzima humana no trato digestivo. A segunda é falsa, porque a pepsina apenas inicia a digestão proteica, usualmente contribuindo com 10% a 20% da digestão total e gerando proteoses, peptonas e polipeptídeos. A maior parte da digestão proteica ocorre no duodeno e jejuno por enzimas pancreáticas e depois por peptidases da borda em escova e citoplasmáticas. A terceira é verdadeira, pois a carboxipolipeptidase remove aminoácidos dos terminais carboxila. A quarta também é verdadeira: a lipase pancreática é a principal enzima para triglicerídeos e produz ácidos graxos livres e 2-monoglicerídeos."
+  },
+  {
+    "id": "16257f939c",
+    "system": "gastro",
+    "topic": "Digestão e absorção de carboidratos",
+    "type": "seq",
+    "stem": "Julgue as afirmações sobre hormônios gastrointestinais relacionados à digestão.",
+    "statements": [
+      "A gastrina é secretada por células G do antro em resposta à distensão, produtos da digestão de proteínas e estímulo vagal por peptídeo liberador de gastrina.",
+      "A CCK é liberada principalmente em resposta a ácidos graxos e monoglicerídeos no intestino e contrai fortemente a vesícula biliar.",
+      "A secretina é liberada por células S quando o quimo ácido chega ao duodeno e estimula secreção pancreática rica em bicarbonato.",
+      "O peptídeo insulinotrópico dependente de glicose aumenta intensamente o esvaziamento gástrico quando há produtos alimentares no intestino delgado superior."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "A primeira afirmação é verdadeira: o Guyton descreve a secreção de gastrina por células G do antro em resposta à refeição, incluindo distensão, produtos proteicos e estímulo vagal via peptídeo liberador de gastrina. A segunda é verdadeira porque a CCK é secretada por células I do duodeno e jejuno, sobretudo por produtos da digestão de gordura, e promove contração da vesícula biliar. A terceira é verdadeira: a secretina responde ao conteúdo ácido no duodeno e estimula secreção pancreática de HCO₃⁻, neutralizando o ácido gástrico. A quarta é falsa, pois o GIP tem efeito moderado de diminuir a atividade motora gástrica, retardando o esvaziamento quando o intestino delgado superior está sobrecarregado. Além disso, o GIP também estimula liberação de insulina em níveis até inferiores aos necessários para inibir a motilidade gástrica."
+  },
+  {
+    "id": "b1824889c6",
+    "system": "gastro",
+    "topic": "Digestão e absorção de carboidratos",
+    "type": "ord",
+    "stem": "Ordene as etapas principais da digestão e absorção do amido até a chegada da glicose ao sangue porta.",
+    "items": [
+      "A ptialina salivar inicia a hidrólise do amido em maltose e pequenos polímeros de glicose na boca e continua agindo por algum tempo no corpo e fundo gástricos",
+      "A atividade da amilase salivar é bloqueada quando o alimento se mistura ao ácido gástrico e o pH cai abaixo de aproximadamente 4,0",
+      "A amilase pancreática no duodeno hidrolisa rapidamente a maior parte dos carboidratos restantes em maltose e pequenos polímeros de glicose",
+      "Maltase e α-dextrinase da borda em escova clivam dissacarídeos e pequenos polímeros em glicose",
+      "A glicose entra no enterócito por cotransporte com Na⁺ impulsionado pela Na⁺-K⁺-ATPase basolateral",
+      "A glicose deixa o enterócito pela membrana basolateral por proteínas de difusão facilitada e alcança o sangue portal"
+    ],
+    "expl": "A digestão do amido começa com a ptialina, uma α-amilase salivar, que age por pouco tempo na boca e pode continuar no corpo e fundo gástricos antes da mistura completa com o ácido. Quando o pH cai abaixo de 4,0, a amilase salivar torna-se essencialmente inativa. No duodeno, a amilase pancreática é muito mais potente e converte rapidamente o amido restante em maltose e pequenos polímeros de glicose. A hidrólise final ocorre nas enzimas da <b>borda em escova</b>, como maltase e α-dextrinase. A absorção da glicose depende do cotransporte com Na⁺ na membrana apical e da saída basolateral por difusão facilitada para o espaço extracelular e sangue."
+  },
+  {
+    "id": "ff08813738",
+    "system": "gastro",
+    "topic": "Digestão e absorção de carboidratos",
+    "type": "ord",
+    "stem": "Ordene o trajeto fisiológico predominante de um ácido graxo de cadeia longa proveniente de triglicerídeos da dieta até alcançar a circulação sistêmica.",
+    "items": [
+      "Sais biliares e lecitina emulsificam grandes glóbulos de gordura no duodeno, aumentando a área superficial para ação enzimática",
+      "A lipase pancreática hidrolisa triglicerídeos, formando principalmente ácidos graxos livres e 2-monoglicerídeos",
+      "Micelas de sais biliares incorporam os produtos da digestão lipídica e os carreiam até a borda em escova",
+      "Ácidos graxos e monoglicerídeos difundem-se das micelas para a membrana dos enterócitos",
+      "No retículo endoplasmático liso, esses produtos são reesterificados em triglicerídeos e incorporados em quilomícrons",
+      "Os quilomícrons entram nos lactíferos das vilosidades e seguem pela linfa, alcançando o sangue pelo ducto torácico"
+    ],
+    "expl": "A digestão das gorduras depende primeiro da emulsificação, porque as lipases são hidrossolúveis e só atuam na superfície das gotículas de gordura. A bile não contém enzimas digestivas, mas seus sais biliares e a lecitina reduzem a tensão interfacial e fragmentam os glóbulos. A lipase pancreática gera ácidos graxos livres e 2-monoglicerídeos, que são removidos das proximidades da gotícula por micelas. Esses lipídios difundem-se para os enterócitos, enquanto os sais biliares permanecem no quimo para reutilização. Ácidos graxos de cadeia longa são reesterificados e transportados como <b>quilomícrons</b> pelos lactíferos e pela linfa, ao contrário dos de cadeia curta e média, que podem ir diretamente ao sangue porta."
+  },
+  {
+    "id": "0e1064f67c",
+    "system": "gastro",
+    "topic": "Digestão e absorção de carboidratos",
+    "type": "vf",
+    "statement": "Na ausência de sais biliares no intestino, a digestão e a absorção de gorduras permanecem praticamente normais, porque a lipase pancreática é secretada em quantidade suficiente para compensar a falta de micelas.",
+    "answer": false,
+    "expl": "A afirmação é falsa. Embora a lipase pancreática exista em grande quantidade e seja a principal enzima para digestão de triglicerídeos, sua ação depende de área de superfície adequada, que é aumentada pela emulsificação promovida por sais biliares e lecitina. Além disso, os sais biliares formam <b>micelas</b> que removem monoglicerídeos e ácidos graxos livres da vizinhança das gotículas e os transportam até a borda em escova. O Guyton afirma que, com abundância de micelas, cerca de 97% da gordura é absorvida; na ausência delas, a absorção cai para aproximadamente 40% a 50%. Portanto, a deficiência de sais biliares causa perda fecal importante de gordura e pode produzir déficit metabólico."
+  },
+  {
+    "id": "33d96f9841",
+    "system": "gastro",
+    "topic": "Digestão e absorção de proteínas",
+    "type": "mc",
+    "stem": "Um paciente com gastrite crônica atrófica apresenta hipocloridria acentuada e queixa-se de pior digestão de carnes. Considerando a fisiologia descrita por Guyton, qual alteração explica melhor esse quadro?",
+    "options": [
+      "Menor ativação do pepsinogênio e menor atividade da pepsina, especialmente sobre proteínas como o colágeno.",
+      "Maior inativação da tripsina no lúmen gástrico, impedindo a formação de aminoácidos livres no estômago.",
+      "Deficiência de enteropeptidase gástrica, reduzindo a conversão de pepsina em pepsinogênio.",
+      "Perda da lipase pancreática, que é a principal enzima responsável pela hidrólise das ligações peptídicas da carne.",
+      "Bloqueio do cotransporte de dipeptídeos com Na⁺ nas células parietais."
+    ],
+    "correct": 0,
+    "expl": "A digestão proteica gástrica depende da secreção de <b>HCl</b> pelas células parietais, que cria pH ácido e permite a conversão do pepsinogênio em pepsina. A pepsina atua melhor em pH de 2,0 a 3,0 e perde quase toda atividade acima de pH 5,0, por isso a hipocloridria reduz a digestão inicial das proteínas. Guyton destaca que a pepsina é especialmente importante para iniciar a digestão do colágeno das carnes, facilitando a ação posterior de outras enzimas digestivas. A tripsina não atua no estômago, mas no intestino delgado após ativação do tripsinogênio. A enteropeptidase está na mucosa intestinal e ativa tripsinogênio, não pepsina; lipase digere gorduras, e a absorção de peptídeos ocorre nos enterócitos, não nas células parietais."
+  },
+  {
+    "id": "63970a4c9d",
+    "system": "gastro",
+    "topic": "Digestão e absorção de proteínas",
+    "type": "mc",
+    "stem": "Após obstrução do ducto pancreático, um paciente desenvolve pancreatite aguda grave. Qual mecanismo fisiológico explica a autodigestão pancreática nesse contexto?",
+    "options": [
+      "Ativação intrapancreática de amilase em celulose, com liberação de ácidos orgânicos corrosivos.",
+      "Excesso de secretina estimulando diretamente a conversão de pepsinogênio em pepsina dentro dos ductos pancreáticos.",
+      "Acúmulo de secreção pancreática com ativação de tripsina acima da capacidade protetora do inibidor de tripsina.",
+      "Falha dos sais biliares em formar micelas dentro dos ácinos pancreáticos.",
+      "Aumento da absorção de aminoácidos por difusão facilitada através dos ductos pancreáticos."
+    ],
+    "correct": 2,
+    "expl": "As enzimas proteolíticas pancreáticas são sintetizadas como zimogênios inativos, como tripsinogênio, quimotripsinogênio e procarboxipolipeptidase. Guyton descreve que as células acinares também secretam <b>inibidor de tripsina</b>, que evita a ativação prematura da tripsina nas células, ácinos e ductos pancreáticos. Quando há lesão grave ou bloqueio ductal, a secreção pode se acumular e o efeito protetor do inibidor torna-se insuficiente, permitindo ativação de enzimas capazes de digerir o próprio pâncreas. Amilase não digere celulose, e pepsina é enzima gástrica, não pancreática. Sais biliares atuam na digestão e absorção de lipídios no intestino, e não explicam a autodigestão proteolítica pancreática."
+  },
+  {
+    "id": "3859f1d3ae",
+    "system": "gastro",
+    "topic": "Digestão e absorção de proteínas",
+    "type": "mc",
+    "stem": "Uma mutação reduz drasticamente a atividade da enteropeptidase na borda intestinal. Qual consequência é mais esperada na digestão proteica?",
+    "options": [
+      "Redução primária da hidrólise de lactose em glicose e galactose.",
+      "Falha na ativação inicial do tripsinogênio, com prejuízo secundário da ativação de outras proteases pancreáticas.",
+      "Aumento da conversão de proelastase em elastase por ação direta do HCl duodenal.",
+      "Bloqueio da formação de pepsina no lúmen gástrico, apesar de acidez normal.",
+      "Conversão excessiva de dipeptídeos em quilomícrons nos enterócitos."
+    ],
+    "correct": 1,
+    "expl": "A enteropeptidase, chamada no texto de enterocinase, é secretada pela mucosa intestinal e ativa o <b>tripsinogênio</b> quando o quimo entra em contato com a mucosa. A tripsina formada também ativa mais tripsinogênio e converte quimotripsinogênio e procarboxipolipeptidase em suas formas ativas. Assim, uma deficiência de enteropeptidase compromete a cascata proteolítica pancreática no intestino delgado. Lactose é substrato da lactase, não da enteropeptidase. HCl não ativa diretamente proelastase no duodeno, pepsina é formada no estômago pela ação do ácido sobre pepsinogênio, e quilomícrons pertencem ao transporte de lipídios, não de peptídeos."
+  },
+  {
+    "id": "63f5505d0e",
+    "system": "gastro",
+    "topic": "Digestão e absorção de proteínas",
+    "type": "mc",
+    "stem": "Durante a absorção intestinal de proteínas, a maior parte dos produtos finais atravessa a membrana luminal dos enterócitos como dipeptídeos, tripeptídeos ou aminoácidos. Segundo Guyton, qual força motriz é central para grande parte desse transporte?",
+    "options": [
+      "Gradiente de Na⁺ mantido pela Na⁺-K⁺-ATPase basolateral, permitindo transporte ativo secundário na borda em escova.",
+      "Bomba de H⁺-K⁺-ATPase apical das células parietais, que arrasta peptídeos para o sangue porta.",
+      "Difusão simples de proteínas inteiras através das junções estreitas das vilosidades.",
+      "Transporte linfático obrigatório dos aminoácidos por lacteais centrais.",
+      "Formação de micelas de sais biliares ao redor dos aminoácidos hidrossolúveis."
+    ],
+    "correct": 0,
+    "expl": "Guyton descreve que muitos aminoácidos e peptídeos são absorvidos por <b>cotransporte com Na⁺</b>, mecanismo de transporte ativo secundário semelhante ao da glicose. A Na⁺-K⁺-ATPase basolateral mantém baixa a concentração intracelular de sódio, criando o gradiente que favorece a entrada luminal de Na⁺ acoplada a solutos. Existem vários transportadores luminais porque aminoácidos e peptídeos têm propriedades químicas diversas. A H⁺-K⁺-ATPase é típica das células parietais gástricas e participa da secreção ácida, não da absorção intestinal de proteínas. Proteínas inteiras raramente são absorvidas; lacteais e micelas são fundamentais para lipídios, não para aminoácidos."
+  },
+  {
+    "id": "79da20ff16",
+    "system": "gastro",
+    "topic": "Digestão e absorção de proteínas",
+    "type": "mc",
+    "stem": "Após uma refeição rica em proteínas parcialmente digeridas, a secreção de enzimas pancreáticas aumenta intensamente. Qual sinal hormonal é mais diretamente responsável por esse aumento segundo Guyton?",
+    "options": [
+      "Secretina, liberada por pH duodenal alcalino, estimulando principalmente células acinares.",
+      "Colecistocinina, liberada por proteoses e peptonas no duodeno e jejuno superior, estimulando células acinares pancreáticas.",
+      "Gastrina, liberada por células S, estimulando ductos pancreáticos a secretar apenas enzimas proteolíticas.",
+      "Motilina, liberada após a refeição, estimulando a secreção de tripsina por células parietais.",
+      "Aldosterona, que aumenta diretamente a secreção de quimotripsinogênio no lúmen intestinal."
+    ],
+    "correct": 1,
+    "expl": "A colecistocinina é liberada pelas células I da mucosa do duodeno e jejuno superior em resposta a produtos da digestão parcial de proteínas, como <b>proteoses e peptonas</b>, e também a ácidos graxos de cadeia longa. Seu principal efeito pancreático é estimular células acinares a secretarem enzimas digestivas, respondendo por grande parte da secreção enzimática pós-prandial. A secretina é liberada sobretudo pelo ácido no duodeno e estimula principalmente solução aquosa rica em HCO₃⁻ pelos ductos pancreáticos. Gastrina vem principalmente de células G e estimula secreção ácida gástrica, não ductos pancreáticos enzimáticos. Motilina está relacionada a motilidade interdigestiva, e aldosterona regula absorção de Na⁺ e água, não secreção de proteases."
+  },
+  {
+    "id": "f93eda26e2",
+    "system": "gastro",
+    "topic": "Digestão e absorção de proteínas",
+    "type": "comb",
+    "stem": "Assinale a combinação que reúne apenas afirmações corretas sobre enzimas proteolíticas e seus locais de ação.",
+    "statements": [
+      "Pepsina atua no estômago e inicia a digestão proteica em meio ácido.",
+      "Tripsina e quimotripsina hidrolisam proteínas a peptídeos de tamanhos variados, sem liberar predominantemente aminoácidos individuais.",
+      "Carboxipolipeptidase libera aminoácidos individuais a partir das extremidades carboxila dos polipeptídeos.",
+      "Lactase é a principal peptidase responsável pela hidrólise de tripeptídeos no citosol do enterócito.",
+      "Lipase pancreática ativa tripsinogênio em tripsina quando o quimo alcança o duodeno."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        3,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3
+    ],
+    "expl": "As afirmações 1, 2 e 3 estão corretas conforme Guyton: pepsina atua no estômago ácido, enquanto tripsina e quimotripsina quebram proteínas em polipeptídeos menores. A carboxipolipeptidase tem papel distinto, liberando aminoácidos individuais a partir das extremidades carboxila dos polipeptídeos. A afirmação 4 é falsa porque lactase é enzima da digestão de carboidratos, especificamente da lactose, e não peptidase. A afirmação 5 é falsa porque quem ativa tripsinogênio inicialmente é a enteropeptidase intestinal, e a própria tripsina depois amplia a ativação. Lipase pancreática atua sobre triglicerídeos, não sobre zimogênios proteolíticos."
+  },
+  {
+    "id": "c4abacf308",
+    "system": "gastro",
+    "topic": "Digestão e absorção de proteínas",
+    "type": "comb",
+    "stem": "Assinale a combinação que contém apenas fatores que, segundo Guyton, favorecem diretamente a digestão ou secreção relacionada à digestão de proteínas no trato gastrointestinal.",
+    "statements": [
+      "Produtos da digestão de proteínas no antro estimulam células G a liberar gastrina.",
+      "Gastrina favorece secreção gástrica de ácido, que contribui para ativação e ação da pepsina.",
+      "Proteoses e peptonas no duodeno estimulam liberação de CCK, aumentando secreção de enzimas pancreáticas.",
+      "Ácido duodenal libera secretina, que estimula principalmente secreção pancreática rica em bicarbonato.",
+      "A ausência de transporte de Na⁺ aumenta a absorção intestinal de aminoácidos por eliminar competição com glicose."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "expl": "As afirmações 1 a 4 são corretas e integram os controles gástricos e pancreáticos descritos por Guyton. Produtos proteicos no antro estimulam gastrina, que aumenta a secreção ácida gástrica; esse ácido é essencial para a ativação do pepsinogênio e para a atividade da pepsina. No intestino delgado superior, proteoses e peptonas estimulam CCK, que aumenta fortemente a secreção de enzimas pancreáticas pelas células acinares. O ácido duodenal estimula secretina, cuja principal ação pancreática é a secreção de solução aquosa rica em HCO₃⁻, necessária para neutralizar o quimo ácido e criar pH adequado às enzimas pancreáticas. A afirmação 5 é falsa porque o gradiente de Na⁺ favorece, e não prejudica, grande parte da absorção de aminoácidos e peptídeos por transporte ativo secundário."
+  },
+  {
+    "id": "7e5cc8b64f",
+    "system": "gastro",
+    "topic": "Digestão e absorção de proteínas",
+    "type": "seq",
+    "stem": "Julgue as afirmações sobre digestão gástrica das proteínas.",
+    "statements": [
+      "A pepsina é mais ativa em meio muito ácido e torna-se praticamente inativa quando o pH sobe acima de 5,0.",
+      "A digestão gástrica por pepsina completa a maior parte da hidrólise proteica até aminoácidos livres antes do duodeno.",
+      "A digestão do colágeno pela pepsina facilita a posterior digestão de proteínas da carne por outras enzimas.",
+      "O HCl é necessário tanto para ativar pepsinogênio quanto para manter um pH favorável à ação da pepsina."
+    ],
+    "answers": [
+      true,
+      false,
+      true,
+      true
+    ],
+    "expl": "A primeira afirmação é verdadeira: Guyton descreve a pepsina como ativa em pH muito ácido, com faixa favorável entre aproximadamente 2,0 e 3,0, e quase sem atividade acima de 5,0. A segunda é falsa porque a pepsina apenas inicia a digestão proteica, promovendo cerca de 10% a 20% da digestão total e formando proteoses, peptonas e polipeptídeos. A maior parte da digestão ocorre no duodeno e jejuno por enzimas pancreáticas e peptidases intestinais. A terceira é verdadeira porque o colágeno, abundante no tecido conjuntivo das carnes, é pouco afetado por outras enzimas digestivas antes de ser atacado pela pepsina. A quarta também é verdadeira, pois o HCl converte pepsinogênio em pepsina e estabelece o pH necessário para sua atividade."
+  },
+  {
+    "id": "833fa49843",
+    "system": "gastro",
+    "topic": "Digestão e absorção de proteínas",
+    "type": "seq",
+    "stem": "Julgue as afirmações sobre absorção intestinal dos produtos da digestão proteica.",
+    "statements": [
+      "Mais de 99% dos produtos finais absorvidos da digestão proteica são aminoácidos.",
+      "Proteínas inteiras são absorvidas em grande quantidade por pinocitose e constituem a principal forma de nitrogênio que chega à veia porta.",
+      "Dipeptídeos e tripeptídeos podem entrar nos enterócitos e ser hidrolisados por peptidases citosólicas em poucos minutos.",
+      "A existência de múltiplos transportadores luminais se relaciona à diversidade química dos aminoácidos e peptídeos."
+    ],
+    "answers": [
+      true,
+      false,
+      true,
+      true
+    ],
+    "expl": "A primeira afirmação é verdadeira, pois Guyton afirma que mais de 99% dos produtos finais absorvidos são aminoácidos, com peptídeos raros e proteínas inteiras ainda mais raras. A segunda é falsa porque proteínas inteiras não são a principal forma absorvida; quando raramente absorvidas, podem até provocar distúrbios alérgicos ou imunológicos. A terceira é verdadeira: dipeptídeos e tripeptídeos entram nos enterócitos e são rapidamente hidrolisados por peptidases citosólicas específicas. A quarta é verdadeira porque o texto descreve pelo menos cinco tipos de transportadores para aminoácidos e peptídeos na membrana luminal. Essa multiplicidade é necessária pelas diferentes propriedades químicas dos substratos."
+  },
+  {
+    "id": "505f3e1e09",
+    "system": "gastro",
+    "topic": "Digestão e absorção de proteínas",
+    "type": "ord",
+    "stem": "Ordene as etapas principais da digestão e absorção de uma proteína alimentar, desde sua chegada ao estômago até sua transferência final ao sangue.",
+    "items": [
+      "HCl gástrico acidifica o conteúdo e converte pepsinogênio em pepsina ativa.",
+      "Pepsina inicia a hidrólise das proteínas, formando proteoses, peptonas e polipeptídeos.",
+      "No duodeno e jejuno, tripsina, quimotripsina, carboxipolipeptidase e elastase atacam os produtos parcialmente digeridos.",
+      "Peptidases da borda em escova, incluindo aminopolipeptidase e dipeptidases, reduzem peptídeos remanescentes a aminoácidos, dipeptídeos e tripeptídeos.",
+      "Dipeptídeos, tripeptídeos e aminoácidos entram nos enterócitos por transportadores luminais, muitos dependentes do gradiente de Na⁺.",
+      "Peptidases citosólicas convertem praticamente todos os dipeptídeos e tripeptídeos restantes em aminoácidos, que são transferidos para o sangue."
+    ],
+    "expl": "A sequência começa no estômago porque o HCl fornece o pH adequado e ativa pepsinogênio em pepsina. A pepsina inicia, mas não completa, a digestão proteica; Guyton atribui a ela cerca de 10% a 20% da digestão total das proteínas. A maior parte da digestão ocorre no intestino delgado superior por enzimas pancreáticas, especialmente tripsina, quimotripsina, carboxipolipeptidase e elastase. O estágio final luminal e de borda em escova depende de peptidases dos enterócitos, seguido pela entrada de aminoácidos e pequenos peptídeos. Dentro do enterócito, peptidases citoplasmáticas completam a hidrólise, de modo que mais de 99% dos produtos finais absorvidos passam ao sangue como aminoácidos."
+  },
+  {
+    "id": "63c03bf6f0",
+    "system": "gastro",
+    "topic": "Digestão e absorção de proteínas",
+    "type": "ord",
+    "stem": "Ordene a cascata de ativação das proteases pancreáticas no intestino delgado.",
+    "items": [
+      "Células acinares pancreáticas secretam tripsinogênio, quimotripsinogênio e procarboxipolipeptidase em formas inativas.",
+      "O quimo entra em contato com a mucosa intestinal, que fornece enteropeptidase ao lúmen.",
+      "A enteropeptidase ativa tripsinogênio em tripsina.",
+      "A tripsina recém-formada ativa autocataliticamente mais tripsinogênio.",
+      "A tripsina ativa quimotripsinogênio em quimotripsina e procarboxipolipeptidase em carboxipolipeptidase.",
+      "As proteases ativas hidrolisam proteínas e polipeptídeos em peptídeos menores e alguns aminoácidos livres."
+    ],
+    "expl": "As proteases pancreáticas são secretadas como zimogênios para impedir que digiram o pâncreas antes de chegarem ao intestino. A ativação inicial do tripsinogênio depende da enteropeptidase da mucosa intestinal, chamada por Guyton de enterocinase. Uma vez formada, a tripsina amplifica a própria formação por ativação autocatalítica do tripsinogênio. A tripsina também ativa outras proenzimas pancreáticas, como quimotripsinogênio e procarboxipolipeptidase. A ordem inversa seria fisiologicamente incorreta, porque quimotripsina e carboxipolipeptidase dependem da tripsina para sua ativação eficiente."
+  },
+  {
+    "id": "e3a5b8ecce",
+    "system": "gastro",
+    "topic": "Digestão e absorção de proteínas",
+    "type": "vf",
+    "statement": "A maior parte da digestão das proteínas ocorre no intestino delgado superior por enzimas proteolíticas pancreáticas, enquanto as peptidases da borda em escova e do citosol dos enterócitos completam a hidrólise antes da transferência predominante de aminoácidos ao sangue.",
+    "answer": true,
+    "expl": "A afirmação é verdadeira e sintetiza a sequência descrita por Guyton. A pepsina gástrica inicia a digestão proteica, mas responde por apenas parte menor do processo total. No duodeno e jejuno, tripsina, quimotripsina, carboxipolipeptidase e elastase realizam a maior parte da digestão das proteínas e polipeptídeos. Em seguida, peptidases da borda em escova reduzem peptídeos maiores a aminoácidos, dipeptídeos e tripeptídeos, que entram nos enterócitos. Peptidases citosólicas convertem quase todos os dipeptídeos e tripeptídeos remanescentes em aminoácidos, que então seguem para o sangue."
+  },
+  {
+    "id": "192c034524",
+    "system": "gastro",
+    "topic": "Digestão e absorção de lipídios",
+    "type": "mc",
+    "stem": "Um paciente submetido a ressecção extensa do íleo distal passa a apresentar fezes volumosas, oleosas e perda ponderal, apesar de secreção pancreática preservada. Qual mecanismo explica melhor a esteatorreia nesse caso?",
+    "options": [
+      "Redução da reabsorção de sais biliares, diminuindo a formação de micelas que carreiam ácidos graxos, monoglicerídeos e colesterol até a borda em escova",
+      "Perda da ativação de tripsinogênio pela enterocinase, impedindo a hidrólise direta dos triglicerídeos",
+      "Ausência de secreção de lipase pela bile, que normalmente cliva gorduras neutras em glicerol e ácidos graxos",
+      "Bloqueio do cotransporte de lipídios com Na⁺ na membrana apical dos enterócitos",
+      "Aumento da absorção portal de ácidos graxos de cadeia longa, desviando-os dos lacteais"
+    ],
+    "correct": 0,
+    "expl": "O íleo distal participa da reabsorção ativa de parte importante dos sais biliares na circulação êntero-hepática. Sem sais biliares suficientes, há menor emulsificação e, sobretudo, menor formação de micelas, que normalmente transportam monoglicerídeos, ácidos graxos livres, colesterol e outros lipídios até a mucosa intestinal. A enterocinase ativa tripsinogênio e pertence à digestão proteica, não à hidrólise direta dos triglicerídeos. A bile não contém enzimas digestivas; a principal enzima para triglicerídeos é a <b>lipase pancreática</b>. Lipídios não usam cotransporte apical com Na⁺ como glicose e muitos aminoácidos; ácidos graxos e monoglicerídeos difundem-se da micela para a membrana epitelial. Ácidos graxos de cadeia longa normalmente são reesterificados e seguem pela linfa como quilomícrons, não diretamente pela veia porta."
+  },
+  {
+    "id": "6695408992",
+    "system": "gastro",
+    "topic": "Digestão e absorção de lipídios",
+    "type": "mc",
+    "stem": "Um homem com pancreatite crônica apresenta esteatorreia acentuada. Considerando a fisiologia descrita no Guyton, qual defeito enzimático é mais diretamente responsável pela má digestão dos triglicerídeos da dieta?",
+    "options": [
+      "Deficiência de lipase pancreática, reduzindo a hidrólise de gorduras neutras em ácidos graxos livres e 2-monoglicerídeos",
+      "Deficiência de ptialina, reduzindo a emulsificação inicial das gorduras no estômago",
+      "Deficiência de secretina, abolindo a formação hepática de sais biliares conjugados",
+      "Deficiência de lactase, reduzindo a formação de micelas de colesterol",
+      "Deficiência de fator intrínseco, impedindo a entrada dos quilomícrons nos lacteais"
+    ],
+    "correct": 0,
+    "expl": "A principal enzima para digestão dos triglicerídeos é a <b>lipase pancreática</b>, presente em grande quantidade no suco pancreático. Ela hidrolisa gorduras neutras principalmente em ácidos graxos livres e 2-monoglicerídeos, produtos que depois são incorporados às micelas. A ptialina é uma α-amilase salivar envolvida na digestão do amido, não na emulsificação lipídica. A secretina estimula secreção pancreática e biliar rica em HCO₃⁻, mas não é o passo de síntese hepática dos sais biliares conjugados. A lactase atua sobre lactose, e o fator intrínseco relaciona-se à absorção ileal de vitamina B12, não ao transporte linfático de quilomícrons."
+  },
+  {
+    "id": "58009024f5",
+    "system": "gastro",
+    "topic": "Digestão e absorção de lipídios",
+    "type": "mc",
+    "stem": "Após uma refeição rica em gordura, a vesícula biliar esvazia grande parte de seu conteúdo para o duodeno. Qual evento hormonal é o principal responsável por essa resposta?",
+    "options": [
+      "Liberação de colecistocinina por células I do duodeno e jejuno, estimulada por alimentos gordurosos no duodeno",
+      "Liberação de gastrina por células G, estimulada por queda do pH duodenal abaixo de 3,0",
+      "Liberação de secretina por células S, estimulada por ácidos graxos de cadeia curta no cólon",
+      "Liberação de motilina durante a fase pós-prandial, estimulada pela presença de bile no jejuno",
+      "Liberação de pepsinogênio pelas células principais, estimulando diretamente o esfíncter de Oddi"
+    ],
+    "correct": 0,
+    "expl": "O estímulo mais potente para a contração da vesícula biliar é a <b>colecistocinina</b>, liberada principalmente quando alimentos gordurosos chegam ao duodeno. A CCK promove contrações rítmicas da vesícula e relaxamento simultâneo do esfíncter de Oddi, permitindo a entrada da bile no duodeno. A gastrina é estimulada por proteínas, distensão e estímulos vagais no estômago, tendo como ação principal estimular secreção ácida e crescimento da mucosa gástrica. A secretina responde sobretudo ao quimo ácido e estimula secreção de bicarbonato pancreático e biliar, não sendo o principal motor do esvaziamento vesicular. A motilina é liberada durante o jejum e estimula complexos motores interdigestivos. Pepsinogênio é precursor da pepsina e não controla diretamente a vesícula biliar."
+  },
+  {
+    "id": "3fd5ac474a",
+    "system": "gastro",
+    "topic": "Digestão e absorção de lipídios",
+    "type": "mc",
+    "stem": "Em um paciente com dificuldade de absorver lipídios de cadeia longa, opta-se por suplementar parte das calorias com ácidos graxos de cadeia curta e média. Segundo o Guyton, por que esses lipídios são absorvidos de modo diferente?",
+    "options": [
+      "Porque são mais hidrossolúveis e, em grande parte, difundem-se dos enterócitos diretamente para o sangue dos capilares das vilosidades",
+      "Porque dependem mais intensamente da reesterificação no retículo endoplasmático liso para formar quilomícrons",
+      "Porque exigem transporte ativo secundário acoplado ao Na⁺ para atravessar a borda em escova",
+      "Porque são absorvidos apenas após ligação ao fator intrínseco produzido pelas células parietais",
+      "Porque são convertidos em sais biliares dentro da célula epitelial intestinal"
+    ],
+    "correct": 0,
+    "expl": "Ácidos graxos de cadeia curta e média, como alguns presentes na gordura do leite, são mais hidrossolúveis que os de cadeia longa. Por isso, grande parte deles não é reesterificada em triglicerídeos pelo retículo endoplasmático e pode passar diretamente para o sangue portal nos capilares das vilosidades. Os ácidos graxos de cadeia longa, ao contrário, são reesterificados e incorporados a quilomícrons que seguem pelos lacteais. O cotransporte com Na⁺ é mecanismo típico para glicose, galactose e muitos aminoácidos, não para esses lipídios. O fator intrínseco participa da absorção de vitamina B12 no íleo. Sais biliares são sintetizados por hepatócitos a partir do colesterol, não pelos enterócitos como destino dos ácidos graxos absorvidos."
+  },
+  {
+    "id": "10e1a4217e",
+    "system": "gastro",
+    "topic": "Digestão e absorção de lipídios",
+    "type": "mc",
+    "stem": "Um fármaco experimental bloqueia a chegada de sais biliares ao duodeno, sem alterar a secreção de lipase pancreática. Qual resultado é mais compatível com a fisiologia da absorção de gorduras?",
+    "options": [
+      "Queda importante da absorção de gordura, pois a ausência de micelas reduz a absorção de cerca de 97% para aproximadamente 40% a 50%",
+      "Aumento da absorção de colesterol, pois ele se torna mais solúvel sem sais biliares",
+      "Digestão normal dos triglicerídeos, pois a emulsificação é dispensável quando a lipase pancreática está preservada",
+      "Bloqueio exclusivo da absorção de ácidos graxos de cadeia curta, sem efeito sobre monoglicerídeos",
+      "Aumento da secreção de enzimas pela vesícula biliar, compensando a falta de micelas"
+    ],
+    "correct": 0,
+    "expl": "Na presença de micelas abundantes de sais biliares, aproximadamente 97% da gordura pode ser absorvida; na ausência delas, a absorção cai para cerca de 40% a 50%. Os sais biliares também emulsificam gorduras, aumentando muito a área de superfície acessível à lipase pancreática. O colesterol depende fortemente das micelas para sua absorção; sem micelas, praticamente não é absorvido de forma eficaz. A emulsificação não é dispensável, porque a lipase é hidrossolúvel e atua apenas na superfície dos glóbulos de gordura. Ácidos graxos de cadeia curta e média são relativamente mais capazes de ir ao sangue portal, enquanto o grande problema envolve produtos lipídicos menos hidrossolúveis. A vesícula biliar armazena e concentra bile, mas não secreta enzimas digestivas."
+  },
+  {
+    "id": "77daf8153e",
+    "system": "gastro",
+    "topic": "Digestão e absorção de lipídios",
+    "type": "comb",
+    "stem": "Em um paciente com deficiência importante de sais biliares no lúmen intestinal, quais afirmações explicam corretamente a má absorção de lipídios?",
+    "statements": [
+      "Há menor emulsificação dos glóbulos de gordura, reduzindo a área superficial disponível para a lipase pancreática.",
+      "Há menor formação de micelas capazes de carrear ácidos graxos, monoglicerídeos e colesterol até a mucosa intestinal.",
+      "A bile deixa de fornecer a principal lipase responsável pela hidrólise dos triglicerídeos.",
+      "A absorção de colesterol é prejudicada, pois essencialmente depende do carreamento por micelas.",
+      "Ácidos graxos de cadeia longa passam a ser absorvidos predominantemente direto para a circulação porta."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4
+    ],
+    "expl": "As afirmações 1, 2 e 4 estão corretas. Os sais biliares reduzem a tensão superficial das partículas de gordura e, com a lecitina, facilitam sua emulsificação, aumentando a área para ação da lipase pancreática. Eles também formam micelas que carregam ácidos graxos, monoglicerídeos, colesterol e outros lipídios até a borda em escova; o colesterol praticamente não é absorvido sem micelas. A afirmação 3 é falsa porque a bile não contém enzimas digestivas, e a principal lipase para triglicerídeos é pancreática. A afirmação 5 é falsa porque ácidos graxos de cadeia longa são reesterificados e transportados por quilomícrons na linfa; quem pode seguir diretamente ao sangue porta são pequenas quantidades de ácidos graxos de cadeia curta e média."
+  },
+  {
+    "id": "2b97cb1f15",
+    "system": "gastro",
+    "topic": "Digestão e absorção de lipídios",
+    "type": "comb",
+    "stem": "Sobre as enzimas pancreáticas envolvidas na digestão de lipídios, selecione a combinação correta.",
+    "statements": [
+      "A lipase pancreática hidrolisa gorduras neutras, formando principalmente ácidos graxos livres e 2-monoglicerídeos.",
+      "A colesterol esterase hidrolisa ésteres de colesterol.",
+      "A fosfolipase A2 hidrolisa fosfolipídios, liberando ácidos graxos.",
+      "A lipase entérica é normalmente indispensável porque a lipase pancreática é secretada em quantidade insuficiente.",
+      "A amilase pancreática emulsifica lipídios antes da ação das micelas."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        3,
+        4
+      ],
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        5
+      ],
+      [
+        3,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      3
+    ],
+    "expl": "As três primeiras afirmações descrevem corretamente enzimas lipolíticas pancreáticas. A lipase pancreática é a enzima mais importante para triglicerídeos e existe em quantidade suficiente para digerir rapidamente todos os triglicerídeos ingeridos. A colesterol esterase atua sobre ésteres de colesterol, enquanto a fosfolipase A2 cliva ácidos graxos de fosfolipídios. A afirmação 4 é falsa porque o Guyton afirma que a lipase entérica existe, mas normalmente não é necessária. A afirmação 5 é falsa porque a amilase pancreática hidrolisa amidos, glicogênio e outros carboidratos, não emulsifica lipídios. A emulsificação depende principalmente de sais biliares e lecitina na bile."
+  },
+  {
+    "id": "8b5832dd36",
+    "system": "gastro",
+    "topic": "Digestão e absorção de lipídios",
+    "type": "seq",
+    "stem": "Julgue as afirmações sobre sais biliares, micelas e absorção lipídica.",
+    "statements": [
+      "Os sais biliares têm ação detergente, diminuem a tensão superficial dos glóbulos de gordura e facilitam sua fragmentação durante a agitação intestinal.",
+      "As micelas de sais biliares são agregados pequenos, solúveis no quimo, que carreiam monoglicerídeos e ácidos graxos até a borda em escova.",
+      "As micelas entram intactas nos enterócitos e são convertidas diretamente em quilomícrons no retículo endoplasmático liso.",
+      "Na ausência de sais biliares no trato intestinal, parte significativa da gordura ingerida é perdida nas fezes."
+    ],
+    "answers": [
+      true,
+      true,
+      false,
+      true
+    ],
+    "expl": "Os sais biliares e a lecitina reduzem a tensão interfacial dos glóbulos de gordura, permitindo emulsificação eficiente. Além disso, em concentração suficiente, os sais biliares formam micelas que mantêm produtos lipídicos pouco solúveis em solução no quimo. A afirmação sobre entrada intacta das micelas é falsa: os monoglicerídeos e ácidos graxos difundem-se das micelas para a membrana epitelial, enquanto os sais biliares permanecem no quimo para reutilização. Depois de absorvidos, os lipídios de cadeia longa são reesterificados e incorporados a quilomícrons. Sem sais biliares, a absorção de gordura cai muito, e até cerca de 40% da gordura ingerida pode ser perdida nas fezes."
+  },
+  {
+    "id": "563d069ad0",
+    "system": "gastro",
+    "topic": "Digestão e absorção de lipídios",
+    "type": "seq",
+    "stem": "Julgue as afirmações sobre o controle hormonal relacionado à digestão de lipídios.",
+    "statements": [
+      "A secretina é liberada por células S quando o quimo ácido entra no duodeno e estimula secreção pancreática abundante rica em HCO₃⁻.",
+      "A CCK é liberada por células I em resposta a produtos da digestão de gorduras e também estimula a secreção de enzimas pancreáticas.",
+      "A CCK retarda moderadamente o esvaziamento gástrico, contribuindo para dar tempo à digestão de gorduras no intestino delgado superior.",
+      "A gastrina é o principal estímulo para a formação de micelas, pois ativa diretamente os sais biliares no lúmen intestinal."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "A secretina responde ao conteúdo ácido duodenal e estimula os ductos pancreáticos a secretarem grande volume de solução aquosa rica em HCO₃⁻. Esse bicarbonato neutraliza o HCl gástrico e cria pH adequado para as enzimas pancreáticas. A CCK é liberada especialmente em resposta a ácidos graxos e monoglicerídeos no intestino, além de proteoses e peptonas, e estimula fortemente as células acinares pancreáticas. Ela também contrai a vesícula biliar e inibe moderadamente o esvaziamento gástrico, o que favorece a digestão de gorduras no intestino delgado proximal. A gastrina estimula secreção ácida gástrica e crescimento da mucosa gástrica; não ativa sais biliares nem é o principal determinante da formação de micelas."
+  },
+  {
+    "id": "beb2c69f02",
+    "system": "gastro",
+    "topic": "Digestão e absorção de lipídios",
+    "type": "ord",
+    "stem": "Ordene as etapas da digestão e absorção de triglicerídeos de cadeia longa, do lúmen intestinal até a circulação sistêmica.",
+    "items": [
+      "Emulsificação dos glóbulos de gordura no duodeno por sais biliares e lecitina, aumentando a área superficial disponível",
+      "Hidrólise dos triglicerídeos pela lipase pancreática, formando principalmente ácidos graxos livres e 2-monoglicerídeos",
+      "Incorporação dos produtos da digestão às micelas de sais biliares, que os carreiam até a borda em escova",
+      "Difusão de ácidos graxos e monoglicerídeos das micelas para a membrana dos enterócitos, deixando os sais biliares no quimo",
+      "Reesterificação no retículo endoplasmático liso e formação de novos triglicerídeos incorporados a quilomícrons",
+      "Transferência dos quilomícrons para os lacteais, passagem pelo ducto torácico e entrada no sangue circulante"
+    ],
+    "expl": "A sequência começa com a emulsificação, porque as lipases são hidrossolúveis e só conseguem atuar na superfície das partículas de gordura. Em seguida, a lipase pancreática hidrolisa triglicerídeos em ácidos graxos livres e 2-monoglicerídeos, produtos que seriam pouco solúveis no quimo sem micelas. As micelas carreiam esses produtos até a borda em escova, mas não são incorporadas como partículas intactas ao enterócito; os lipídios difundem-se para a membrana epitelial. Dentro da célula, ácidos graxos de cadeia longa e monoglicerídeos são captados pelo retículo endoplasmático liso e usados para formar novos triglicerídeos. Esses triglicerídeos entram em quilomícrons, que são grandes demais para seguir diretamente pelos capilares sanguíneos e, por isso, entram nos lacteais. A drenagem linfática pelo ducto torácico explica por que a maior parte da gordura absorvida não passa inicialmente pela veia porta."
+  },
+  {
+    "id": "0345074bfb",
+    "system": "gastro",
+    "topic": "Digestão e absorção de lipídios",
+    "type": "ord",
+    "stem": "Ordene os eventos fisiológicos da secreção, armazenamento e liberação da bile após uma refeição gordurosa.",
+    "items": [
+      "Hepatócitos secretam a bile inicial nos canalículos, contendo grande quantidade de ácidos biliares, colesterol e outros constituintes orgânicos",
+      "Células epiteliais dos dúctulos e ductos biliares acrescentam solução aquosa rica em Na⁺ e HCO₃⁻, especialmente sob estímulo da secretina",
+      "A bile flui pelo sistema de ductos e pode ser armazenada na vesícula biliar por meio do ducto cístico",
+      "A mucosa da vesícula biliar absorve água, Na⁺, Cl⁻ e outros eletrólitos, concentrando sais biliares, colesterol, lecitina e bilirrubina",
+      "Gordura no duodeno estimula liberação de CCK por células I da mucosa duodenal e jejunal",
+      "A CCK promove contração da vesícula biliar e relaxamento do esfíncter de Oddi, expelindo bile concentrada para o duodeno"
+    ],
+    "expl": "A bile é secretada em duas etapas: primeiro pelos hepatócitos, depois com adição ductal de uma solução aquosa rica em bicarbonato. A secretina aumenta a secreção de HCO₃⁻ pelos ductos biliares, somando-se ao bicarbonato pancreático na neutralização do ácido gástrico no duodeno. Como a secreção hepática é contínua, a vesícula biliar funciona como reservatório e concentrador da bile entre as refeições. A concentração ocorre por absorção de água e eletrólitos, enquanto sais biliares e substâncias lipídicas permanecem na bile vesicular. Após refeição gordurosa, a presença de gordura no duodeno é o principal estímulo para liberação de CCK. A CCK coordena a contração vesicular com relaxamento do esfíncter de Oddi, permitindo que a bile exerça suas funções detergente e micelar."
+  },
+  {
+    "id": "84579bbfc1",
+    "system": "gastro",
+    "topic": "Digestão e absorção de lipídios",
+    "type": "vf",
+    "statement": "Ácidos graxos de cadeia curta e média podem ser absorvidos diretamente para o sangue porta, em vez de serem reesterificados em triglicerídeos e transportados como quilomícrons pela linfa.",
+    "answer": true,
+    "expl": "A afirmação é verdadeira. O Guyton descreve que pequenas quantidades de ácidos graxos de cadeia curta e média, como alguns da gordura do leite, são absorvidas diretamente pelo sangue porta. Isso ocorre porque são mais hidrossolúveis e, em grande parte, não são reconvertidos em triglicerídeos pelo retículo endoplasmático dos enterócitos. Em contraste, ácidos graxos de cadeia longa e monoglicerídeos são usualmente reesterificados em triglicerídeos. Esses triglicerídeos entram em quilomícrons e seguem pelos lacteais e pelo ducto torácico antes de alcançar o sangue circulante."
+  },
+  {
+    "id": "9b7e62c269",
+    "system": "gastro",
+    "topic": "Secreções e hormônios gastrointestinais",
+    "type": "mc",
+    "stem": "Um paciente apresenta quimo duodenal muito ácido logo após refeição volumosa. Considerando o principal mecanismo fisiológico de proteção duodenal descrito por Guyton, qual resposta secretória é esperada quando o pH do conteúdo duodenal cai abaixo de aproximadamente 4,5 a 5,0?",
+    "options": [
+      "Liberação de secretina por células S, estimulando secreção pancreática aquosa rica em HCO₃⁻.",
+      "Liberação de gastrina por células G, estimulando secreção pancreática de enzimas proteolíticas.",
+      "Liberação de motilina pelo duodeno, estimulando contração da vesícula biliar e liberação de bile.",
+      "Liberação de CCK por células K, inibindo a secreção de bicarbonato pelos ductos pancreáticos.",
+      "Ativação direta da lipase pancreática pelo HCl, neutralizando o conteúdo ácido no lúmen."
+    ],
+    "correct": 0,
+    "expl": "O quimo ácido no duodeno ativa a pró-secretina das células S, liberando <b>secretina</b>, cujo principal efeito é estimular os ductos pancreáticos a secretarem grande volume de solução aquosa rica em HCO₃⁻. Esse bicarbonato neutraliza o HCl pelo sistema HCl + NaHCO₃ → NaCl + H₂CO₃, elevando o pH para uma faixa adequada às enzimas pancreáticas. A gastrina é secretada principalmente por células G e estimula secreção ácida gástrica e crescimento da mucosa, não secreção pancreática enzimática. A motilina atua no jejum aumentando complexos mioelétricos interdigestivos, não é o principal hormônio da neutralização ácida. A CCK é liberada sobretudo por gorduras e produtos proteicos e estimula enzimas pancreáticas e contração vesicular, enquanto a lipase pancreática digere triglicerídeos, não neutraliza ácido."
+  },
+  {
+    "id": "b8c5acc92d",
+    "system": "gastro",
+    "topic": "Secreções e hormônios gastrointestinais",
+    "type": "mc",
+    "stem": "Após uma refeição rica em gordura, observa-se liberação de bile para o duodeno e aumento importante da secreção de enzimas pancreáticas. Qual combinação explica melhor esse achado?",
+    "options": [
+      "CCK liberada por células I do duodeno e jejuno, estimulada por ácidos graxos de cadeia longa e produtos da digestão proteica.",
+      "Secretina liberada por células S do antro gástrico, estimulada por distensão e responsável pela contração da vesícula biliar.",
+      "GIP liberado por células parietais, estimulado por ácido e responsável por ativar o tripsinogênio.",
+      "Gastrina liberada por células acinares pancreáticas, estimulada por monoglicerídeos e responsável pela secreção de bile.",
+      "Motilina liberada no período pós-prandial, estimulada por gordura e responsável pela secreção pancreática de bicarbonato."
+    ],
+    "correct": 0,
+    "expl": "A <b>colecistocinina</b> é secretada por células I da mucosa do duodeno e jejuno, especialmente em resposta a produtos da digestão de gordura, como ácidos graxos e monoglicerídeos, e também a proteoses e peptonas. Ela contrai fortemente a vesícula biliar, relaxa funcionalmente a via de saída biliar com o esvaziamento pelo esfíncter de Oddi e estimula células acinares pancreáticas a secretarem enzimas digestivas. A secretina é liberada por células S em resposta ao ácido duodenal e estimula bicarbonato pancreático e biliar, mas não é o principal estímulo da contração vesicular. O GIP vem de células K do duodeno e jejuno e estimula insulina e inibe função gástrica, sem ativar tripsinogênio. A gastrina é gástrica e estimula ácido, enquanto a motilina é liberada no jejum e aumenta a motilidade interdigestiva."
+  },
+  {
+    "id": "48cbc8b0d6",
+    "system": "gastro",
+    "topic": "Secreções e hormônios gastrointestinais",
+    "type": "mc",
+    "stem": "Durante avaliação de xerostomia, um estudante compara saliva em repouso com saliva produzida em fluxo máximo. Qual alternativa descreve corretamente a modificação ductal da saliva segundo Guyton?",
+    "options": [
+      "Nos ductos, Na⁺ é reabsorvido e K⁺ é secretado; Cl⁻ é reabsorvido passivamente e HCO₃⁻ é secretado, mas em fluxo máximo a modificação ductal é menor.",
+      "Nos ductos, Na⁺ e Cl⁻ são secretados ativamente, tornando a saliva final hipertônica em repouso.",
+      "Os ácinos produzem secreção primária sem ptialina, e toda a digestão do amido depende de enzimas das células ductais.",
+      "A saliva em repouso tem concentrações de Na⁺ e Cl⁻ maiores que as plasmáticas, enquanto K⁺ e HCO₃⁻ são quase ausentes.",
+      "A estimulação simpática é o principal mecanismo de salivação copiosa, superando a estimulação parassimpática."
+    ],
+    "correct": 0,
+    "expl": "A secreção salivar ocorre em dois estágios: os ácinos formam secreção primária com ptialina e/ou mucina em solução semelhante ao líquido extracelular, e os ductos modificam sua composição. Nos ductos, Na⁺ é reabsorvido ativamente, K⁺ é secretado, Cl⁻ acompanha passivamente a eletronegatividade luminal e HCO₃⁻ é secretado para o lúmen. Em repouso, por haver mais tempo para modificação ductal, a saliva tem pouco Na⁺ e Cl⁻ e concentrações elevadas de K⁺ e HCO₃⁻ em relação ao plasma. Em fluxo máximo, a secreção passa rapidamente pelos ductos, de modo que a concentração de NaCl se aproxima mais da plasmática do que em repouso. A salivação copiosa é controlada principalmente por sinais parassimpáticos dos núcleos salivatórios, e a estimulação simpática aumenta pouco a salivação."
+  },
+  {
+    "id": "782419ad99",
+    "system": "gastro",
+    "topic": "Secreções e hormônios gastrointestinais",
+    "type": "mc",
+    "stem": "Um fármaco bloqueia seletivamente a H⁺-K⁺-ATPase nas células parietais gástricas. Qual efeito imediato é mais compatível com o mecanismo de secreção ácida descrito por Guyton?",
+    "options": [
+      "Redução da secreção de H⁺ para os canalículos parietais e menor formação de HCl luminal.",
+      "Aumento da ativação do pepsinogênio, pois a pepsina é mais ativa em pH acima de 5,0.",
+      "Aumento da secreção de fator intrínseco pelas células principais do fundo gástrico.",
+      "Bloqueio primário da secreção de gastrina pelas células ECL da mucosa oxíntica.",
+      "Aumento direto da secreção pancreática de bicarbonato por retirada do freio vagal."
+    ],
+    "correct": 0,
+    "expl": "A força motriz principal da secreção de ácido pela célula parietal é a <b>H⁺-K⁺-ATPase</b>, que bombeia H⁺ para os canalículos em troca de K⁺. O HCO₃⁻ formado pela anidrase carbônica sai pela membrana basolateral em troca de Cl⁻, e o Cl⁻ entra no canalículo para formar HCl com o H⁺ secretado. Bloquear essa bomba reduz diretamente a concentração de H⁺ canalicular e a secreção de ácido clorídrico. A pepsina é ativa em meio muito ácido, com pH ideal entre 1,8 e 3,5, e perde atividade acima de 5,0, portanto não seria aumentada pela alcalinização. O fator intrínseco também é secretado por células parietais, não pelas células principais, e as células ECL secretam histamina, não gastrina."
+  },
+  {
+    "id": "525af8c40b",
+    "system": "gastro",
+    "topic": "Secreções e hormônios gastrointestinais",
+    "type": "mc",
+    "stem": "Um homem com cálculo impactado no ducto pancreático evolui com dor intensa e necrose pancreática. Qual explicação fisiológica melhor justifica a autodigestão pancreática nesse quadro?",
+    "options": [
+      "Acúmulo de secreção pancreática pode superar o efeito do inibidor de tripsina, permitindo ativação de tripsina e de outras proteases dentro do pâncreas.",
+      "A secretina ativa diretamente o tripsinogênio dentro dos ácinos sempre que há acidificação duodenal.",
+      "A lipase lingual transforma procarboxipolipeptidase em elastase dentro do ducto pancreático.",
+      "A bile contém enzimas proteolíticas que refluem para o pâncreas e digerem os ácinos.",
+      "A gastrina estimula enterocinase intrapancreática, ativando quimotripsinogênio antes da secreção."
+    ],
+    "correct": 0,
+    "expl": "As enzimas proteolíticas pancreáticas são sintetizadas como zimogênios, como tripsinogênio, quimotripsinogênio e procarboxipolipeptidase, para evitar digestão do próprio pâncreas. As células acinares também secretam <b>inibidor de tripsina</b>, que inativa tripsina ainda nas células, ácinos e ductos. Em lesão grave ou obstrução ductal, a secreção acumulada pode tornar esse inibidor insuficiente, permitindo ativação de tripsina; como a tripsina ativa outras proteases, ocorre autodigestão pancreática. A enterocinase é secretada pela mucosa intestinal e ativa o tripsinogênio no lúmen intestinal, não dentro do pâncreas em condições normais. Secretina estimula bicarbonato ductal, CCK estimula enzimas acinares, e a bile não contém enzimas digestivas de gordura ou proteases."
+  },
+  {
+    "id": "6cdf9c6f53",
+    "system": "gastro",
+    "topic": "Secreções e hormônios gastrointestinais",
+    "type": "comb",
+    "stem": "Assinale a combinação que contém apenas afirmações corretas sobre secreções pancreáticas e biliares.",
+    "statements": [
+      "A acetilcolina e a CCK estimulam principalmente células acinares pancreáticas, aumentando a secreção de enzimas digestivas.",
+      "A secretina estimula principalmente as células epiteliais dos ductos pancreáticos, produzindo grande volume de solução rica em HCO₃⁻.",
+      "A bile emulsifica gorduras por conter lipase biliar em alta concentração.",
+      "A secretina também aumenta a secreção aquosa rica em bicarbonato pelos dúctulos e ductos biliares.",
+      "A bile vesicular concentra sais biliares, colesterol, lecitina e bilirrubina porque água e muitos eletrólitos são reabsorvidos pela mucosa da vesícula."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        1,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "expl": "As afirmações 1 e 2 estão corretas porque acetilcolina e CCK estimulam secreção enzimática acinar, enquanto a secretina estimula secreção ductal aquosa rica em bicarbonato. A afirmação 4 também está correta: a secretina aumenta a secreção de solução aquosa rica em HCO₃⁻ pelos ductos biliares, somando-se ao bicarbonato pancreático na neutralização do ácido duodenal. A afirmação 5 é correta porque a vesícula concentra a bile ao absorver água, Na⁺, Cl⁻ e outros eletrólitos, preservando e concentrando sais biliares e lipídios biliares. A afirmação 3 é falsa, pois a bile não contém enzimas digestivas; sua ação na gordura depende de sais biliares e lecitina, que emulsificam e formam micelas. Portanto, a única combinação correta é 1, 2, 4 e 5."
+  },
+  {
+    "id": "679b56498e",
+    "system": "gastro",
+    "topic": "Secreções e hormônios gastrointestinais",
+    "type": "comb",
+    "stem": "Em relação às barreiras mucosas e secreções protetoras do trato gastrointestinal, selecione a combinação correta.",
+    "statements": [
+      "O muco gástrico superficial é viscoso e alcalino, formando barreira que protege a mucosa contra ácido e pepsina.",
+      "As glândulas de Brunner secretam muco alcalino no duodeno, estimuladas por irritação local, estímulo vagal e secretina.",
+      "A estimulação simpática das glândulas de Brunner aumenta intensamente sua secreção e protege contra úlcera duodenal.",
+      "O muco do intestino grosso protege contra escoriações, ajuda a aderir o material fecal e contém bicarbonato que neutraliza ácidos fecais.",
+      "O muco gastrointestinal é facilmente digerido pelas enzimas do lúmen, razão pela qual precisa ser reposto continuamente a cada refeição."
+    ],
+    "options": [
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        4,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ]
+    ],
+    "correct": [
+      1,
+      2,
+      4
+    ],
+    "expl": "As afirmações 1, 2 e 4 descrevem funções protetoras centrais do muco no estômago, duodeno e cólon. O muco gástrico superficial é alcalino e forma camada gelatinosa que limita a exposição da parede gástrica ao ácido e à pepsina. As glândulas de Brunner, localizadas nos primeiros centímetros do duodeno, secretam muco alcalino em resposta a estímulos táteis ou irritativos, estimulação vagal e hormônios como a secretina. A afirmação 3 é falsa porque a estimulação simpática inibe as glândulas de Brunner, podendo deixar o bulbo duodenal menos protegido. A afirmação 5 é falsa porque Guyton destaca que o muco é muito resistente à digestão pelas enzimas gastrointestinais."
+  },
+  {
+    "id": "75389a026d",
+    "system": "gastro",
+    "topic": "Secreções e hormônios gastrointestinais",
+    "type": "seq",
+    "stem": "Julgue as afirmações sobre hormônios gastrointestinais e suas ações secretórias.",
+    "statements": [
+      "A gastrina é secretada por células G em resposta à distensão gástrica, produtos da digestão proteica e peptídeo liberador de gastrina, e estimula a secreção gástrica de ácido.",
+      "A secretina é liberada principalmente por conteúdo gástrico ácido no duodeno e estimula secreção pancreática rica em bicarbonato.",
+      "A CCK é liberada por células I do duodeno e jejuno em resposta a produtos da digestão de gordura e promove contração da vesícula biliar e secreção de enzimas pancreáticas.",
+      "A motilina é liberada após a digestão de refeição gordurosa e sua função principal conhecida é inibir complexos mioelétricos interdigestivos."
+    ],
+    "answers": [
+      true,
+      true,
+      true,
+      false
+    ],
+    "expl": "As três primeiras afirmações correspondem diretamente ao controle hormonal descrito por Guyton: gastrina para secreção ácida, secretina para bicarbonato e CCK para bile e enzimas pancreáticas. A gastrina é estimulada por sinais associados à refeição, incluindo distensão, produtos proteicos e peptídeo liberador de gastrina durante estimulação vagal. A secretina responde ao ácido duodenal e é crucial para neutralizar o quimo gástrico. A CCK responde especialmente a gorduras e produtos proteicos no intestino delgado superior. A afirmação sobre motilina é falsa porque ela é secretada pelo estômago e duodeno superior durante o jejum, é liberada ciclicamente e estimula complexos mioelétricos interdigestivos a cada cerca de 90 minutos."
+  },
+  {
+    "id": "6a513b218e",
+    "system": "gastro",
+    "topic": "Secreções e hormônios gastrointestinais",
+    "type": "seq",
+    "stem": "Julgue as afirmações sobre digestão e absorção de macronutrientes.",
+    "statements": [
+      "A amilase salivar pode continuar digerindo amido no corpo e fundo gástricos por até cerca de 1 hora, até ser inativada pelo ácido gástrico.",
+      "A glicose e a galactose são absorvidas por mecanismo dependente de Na⁺, enquanto a frutose é transportada por difusão facilitada não acoplada ao Na⁺.",
+      "A maior parte dos produtos finais absorvidos da digestão proteica são proteínas inteiras, que seguem pela linfa em quilomícrons.",
+      "Na ausência de micelas de sais biliares, a absorção de gordura cai substancialmente, pois monoglicerídeos, ácidos graxos e colesterol chegam com dificuldade à borda em escova."
+    ],
+    "answers": [
+      true,
+      true,
+      false,
+      true
+    ],
+    "expl": "A digestão do amido começa com a ptialina salivar, que pode atuar no estômago antes de o alimento ser completamente misturado ao ácido, mas é bloqueada quando o pH cai abaixo de aproximadamente 4,0. A glicose e a galactose entram no enterócito por cotransporte com Na⁺, movido indiretamente pela Na⁺-K⁺-ATPase basolateral; a frutose usa difusão facilitada. A afirmação sobre proteínas inteiras é falsa, pois mais de 99% dos produtos finais absorvidos da digestão proteica são aminoácidos, com raríssima absorção de peptídeos ou proteínas intactas. A absorção lipídica depende fortemente das micelas, que carregam produtos da digestão de gorduras e colesterol até a mucosa. Segundo Guyton, na presença de micelas abundantes cerca de 97% da gordura é absorvida, enquanto na ausência delas a absorção cai para cerca de 40% a 50%."
+  },
+  {
+    "id": "39afb91aa1",
+    "system": "gastro",
+    "topic": "Secreções e hormônios gastrointestinais",
+    "type": "ord",
+    "stem": "Ordene os eventos da secreção ácida gástrica estimulada por refeição proteica, do estímulo inicial à formação de HCl no lúmen glandular.",
+    "items": [
+      "Proteínas no antro estimulam células G das glândulas pilóricas a liberar gastrina no sangue.",
+      "A gastrina alcança células semelhantes às enterocromafins no corpo gástrico e estimula liberação de histamina.",
+      "A histamina atua sobre células parietais das glândulas oxínticas e aumenta a secreção de H⁺.",
+      "A H⁺-K⁺-ATPase bombeia H⁺ para os canalículos parietais enquanto Cl⁻ entra no canalículo por canais de cloreto.",
+      "H⁺ e Cl⁻ formam HCl no canalículo, acompanhado por água por osmose, gerando secreção ácida gástrica."
+    ],
+    "expl": "Proteínas alimentares no antro são estímulos importantes para células G, que liberam gastrina. A gastrina chega por via sanguínea às células ECL próximas das glândulas oxínticas, induzindo liberação de histamina, que é um estimulador rápido e potente da célula parietal. Na célula parietal, a H⁺-K⁺-ATPase é a força motriz da secreção de H⁺, enquanto a anidrase carbônica contribui para formar HCO₃⁻ e H⁺ no citoplasma. O HCO₃⁻ sai para o sangue em troca de Cl⁻, e o Cl⁻ secretado para o canalículo combina-se ao H⁺ para formar HCl. A sequência alternativa que colocasse histamina antes de gastrina ou ativação de pepsina antes de HCl inverteria a lógica do controle descrita por Guyton."
+  },
+  {
+    "id": "4ae5196cd3",
+    "system": "gastro",
+    "topic": "Secreções e hormônios gastrointestinais",
+    "type": "ord",
+    "stem": "Ordene as etapas de digestão e absorção predominante de triglicerídeos de cadeia longa no intestino delgado.",
+    "items": [
+      "Sais biliares e lecitina emulsificam glóbulos de gordura, aumentando muito a área de superfície disponível.",
+      "Lipase pancreática hidrolisa triglicerídeos principalmente em ácidos graxos livres e 2-monoglicerídeos.",
+      "Micelas de sais biliares removem os produtos da digestão da superfície lipídica e os conduzem à borda em escova.",
+      "Ácidos graxos e monoglicerídeos difundem-se para os enterócitos, enquanto as micelas permanecem no quimo e são reutilizadas.",
+      "No retículo endoplasmático liso, os lipídios são reesterificados a triglicerídeos e incorporados a quilomícrons.",
+      "Quilomícrons entram nos lactíferos das vilosidades e alcançam o sangue pela linfa e pelo ducto torácico."
+    ],
+    "expl": "A digestão eficaz de triglicerídeos começa pela emulsificação, pois a lipase é hidrossolúvel e atua na superfície dos glóbulos de gordura. A bile não contém enzimas digestivas, mas seus sais biliares e a lecitina reduzem a tensão interfacial e facilitam a fragmentação das partículas lipídicas. A lipase pancreática forma ácidos graxos livres e 2-monoglicerídeos, que seriam pouco solúveis sem o transporte por micelas. As micelas entregam esses produtos à borda em escova, mas não entram como unidade permanente no enterócito; elas permanecem no quimo para novo transporte. Ácidos graxos de cadeia longa são reesterificados e seguem em quilomícrons pela linfa, ao contrário de ácidos graxos de cadeia curta e média, que podem ir diretamente ao sangue porta."
+  },
+  {
+    "id": "4db401c9d5",
+    "system": "gastro",
+    "topic": "Secreções e hormônios gastrointestinais",
+    "type": "vf",
+    "statement": "A ausência de sais biliares no intestino reduz a digestão e a absorção de gorduras porque diminui a emulsificação dos glóbulos lipídicos e compromete a formação de micelas que transportam monoglicerídeos, ácidos graxos, colesterol e outros lipídios até a mucosa intestinal.",
+    "answer": true,
+    "expl": "A afirmação é verdadeira. Segundo Guyton, os sais biliares têm ação detergente que reduz a tensão superficial dos glóbulos de gordura, facilitando sua fragmentação em partículas pequenas e aumentando a área de ação da lipase pancreática. Além disso, os sais biliares formam micelas, que carregam monoglicerídeos, ácidos graxos livres, colesterol e outros lipídios até a borda em escova. Sem micelas, a absorção de gordura cai de modo importante e uma parcela considerável da gordura ingerida pode ser perdida nas fezes. Esse mecanismo explica a tendência à esteatorreia quando há deficiência importante de bile no lúmen intestinal."
   }
 ];
 
 /* =========================== ENGINE =========================== */
 const $ = (s,r=document)=>r.querySelector(s);
 const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
-const SYS_LABEL = {cardio:'Cardiovascular', renal:'Renal'};
+const SYS_LABEL = {cardio:'Cardiovascular', renal:'Renal', gastro:'Digestão & Absorção'};
 const TYPE_LABEL = {vf:'V / F', seq:'Sequência V-F', comb:'Afirmativas corretas', mc:'Múltipla escolha', ord:'Ordenação'};
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -2877,9 +3931,12 @@ let session = null;
 function fillMeta(){
   const c = QUESTIONS.filter(q=>q.system==='cardio').length;
   const r = QUESTIONS.filter(q=>q.system==='renal').length;
-  $('#meta-cardio').textContent = '6 temas · ' + c + ' questões';
-  $('#meta-renal').textContent  = '3 temas · ' + r + ' questões';
-  $('#meta-full').textContent   = (c+r) + ' questões';
+  const g = QUESTIONS.filter(q=>q.system==='gastro').length;
+  const nTopics = sys => new Set(QUESTIONS.filter(q=>q.system===sys).map(q=>q.topic)).size;
+  $('#meta-cardio').textContent = nTopics('cardio') + ' temas · ' + c + ' questões';
+  $('#meta-renal').textContent  = nTopics('renal')  + ' temas · ' + r + ' questões';
+  const mg = $('#meta-gastro'); if(mg) mg.textContent = nTopics('gastro') + ' temas · ' + g + ' questões';
+  $('#meta-full').textContent   = (c+r+g) + ' questões';
 }
 /* painel de revisão inteligente (progresso salvo) */
 function renderStartStats(){
@@ -3319,7 +4376,7 @@ function showResults(){
   });
   $('#res-topics').innerHTML = order.map(t=>{
     const d=map[t]; const p=Math.round(d.hit/d.tot*100);
-    const col = d.sys==='cardio' ? 'var(--cardio)' : 'var(--renal)';
+    const col = 'var(--' + d.sys + ')';
     return '<div class="trow">'+
       '<span class="dot" style="background:'+col+'"></span>'+
       '<span class="tn">'+t+'</span>'+
