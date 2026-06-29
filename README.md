@@ -42,6 +42,20 @@ Escolha o tamanho do teste (10, 20 ou todas), o bloco (cardiovascular, renal ou
 completo), responda e confira o desempenho por tema e o gabarito comentado.
 As questões e as alternativas são **embaralhadas a cada tentativa**.
 
+## Revisão inteligente (progresso salvo no navegador)
+
+O progresso fica salvo localmente (`localStorage`), sem precisar de conta:
+
+- **🧠 Modo adaptativo** — quando você erra uma questão, o app reforça aquele tema
+  na hora (puxa mais questões do mesmo conteúdo) e dá mais peso aos seus pontos
+  fracos do histórico. Aprendizado direcionado às suas dificuldades.
+- **🔁 Refazer as que errei** — refaz só as questões cuja última resposta foi erro
+  (ao acertar, elas saem da lista).
+- **⭐ Questões marcadas** — marque as difíceis (botão ☆ na questão ou tecla `M`) e
+  refaça só elas.
+- **Estatísticas** — questões praticadas, respostas dadas e % de acerto geral.
+- **Limpar progresso** — zera tudo quando quiser.
+
 ---
 
 *Material de estudo — não substitui a leitura do livro.*

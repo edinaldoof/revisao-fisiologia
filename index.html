@@ -255,6 +255,36 @@
 
   footer{text-align:center; font-size:.74rem; color:var(--ink-faint); margin-top:26px; line-height:1.5;}
 
+  /* ---------- Revisão inteligente (progresso salvo) ---------- */
+  .smart{margin-top:22px; border-top:1px dashed var(--line); padding-top:18px;}
+  .smart-h{display:flex; align-items:center; gap:8px; font-family:var(--sans); font-weight:700; font-size:.96rem; color:var(--ink); margin-bottom:4px;}
+  .smart-sub{font-size:.8rem; color:var(--ink-faint); margin-bottom:14px;}
+  .stat-row{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
+  .stat{flex:1; min-width:96px; background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:11px 13px;}
+  .stat .v{font-family:var(--sans); font-weight:700; font-size:1.25rem; color:var(--ink); line-height:1;}
+  .stat .k{font-size:.7rem; color:var(--ink-faint); margin-top:4px; letter-spacing:.02em;}
+  .smart-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  @media (max-width:520px){ .smart-actions{grid-template-columns:1fr;} }
+  .smart-btn{display:flex; align-items:center; gap:10px; text-align:left; cursor:pointer; font-family:var(--body);
+    background:var(--surface); border:1.5px solid var(--line); border-radius:12px; padding:13px 15px; transition:.16s; color:var(--ink);}
+  .smart-btn:hover:not(:disabled){transform:translateY(-1px); box-shadow:var(--shadow-sm); border-color:var(--ink-faint);}
+  .smart-btn:disabled{opacity:.45; cursor:not-allowed;}
+  .smart-btn:focus-visible{outline:3px solid var(--accent-soft); outline-offset:2px;}
+  .smart-btn .ico{font-size:1.2rem; flex:none;}
+  .smart-btn .lab{font-weight:600; font-size:.9rem;}
+  .smart-btn .desc{font-size:.74rem; color:var(--ink-faint); margin-top:1px;}
+  .smart-btn.feature{grid-column:1 / -1; background:linear-gradient(120deg, rgba(225,46,75,.07), rgba(14,154,167,.08)); border-color:transparent;}
+  .smart-btn.feature .lab{color:var(--ink);}
+  .clearp{margin-top:12px; background:none; border:none; color:var(--ink-faint); font-size:.76rem; cursor:pointer; text-decoration:underline; padding:4px 0;}
+  .clearp:hover{color:var(--no-ink);}
+
+  /* botão marcar questão (estrela) */
+  .mark-btn{margin-left:8px; background:var(--surface); border:1.5px solid var(--line); border-radius:9px;
+    width:36px; height:36px; flex:none; cursor:pointer; font-size:1.05rem; line-height:1; transition:.15s; color:var(--ink-faint);}
+  .mark-btn:hover{border-color:#E8A92B; color:#E8A92B;}
+  .mark-btn.on{background:#FFF6E2; border-color:#E8A92B; color:#E8A92B;}
+  .mark-btn:focus-visible{outline:3px solid var(--accent-soft); outline-offset:2px;}
+
   /* ====== Responsividade refinada (mobile + desktop) ====== */
   @media (max-width:600px){
     .stem{ font-size:1.08rem; }
@@ -366,6 +396,27 @@
     </div>
     <button class="start-all" data-mode="full">Revisão completa &nbsp;·&nbsp; <span id="meta-full">— questões</span></button>
 
+    <div class="smart" id="smart-zone">
+      <div class="smart-h">📈 Revisão inteligente</div>
+      <div class="smart-sub">Seu progresso fica salvo neste navegador. Erre uma questão e o modo adaptativo reforça aquele conteúdo.</div>
+      <div class="stat-row" id="stat-row"></div>
+      <div class="smart-actions">
+        <button class="smart-btn feature" id="mode-adaptive">
+          <span class="ico">🧠</span>
+          <span><span class="lab">Modo adaptativo</span><span class="desc">Reforça seus pontos fracos: errou → mais questões do tema</span></span>
+        </button>
+        <button class="smart-btn" id="mode-wrong">
+          <span class="ico">🔁</span>
+          <span><span class="lab">Refazer as que errei</span><span class="desc"><span id="n-wrong">0</span> questão(ões)</span></span>
+        </button>
+        <button class="smart-btn" id="mode-marked">
+          <span class="ico">⭐</span>
+          <span><span class="lab">Questões marcadas</span><span class="desc"><span id="n-marked">0</span> marcada(s)</span></span>
+        </button>
+      </div>
+      <button class="clearp" id="clear-progress">Limpar meu progresso</button>
+    </div>
+
     <p class="src-note">
       <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3.5A1.5 1.5 0 0 1 3.5 2H7v12H3.5A1.5 1.5 0 0 1 2 12.5zM9 2h3.5A1.5 1.5 0 0 1 14 3.5v9A1.5 1.5 0 0 1 12.5 14H9z" fill="#8493A6"/></svg>
       Questões e explicações elaboradas a partir do <b>Guyton &amp; Hall — Tratado de Fisiologia Médica</b> (13ª ed.) e dos <b>simulados de fisiologia</b> usados como referência de nível e estilo.
@@ -378,6 +429,7 @@
       <span class="pill" id="q-sys">Cardiovascular</span>
       <span class="topic" id="q-topic">—</span>
       <span class="typetag" id="q-type">V / F</span>
+      <button class="mark-btn" id="q-mark" type="button" aria-pressed="false" title="Marcar como difícil" aria-label="Marcar questão como difícil">☆</button>
     </div>
     <div id="q-body"></div>
     <div id="q-feedback"></div>
@@ -445,6 +497,7 @@
    ========================================================= */
 const QUESTIONS = [
   {
+    "id": "1e021a2a6f",
     "system": "cardio",
     "topic": "Eletrofisiologia do coração",
     "type": "mc",
@@ -460,6 +513,7 @@ const QUESTIONS = [
     "expl": "No músculo ventricular, o platô do potencial de ação depende da abertura prolongada dos canais de cálcio do tipo L, também chamados canais lentos de cálcio-sódio, e da redução simultânea da permeabilidade ao K⁺. O bloqueio desses canais encurta a fase 2 e reduz a entrada de Ca²⁺ que ajuda a ativar a contração. A fase 0 não fica mais rápida, pois ela depende principalmente dos canais rápidos de Na⁺. A hiperpolarização diastólica espontânea é característica do nodo sinusal e decorre de eventos próprios das fibras nodais, não do bloqueio de Ca²⁺ tipo L ventricular. O período refratário tenderia a acompanhar o encurtamento do potencial de ação, e não a se prolongar. A força contrátil não aumenta, porque o Ca²⁺ que entra pelos túbulos T é essencial para complementar o retículo sarcoplasmático cardíaco, que é menos desenvolvido que o do músculo esquelético."
   },
   {
+    "id": "4088895278",
     "system": "cardio",
     "topic": "Eletrofisiologia do coração",
     "type": "mc",
@@ -475,6 +529,7 @@ const QUESTIONS = [
     "expl": "A estimulação parassimpática libera acetilcolina, que aumenta muito a permeabilidade da membrana ao K⁺ nas fibras condutoras cardíacas. Esse efluxo de K⁺ causa <b>hiperpolarização</b>, tornando o potencial do nodo sinusal mais negativo, cerca de −65 a −75 mV em vez dos −55 a −60 mV habituais, e retardando a chegada ao limiar. No nodo A-V, a hiperpolarização reduz o fator de segurança para a transmissão e pode apenas retardar ou, se intensa, bloquear a condução. O aumento da permeabilidade ao Na⁺ e ao Ca²⁺ é atribuído ao estímulo simpático, não ao vagal. A norepinefrina aumenta, e não reduz, a atividade cardíaca por receptores β₁. As fibras de Purkinje podem produzir escape ventricular entre 15 e 40 batimentos/min, mas isso ocorre quando a condução aos ventrículos falha, não como efeito direto acelerador do vago."
   },
   {
+    "id": "027a32b739",
     "system": "cardio",
     "topic": "Eletrofisiologia do coração",
     "type": "mc",
@@ -490,6 +545,7 @@ const QUESTIONS = [
     "expl": "No bloqueio A-V completo, os átrios continuam sob comando sinusal, enquanto os ventrículos dependem de um marca-passo distal, frequentemente no sistema de Purkinje. Guyton descreve que, após bloqueio súbito, as fibras de Purkinje podem demorar 5 a 20 segundos para iniciar impulsos porque estavam sobrepujadas pelos estímulos sinusais, e a falta de bombeamento pode causar desmaio após 4 a 5 segundos. O ritmo ventricular de escape costuma ficar entre 15 e 40 batimentos/min, não em 70-80 batimentos/min. O nodo sinusal não passa a comandar os ventrículos se a via A-V está bloqueada. A barreira fibrosa normalmente isola átrios e ventrículos, e a condução retrógrada não é uma via fisiológica. As fibras ventriculares comuns conduzem lentamente, cerca de 0,3 a 0,5 m/s, enquanto velocidades de até 4 m/s pertencem ao sistema de Purkinje."
   },
   {
+    "id": "a7632d9879",
     "system": "cardio",
     "topic": "Eletrofisiologia do coração",
     "type": "mc",
@@ -505,6 +561,7 @@ const QUESTIONS = [
     "expl": "O impulso chega ao nodo A-V cerca de 0,03 segundo após sua origem no nodo sinusal. Em seguida há retardo de aproximadamente 0,09 segundo no próprio nodo A-V e mais 0,04 segundo no feixe penetrante, gerando cerca de 0,13 segundo de retardo nodal/feixe e 0,16 segundo até chegar ao tecido contrátil ventricular. A opção que atribui 0,13 segundo ao trajeto até o nodo A-V confunde o retardo A-V com a condução atrial inicial. As fibras de Purkinje não são a principal fonte do atraso; ao contrário, conduzem rapidamente. O tempo de 0,06 segundo descreve aproximadamente a transmissão ventricular desde os ramos até a última fibra, não o retardo A-V. O valor de 0,25 a 0,30 segundo corresponde ao período refratário ventricular, não ao atraso nodal."
   },
   {
+    "id": "836b148464",
     "system": "cardio",
     "topic": "Eletrofisiologia do coração",
     "type": "mc",
@@ -520,6 +577,7 @@ const QUESTIONS = [
     "expl": "O músculo ventricular tem período refratário normal de cerca de 0,25 a 0,30 segundo, aproximadamente igual à duração do platô prolongado do potencial de ação. Durante esse intervalo, uma área já excitada não pode ser reexcitada por impulso normal, impedindo somação tetânica como a observada no músculo esquelético. Há ainda período refratário relativo de cerca de 0,05 segundo, no qual um estímulo mais intenso pode produzir contração prematura. A fase 4 não corresponde ao período refratário principal. As junções comunicantes participam da condução, mas não explicam isoladamente a refratariedade durante o platô. O período refratário atrial é mais curto, cerca de 0,15 segundo, e não mais longo que o ventricular."
   },
   {
+    "id": "c1112f54b4",
     "system": "cardio",
     "topic": "Eletrofisiologia do coração",
     "type": "comb",
@@ -571,6 +629,7 @@ const QUESTIONS = [
     "expl": "No miocárdio, o potencial de ação percorre a membrana e os túbulos T, influenciando o retículo sarcoplasmático e promovendo liberação de Ca²⁺. Além disso, uma quantidade importante de Ca²⁺ entra diretamente a partir dos túbulos T por canais dependentes de voltagem durante o potencial de ação. Esse Ca²⁺ ativa canais de liberação de Ca²⁺, os receptores de rianodina, no retículo sarcoplasmático, permitindo aumento do Ca²⁺ sarcoplasmático que interage com a troponina. A afirmativa 4 é falsa porque o retículo sarcoplasmático cardíaco é menos desenvolvido que o do músculo esquelético e não armazena Ca²⁺ suficiente para contração completa sem o Ca²⁺ adicional. A afirmativa 5 é correta: os túbulos T cardíacos têm diâmetro cerca de cinco vezes maior, equivalendo a volume 25 vezes maior. Portanto, a única combinação adequada é 1, 2, 3 e 5."
   },
   {
+    "id": "3a1a390d53",
     "system": "cardio",
     "topic": "Eletrofisiologia do coração",
     "type": "comb",
@@ -621,6 +680,7 @@ const QUESTIONS = [
     "expl": "A estimulação simpática aumenta a frequência de descarga do nodo sinusal, a velocidade de condução e a excitabilidade cardíaca. A norepinefrina liberada por terminações simpáticas estimula receptores β₁ e, segundo Guyton, provavelmente aumenta a permeabilidade das fibras a Na⁺ e Ca²⁺. No nodo A-V e nos feixes A-V, isso torna mais fácil a excitação sucessiva e reduz o tempo de condução entre átrios e ventrículos. A estimulação vagal intensa pode bloquear a condução A-V ou cessar a excitação sinusal, interrompendo o batimento ventricular por 5 a 20 segundos até surgir escape. A afirmativa 5 é falsa porque a estimulação simpática máxima pode praticamente triplicar a frequência cardíaca e duplicar a força de contração, não reduzi-la. Assim, são corretas as afirmativas 1, 2, 3 e 4."
   },
   {
+    "id": "da711fcf12",
     "system": "cardio",
     "topic": "Eletrofisiologia do coração",
     "type": "seq",
@@ -640,6 +700,7 @@ const QUESTIONS = [
     "expl": "O nodo sinusal é o marca-passo normal porque sua frequência intrínseca, cerca de 70 a 80 descargas por minuto, é maior que a de outras partes do sistema excitatório. As fibras do nodo A-V podem disparar espontaneamente a aproximadamente 40 a 60 vezes por minuto se não forem comandadas por outro local. As fibras de Purkinje têm frequência intrínseca menor, cerca de 15 a 40 vezes por minuto, portanto não são mais rápidas que o nodo sinusal. A cada descarga sinusal, nodo A-V e Purkinje são descarregados antes de alcançarem seus próprios limiares. Um marca-passo ectópico pode gerar sequência anormal de contração e reduzir a eficiência do bombeamento. Assim, apenas a terceira afirmação inverte a hierarquia fisiológica dos marca-passos."
   },
   {
+    "id": "51a6a3533b",
     "system": "cardio",
     "topic": "Eletrofisiologia do coração",
     "type": "seq",
@@ -659,6 +720,7 @@ const QUESTIONS = [
     "expl": "As fibras de Purkinje conduzem rapidamente, em torno de 1,5 a 4,0 m/s, enquanto o músculo ventricular comum conduz cerca de 0,3 a 0,5 m/s. Essa condução rápida permite ativação quase simultânea das regiões ventriculares. No nodo A-V e em fibras adjacentes, a condução é lenta em grande parte pelo menor número de junções comunicantes, que aumenta a resistência à passagem de íons excitatórios. A barreira fibrosa A-V normalmente isola átrios e ventrículos, deixando o feixe A-V como via fisiológica. A última afirmação é falsa porque a lentificação ventricular prejudica, e não melhora, a sincronia; Guyton cita redução da eficácia do bombeamento de até 20% a 30% em certas situações de transmissão lenta. A contração eficiente depende de ativação ventricular quase simultânea."
   },
   {
+    "id": "1b57168105",
     "system": "cardio",
     "topic": "Eletrofisiologia do coração",
     "type": "ord",
@@ -673,6 +735,7 @@ const QUESTIONS = [
     "expl": "A fase 0 do potencial de ação ventricular é causada pela abertura de canais rápidos de Na⁺, produzindo a subida rápida do potencial. A fase 1 ocorre quando esses canais se fecham e há início de repolarização por saída de K⁺. A fase 2 é o platô, sustentado pelo influxo de Ca²⁺ através de canais tipo L e pela diminuição da permeabilidade ao K⁺. A fase 3 começa quando os canais de Ca²⁺ se fecham e a permeabilidade ao K⁺ aumenta, permitindo repolarização rápida. A fase 4 corresponde ao repouso, com valor médio próximo de −90 mV nas fibras ventriculares. Inverter a fase de Ca²⁺ com a abertura rápida de Na⁺ confundiria a base do platô com a base da despolarização inicial."
   },
   {
+    "id": "d972f31976",
     "system": "cardio",
     "topic": "Eletrofisiologia do coração",
     "type": "ord",
@@ -687,6 +750,7 @@ const QUESTIONS = [
     "expl": "O nodo sinoatrial é o marca-passo normal porque descarrega mais rapidamente que o nodo A-V e as fibras de Purkinje. O impulso se espalha pelos átrios e chega ao nodo A-V em cerca de 0,03 segundo. O atraso fisiológico principal ocorre no nodo A-V e no feixe penetrante, somando cerca de 0,13 segundo, por causa da condução lenta e do menor número de junções comunicantes. Depois, o sistema de Purkinje conduz rapidamente, com velocidades de 1,5 a 4,0 m/s. A ativação final do músculo ventricular comum é mais lenta, cerca de 0,3 a 0,5 m/s, e completa a dispersão do impulso até o epicárdio. Colocar Purkinje antes do retardo A-V eliminaria a sequência que permite a contração atrial antes da ventricular."
   },
   {
+    "id": "36754c0105",
     "system": "cardio",
     "topic": "Eletrofisiologia do coração",
     "type": "vf",
@@ -695,6 +759,7 @@ const QUESTIONS = [
     "expl": "A afirmação é verdadeira. Guyton descreve que as fibras sinusais têm potencial de repouso menos negativo, cerca de −55 a −60 mV, em contraste com −85 a −90 mV nas fibras ventriculares. Nesse nível, a maioria dos canais rápidos de Na⁺ permanece inativada após poucos milissegundos, impedindo que eles produzam o potencial em ponta rápido típico do ventrículo. Assim, nas fibras nodais, os canais lentos de sódio-cálcio são os principais responsáveis pela ativação do potencial de ação. Isso explica por que o potencial de ação nodal se desenvolve e se recupera mais lentamente que o ventricular. Confundir esse mecanismo com abertura rápida de Na⁺ eliminaria a diferença essencial entre fibra nodal e fibra muscular ventricular."
   },
   {
+    "id": "3c83280327",
     "system": "cardio",
     "topic": "Contratilidade miocárdica",
     "type": "mc",
@@ -710,6 +775,7 @@ const QUESTIONS = [
     "expl": "O excesso de K⁺ extracelular despolariza parcialmente a membrana miocárdica, tornando o potencial de repouso menos negativo e reduzindo a intensidade do potencial de ação. Guyton destaca que concentrações de K⁺ de 8 a 12 mEq/L, cerca de 2 a 3 vezes o normal, podem causar fraqueza acentuada do coração, ritmos anormais, bloqueio da condução A-V e morte. A alternativa que fala em hiperpolarização está errada porque o efeito descrito é justamente a despolarização parcial. A ideia de contrações espásticas corresponde ao excesso de Ca²⁺, não ao excesso de K⁺. Também é incorreto dizer que há aceleração do feixe A-V ou aumento da pressão de ejeção, pois grandes quantidades de K⁺ podem bloquear a condução e tornar o coração dilatado e flácido."
   },
   {
+    "id": "0eff7de107",
     "system": "cardio",
     "topic": "Contratilidade miocárdica",
     "type": "mc",
@@ -725,6 +791,7 @@ const QUESTIONS = [
     "expl": "No coração, grande quantidade de Ca²⁺ adicional entra a partir dos túbulos T durante o potencial de ação e ativa os receptores de rianodina no retículo sarcoplasmático, liberando mais Ca²⁺ para o sarcoplasma. Esse Ca²⁺ interage com a troponina e permite a formação de pontes cruzadas entre actina e miosina. Guyton ressalta que, sem esse Ca²⁺ adicional dos túbulos T, a força cardíaca fica consideravelmente reduzida, pois o retículo sarcoplasmático cardíaco é menos desenvolvido que o do músculo esquelético. As alternativas que tornam o músculo cardíaco semelhante ao esquelético ou que negam a comunicação dos túbulos T com o líquido extracelular estão erradas. Também é falso que a ausência de Ca²⁺ aumente a força ou que o Ca²⁺ extracelular atue apenas na frequência."
   },
   {
+    "id": "b72899855e",
     "system": "cardio",
     "topic": "Contratilidade miocárdica",
     "type": "mc",
@@ -740,6 +807,7 @@ const QUESTIONS = [
     "expl": "A duração total do ciclo cardíaco é a recíproca da frequência cardíaca; a 72 batimentos/min, dura cerca de 0,833 segundo. Guyton afirma que, nessa frequência normal, a sístole ocupa aproximadamente 0,4 do ciclo, mas, quando a frequência triplica, ocupa cerca de 0,65 do ciclo. Portanto, a diástole encurta proporcionalmente mais que a sístole, prejudicando o enchimento das câmaras antes da próxima contração. A alternativa que diz que sístole e diástole encurtam igualmente está errada. Também estão erradas as opções que atribuem 0,65 do ciclo ao repouso, que dizem haver prolongamento do potencial de ação com taquicardia ou que tornam a duração do ciclo independente da frequência."
   },
   {
+    "id": "3984dbd357",
     "system": "cardio",
     "topic": "Contratilidade miocárdica",
     "type": "mc",
@@ -755,6 +823,7 @@ const QUESTIONS = [
     "expl": "Guyton descreve que estímulos simpáticos potentes podem elevar a frequência cardíaca de cerca de 70 para 180 a 200 batimentos/min em adultos jovens, raramente até 250 batimentos/min, além de aumentar a força de contração até o dobro. Esses efeitos elevam o volume bombeado e a pressão de ejeção, podendo aumentar muito o débito cardíaco além do efeito de Frank-Starling. A alternativa que diz que o simpático reduz a frequência está invertida. A estimulação vagal forte reduz principalmente a frequência e diminui a força apenas 20% a 30%, pois as fibras vagais estão mais dispersas nos átrios e pouco nos ventrículos. A inibição simpática reduz o bombeamento em até cerca de 30% abaixo do normal, e a ativação parassimpática desloca a função cardíaca para baixo, não para cima."
   },
   {
+    "id": "fcf6a7fa70",
     "system": "cardio",
     "topic": "Contratilidade miocárdica",
     "type": "mc",
@@ -770,6 +839,7 @@ const QUESTIONS = [
     "expl": "O aumento da pressão externa ao coração dificulta o enchimento das câmaras e desloca a curva de débito cardíaco para a direita. Guyton exemplifica que elevar a pressão intrapleural de −4 para −2 mmHg exige cerca de 2 mmHg adicionais de pressão atrial direita para o mesmo enchimento; no tamponamento, o acúmulo de líquido pericárdico tem efeito semelhante e pode ser ainda maior nos altos volumes. A alternativa que prevê deslocamento para a esquerda está errada porque isso facilitaria, e não dificultaria, o enchimento. O platô de cerca de 25 L/min corresponde à excitação nervosa máxima do coração, não ao tamponamento. Também é errado dizer que a pressão externa não interfere no enchimento ou confundir esse fenômeno com redução primária da pressão média de enchimento sistêmico."
   },
   {
+    "id": "8d64e8a51b",
     "system": "cardio",
     "topic": "Contratilidade miocárdica",
     "type": "comb",
@@ -818,6 +888,7 @@ const QUESTIONS = [
     "expl": "As afirmativas 1, 2, 3 e 4 estão corretas. Guyton descreve que a excitação nervosa máxima pode elevar o platô da curva de débito cardíaco para cerca de 25 L/min por aumentar frequência e contratilidade. A hipertrofia cardíaca pode elevar o platô em 60% a 100%, e em corredores de maratona a massa cardíaca pode aumentar 50% a 75%, permitindo, quando combinada à excitação nervosa, débitos de 30 a 40 L/min. Fatores como hipertensão grave, infarto, valvulopatia, miocardite e hipóxia reduzem a eficácia de bombeamento. A afirmativa 5 é falsa porque a estimulação vagal atua principalmente reduzindo a frequência e tem pouco efeito ventricular direto, já que as fibras vagais estão mais distribuídas nos átrios."
   },
   {
+    "id": "35ccfa0ce3",
     "system": "cardio",
     "topic": "Contratilidade miocárdica",
     "type": "comb",
@@ -867,6 +938,7 @@ const QUESTIONS = [
     "expl": "As afirmativas 1 a 4 estão corretas e descrevem mecanismos periféricos de alteração do débito cardíaco. No beribéri, a deficiência de tiamina reduz a utilização de nutrientes e causa vasodilatação periférica, podendo aumentar retorno venoso e débito para cerca de duas vezes o normal. No hipertireoidismo, o metabolismo elevado reduz a resistência periférica e eleva o débito em 40% a 80%; na anemia, a menor viscosidade e a hipóxia tecidual local também reduzem a resistência. A hemorragia diminui o volume sanguíneo e reduz a pressão de enchimento necessária para o retorno venoso. A afirmativa 5 é falsa porque a dilatação venosa aguda diminui, e não aumenta, a pressão de enchimento do sistema vascular, causando acúmulo de sangue nas veias e queda do retorno."
   },
   {
+    "id": "b943da4f84",
     "system": "cardio",
     "topic": "Contratilidade miocárdica",
     "type": "seq",
@@ -886,6 +958,7 @@ const QUESTIONS = [
     "expl": "A primeira afirmação é verdadeira porque os discos intercalados possuem gap junctions que permitem passagem quase livre de íons e propagação rápida do potencial de ação de uma célula a outra. A segunda é falsa: Guyton descreve dois sincícios funcionais, atrial e ventricular, separados por tecido fibroso, com condução normal entre eles pelo feixe A-V. A terceira é verdadeira, pois a condução no músculo atrial e ventricular é de cerca de 0,3 a 0,5 m/s, enquanto no sistema de Purkinje chega a aproximadamente 4 m/s. A quarta é falsa porque o período refratário ventricular longo, de 0,25 a 0,30 segundo, impede reexcitação imediata e evita somação/tetania como no músculo esquelético. O período refratário relativo de cerca de 0,05 segundo permite resposta apenas a estímulo mais intenso, não somação normal."
   },
   {
+    "id": "5a4c016e55",
     "system": "cardio",
     "topic": "Contratilidade miocárdica",
     "type": "seq",
@@ -905,6 +978,7 @@ const QUESTIONS = [
     "expl": "A primeira afirmação é verdadeira: Guyton cita cerca de 5,6 L/min em homens jovens, 4,9 L/min em mulheres e frequentemente quase 5 L/min como valor médio arredondado no adulto. A segunda também é verdadeira, pois o índice cardíaco médio normal é de cerca de 3 L/min/m² e a área corporal média de um adulto de 70 kg é aproximadamente 1,7 m². A terceira é falsa porque, nas condições não estressantes usuais, o débito cardíaco é controlado principalmente pelos fatores periféricos que determinam o retorno venoso. O mecanismo de Frank-Starling permite que o coração bombeie automaticamente o sangue que retorna, até seu limite. A quarta é verdadeira: o platô normal da curva de débito cardíaco é por volta de 13 L/min, aproximadamente 2,5 vezes o débito normal de 5 L/min."
   },
   {
+    "id": "25b72467b9",
     "system": "cardio",
     "topic": "Contratilidade miocárdica",
     "type": "ord",
@@ -919,6 +993,7 @@ const QUESTIONS = [
     "expl": "A fase 0 do potencial ventricular ocorre pela abertura dos canais rápidos de Na⁺, que elevam o potencial até cerca de +20 mV. Na fase 1, esses canais se fecham e há repolarização inicial com saída de K⁺. A fase 2 é o platô, sustentado pela entrada de Ca²⁺ pelos canais tipo L e pela redução da permeabilidade ao K⁺. Na fase 3, o fechamento dos canais de Ca²⁺ e a maior saída de K⁺ encerram o platô e repolarizam a célula. A fase 4 corresponde ao potencial de repouso, descrito por Guyton como aproximadamente −90 mV; inverter o platô com a repolarização rápida ou atribuir a fase 0 ao Ca²⁺ tornaria a sequência fisiologicamente incorreta."
   },
   {
+    "id": "92a4c6254a",
     "system": "cardio",
     "topic": "Contratilidade miocárdica",
     "type": "ord",
@@ -933,6 +1008,7 @@ const QUESTIONS = [
     "expl": "O acoplamento começa quando o potencial de ação alcança os túbulos T, que se comunicam diretamente com o líquido extracelular. A entrada de Ca²⁺ pelos canais dependentes de voltagem é crucial no miocárdio e aciona a liberação adicional de Ca²⁺ pelos receptores de rianodina do retículo sarcoplasmático. O aumento do Ca²⁺ sarcoplasmático permite sua ligação à troponina e a formação de pontes cruzadas, gerando contração. O relaxamento ocorre quando termina o influxo de Ca²⁺ ao fim do platô e o íon é removido por Ca²⁺-ATPase para o retículo e pelo trocador Na⁺-Ca²⁺ para fora da célula. Colocar a remoção de Ca²⁺ antes da ligação à troponina ou dispensar a entrada de Ca²⁺ pelos túbulos T contradiz a dependência especial do coração em relação ao Ca²⁺ extracelular."
   },
   {
+    "id": "0f9888eb68",
     "system": "cardio",
     "topic": "Contratilidade miocárdica",
     "type": "vf",
@@ -941,6 +1017,7 @@ const QUESTIONS = [
     "expl": "A afirmação é verdadeira. Guyton atribui o platô do potencial de ação cardíaco à abertura de canais lentos de cálcio tipo L, também chamados canais cálcio-sódio, que permanecem abertos por vários décimos de segundo e permitem entrada de Ca²⁺ e Na⁺. Ao mesmo tempo, a permeabilidade ao K⁺ diminui aproximadamente cinco vezes, reduzindo a saída de cargas positivas e impedindo repolarização rápida. Quando esses canais de Ca²⁺ se fecham ao final de 0,2 a 0,3 segundo e a permeabilidade ao K⁺ aumenta, ocorre repolarização. Esse platô torna a contração ventricular prolongada, com duração em torno de 0,3 segundo, muito maior que a contração do músculo esquelético."
   },
   {
+    "id": "b16e9d1cac",
     "system": "cardio",
     "topic": "Ciclo cardíaco",
     "type": "mc",
@@ -956,6 +1033,7 @@ const QUESTIONS = [
     "expl": "A onda P é causada pela disseminação da despolarização pelos átrios e é seguida pela contração atrial, que produz discreto aumento da pressão atrial. Segundo Guyton & Hall, cerca de 0,16 segundo após o início da onda P surgem as ondas QRS, decorrentes da despolarização ventricular, e o QRS começa pouco antes da sístole ventricular. A alternativa sobre repolarização atrial está errada porque atribui à onda P um evento que não é sua origem. A onda T não é despolarização ventricular, mas <b>repolarização ventricular</b>, surgindo pouco antes do fim da contração ventricular. Também é incorreto dizer que a onda P é consequência mecânica da pressão atrial ou que o QRS só aparece após a ejeção, pois a ativação elétrica precede a contração e a abertura das valvas semilunares."
   },
   {
+    "id": "e9f1d59c87",
     "system": "cardio",
     "topic": "Ciclo cardíaco",
     "type": "mc",
@@ -971,6 +1049,7 @@ const QUESTIONS = [
     "expl": "Normalmente, cerca de 80% do sangue flui dos átrios para os ventrículos antes da contração atrial, e a contração atrial adiciona aproximadamente 20% ao enchimento ventricular. Por isso, a perda da sístole atrial pode ser pouco notada em repouso, já que o coração tem reserva de bombeamento de 300% a 400% acima da necessidade basal, mas pode causar falta de ar durante exercício. A alternativa que atribui 80% do enchimento à contração atrial inverte a fisiologia. A fibrilação atrial não melhora o enchimento; em valvulopatia mitral avançada ela reduz ainda mais a eficácia do bombeamento. O enchimento não ocorre todo no segundo terço da diástole: há enchimento rápido no primeiro terço, fluxo pequeno no segundo e contribuição atrial no último terço. Reduzir o volume diastólico final não aumenta a fração de ejeção por mecanismo de Frank-Starling; tende a reduzir a força de contração dentro dos limites fisiológicos."
   },
   {
+    "id": "16e83727c7",
     "system": "cardio",
     "topic": "Ciclo cardíaco",
     "type": "mc",
@@ -986,6 +1065,7 @@ const QUESTIONS = [
     "expl": "O débito sistólico é a diferença entre volume diastólico final e volume sistólico final: 120 mL - 50 mL = 70 mL. A fração de ejeção é 70/120, aproximadamente 0,58, muito próxima do valor normal de cerca de 0,6 ou 60% citado por Guyton & Hall. A alternativa que usa 50 mL como débito sistólico confunde volume residual com volume ejetado. A alternativa que usa 120 mL como volume ejetado ignora que 40 a 50 mL costumam permanecer no ventrículo ao final da sístole. Somar volumes para obter débito sistólico é fisiologicamente incorreto, e a fração de ejeção é, por definição, uma relação volumétrica, embora seja influenciada por contratilidade, pré-carga e pós-carga."
   },
   {
+    "id": "3c6c8070cb",
     "system": "cardio",
     "topic": "Ciclo cardíaco",
     "type": "mc",
@@ -1001,6 +1081,7 @@ const QUESTIONS = [
     "expl": "Na estenose aórtica, o ventrículo esquerdo ejeta sangue por uma abertura fibrosa pequena, produzindo um jato de enorme velocidade e turbulência na raiz da aorta. Guyton descreve que a pressão sistólica ventricular esquerda pode atingir cerca de 300 mmHg nessa situação, e em estenose grave, com hipertrofia, até 400 mmHg. A regurgitação aórtica produz sopro <b>diastólico</b> de refluxo da aorta para o ventrículo esquerdo, não sopro sistólico ejetivo. A estenose mitral é diastólica, geralmente fraca e de baixa frequência, porque a pressão atrial esquerda raramente ultrapassa 30 mmHg. A regurgitação mitral é sistólica, mas o som se transmite sobretudo ao ápice, e a persistência do canal arterial é uma derivação esquerda-direita com sopro de maquinário, mais intenso na sístole e menos na diástole."
   },
   {
+    "id": "b0f90dd574",
     "system": "cardio",
     "topic": "Ciclo cardíaco",
     "type": "mc",
@@ -1016,6 +1097,7 @@ const QUESTIONS = [
     "expl": "Na regurgitação aórtica, parte do sangue retorna da aorta ao ventrículo esquerdo durante a diástole, elevando a pressão diastólica intraventricular e comprimindo camadas internas do miocárdio. Ao mesmo tempo, a pressão diastólica aórtica cai, o que reduz a força propulsora do fluxo coronariano. Essa combinação favorece isquemia mesmo sem obstrução coronariana fixa. A alternativa que propõe aumento da pressão diastólica aórtica está oposta ao mecanismo descrito. Também é errado dizer que não há hipertrofia ou demanda aumentada, pois tanto estenose quanto regurgitação aórtica elevam a carga de trabalho do ventrículo esquerdo. Pressão atrial direita e fechamento mitral não são os determinantes centrais da isquemia nessa lesão segundo o texto."
   },
   {
+    "id": "5e2318d56c",
     "system": "cardio",
     "topic": "Ciclo cardíaco",
     "type": "comb",
@@ -1067,6 +1149,7 @@ const QUESTIONS = [
     "expl": "As quatro primeiras afirmativas descrevem corretamente o mecanismo de Frank-Starling conforme Guyton & Hall. O aumento do retorno venoso distende o miocárdio, aproxima os filamentos de actina e miosina de uma sobreposição mais favorável e aumenta a força de contração. A distensão atrial esquerda também pode elevar a frequência cardíaca em 10% a 20%, mas esse efeito é menor que o aumento de força pela distensão ventricular. As curvas de função ventricular expressam esse princípio ao relacionar maior pressão atrial com maior trabalho sistólico ou maior débito volumétrico até um limite. A quinta afirmativa é falsa porque a pressão diastólica ventricular não aumenta muito até que o volume do ventrículo não contraído ultrapasse cerca de 150 mL; acima disso, ela sobe rapidamente."
   },
   {
+    "id": "60c223d81e",
     "system": "cardio",
     "topic": "Ciclo cardíaco",
     "type": "comb",
@@ -1118,6 +1201,7 @@ const QUESTIONS = [
     "expl": "As afirmativas 1 a 4 são compatíveis com a descrição fisiológica de Guyton & Hall. A regurgitação mitral ocorre durante a sístole e seu som é transmitido principalmente para o ápice, porque o átrio esquerdo é profundo no tórax. A estenose mitral produz sopro diastólico geralmente fraco e de baixa frequência, pois a pressão atrial esquerda raramente sobe acima de 30 mmHg. Na regurgitação aórtica grave, o ventrículo esquerdo pode bombear volumes sistólicos totais superiores a 250 mL, mas grande parte retorna durante a diástole, reduzindo o débito efetivo. A quinta afirmativa é falsa porque a estenose aórtica aumenta, não reduz, a carga de trabalho, a tensão ventricular, o consumo de oxigênio e a tendência à hipertrofia."
   },
   {
+    "id": "f81ef5ec0f",
     "system": "cardio",
     "topic": "Ciclo cardíaco",
     "type": "seq",
@@ -1137,6 +1221,7 @@ const QUESTIONS = [
     "expl": "A primeira bulha, o “lub”, acompanha o fechamento das valvas mitral e tricúspide no início da sístole ventricular. É falso que a abertura valvar normal seja a principal causa audível das bulhas, pois Guyton enfatiza que a abertura é relativamente vagarosa e normalmente silenciosa. A segunda bulha, o “dub”, resulta do fechamento das valvas aórtica e pulmonar ao fim da sístole e dura cerca de 0,11 segundo, contra cerca de 0,14 segundo da primeira. Ela tem frequência maior porque as valvas semilunares e as paredes arteriais estão mais retesadas. A quarta bulha é ligada à contração atrial e costuma ter frequência de 20 ciclos/s ou menos, sendo difícil de auscultar."
   },
   {
+    "id": "ddf6c40e9b",
     "system": "cardio",
     "topic": "Ciclo cardíaco",
     "type": "seq",
@@ -1156,6 +1241,7 @@ const QUESTIONS = [
     "expl": "O componente dominante do trabalho cardíaco é o trabalho externo volume-pressão, que move sangue de pressões venosas baixas para pressões arteriais elevadas. Em condições normais, a energia cinética necessária para acelerar o sangue corresponde a apenas cerca de 1% do trabalho total do ventrículo esquerdo, portanto a segunda afirmação é falsa. A exceção importante é a estenose aórtica, em que o sangue atravessa uma abertura estreita em alta velocidade e a energia cinética pode consumir mais de 50% do trabalho total. O consumo de oxigênio relaciona-se ao trabalho externo, à energia potencial e ao índice tensão-tempo. A eficiência mecânica normal é de cerca de 20% a 25%, mas pode cair para 5% a 10% em insuficiência cardíaca."
   },
   {
+    "id": "3211078e6f",
     "system": "cardio",
     "topic": "Ciclo cardíaco",
     "type": "ord",
@@ -1171,6 +1257,7 @@ const QUESTIONS = [
     "expl": "A alça volume-pressão começa, funcionalmente, com o enchimento ventricular, quando o volume residual de cerca de 50 mL aumenta para aproximadamente 120 mL. Em seguida, a contração ventricular fecha as valvas A-V e ocorre contração isovolumétrica, pois todas as valvas estão fechadas e o volume não se altera. Quando a pressão ventricular esquerda supera a pressão aórtica diastólica, em torno de 80 mmHg, a valva aórtica se abre e ocorre ejeção. Ao fim da sístole, o refluxo breve na aorta fecha a valva aórtica e gera a incisura. Depois, durante 0,03 a 0,06 segundo, ocorre relaxamento isovolumétrico sem mudança de volume até que as valvas A-V se abram novamente."
   },
   {
+    "id": "90f446430c",
     "system": "cardio",
     "topic": "Ciclo cardíaco",
     "type": "ord",
@@ -1186,6 +1273,7 @@ const QUESTIONS = [
     "expl": "A onda a é consequência direta da contração atrial, que ocorre logo após a despolarização atrial representada pela onda P. O complexo QRS precede a sístole ventricular, e o aumento inicial da pressão ventricular causa o fechamento e o abaulamento das valvas A-V, formando a onda c. Durante a sístole ventricular, as valvas A-V permanecem fechadas, mas o retorno venoso continua enchendo os átrios. Esse armazenamento progressivo gera a onda v próximo ao fim da contração ventricular. Quando a pressão ventricular cai e as valvas A-V se abrem, o sangue acumulado escoa rapidamente para os ventrículos, fazendo desaparecer a onda v."
   },
   {
+    "id": "13329eb980",
     "system": "cardio",
     "topic": "Ciclo cardíaco",
     "type": "vf",
@@ -1194,6 +1282,7 @@ const QUESTIONS = [
     "expl": "A persistência do canal arterial após o nascimento transforma a comunicação fetal em derivação esquerda-direita, com sangue fluindo da aorta de maior pressão para a artéria pulmonar. Em crianças maiores, metade a dois terços do sangue aórtico podem recircular pelos pulmões, retornando ao ventrículo esquerdo e à aorta antes de seguir efetivamente para a circulação sistêmica. O sopro é chamado de maquinário porque aumenta e diminui a cada batimento, sendo mais intenso na sístole, quando a pressão aórtica é maior, e menos intenso na diástole. A ausência de cianose inicial é coerente, pois o sangue arterial pode estar até mais oxigenado pelo excesso de passagens pulmonares. Cianose tende a aparecer tardiamente, quando surgem insuficiência cardíaca ou congestão pulmonar."
   },
   {
+    "id": "63e9c3b3df",
     "system": "cardio",
     "topic": "Eletrocardiograma",
     "type": "mc",
@@ -1209,6 +1298,7 @@ const QUESTIONS = [
     "expl": "No papel padrão a 25 mm/s, 25 mm correspondem a 1 segundo, cada 5 mm a 0,20 s e cada pequeno intervalo de 1 mm a 0,04 s. Assim, 20,8 mm correspondem a aproximadamente 0,83 s, resultando em 60/0,83, ou cerca de <b>72 batimentos/min</b>, valor normal citado por Guyton para adulto. Quatro pequenos quadrados equivalem a 0,16 s, que é o intervalo P-Q ou P-R normal, isto é, do início da estimulação atrial ao início da estimulação ventricular. Cerca de 8,75 pequenos quadrados equivalem a 0,35 s, que é o intervalo Q-T normal, relacionado à duração aproximada da contração ventricular. As alternativas que calculam 60, 90 ou 120 bpm usam incorretamente a calibração temporal ou o intervalo R-R. A última alternativa erra porque o P-R não mede contração ventricular; a contração ventricular se estende aproximadamente do início de Q ou R até o final de T."
   },
   {
+    "id": "9eaf2539bf",
     "system": "cardio",
     "topic": "Eletrocardiograma",
     "type": "mc",
@@ -1224,6 +1314,7 @@ const QUESTIONS = [
     "expl": "Nas derivações torácicas, o eletrodo colocado sobre a parede anterior do tórax é ligado ao terminal positivo, enquanto o eletrodo indiferente é formado pela conexão simultânea aos membros por resistências iguais. Como essas derivações ficam próximas ao coração, cada uma registra principalmente o potencial da musculatura subjacente. Em V1 e V2, o eletrodo está mais próximo da base cardíaca, que fica eletronegativa durante grande parte da despolarização ventricular, gerando QRS predominantemente negativo. Em V4, V5 e V6, o eletrodo está mais próximo do ápice, que permanece eletropositivo durante grande parte desse processo, produzindo QRS predominantemente positivo. A alternativa sobre repolarização atrial é errada porque o QRS representa despolarização ventricular, não repolarização atrial. As opções que atribuem o padrão a terminais dos membros, ausência de septo ou inversão temporal da onda T contradizem a definição das derivações torácicas e a sequência normal QRS-T."
   },
   {
+    "id": "b199cbf0a4",
     "system": "cardio",
     "topic": "Eletrocardiograma",
     "type": "mc",
@@ -1239,6 +1330,7 @@ const QUESTIONS = [
     "expl": "Na derivação I, o terminal negativo está no braço direito e o positivo no braço esquerdo; portanto, o registro é +0,1 - (-0,2) = <b>+0,3 mV</b>. Na derivação II, o terminal negativo está no braço direito e o positivo na perna esquerda; assim, +0,8 - (-0,2) = <b>+1,0 mV</b>. Na derivação III, o terminal negativo está no braço esquerdo e o positivo na perna esquerda; logo, +0,8 - (+0,1) = <b>+0,7 mV</b>. Esses valores obedecem à lei de Einthoven, pois I + III = II, ou 0,3 + 0,7 = 1,0 mV. As alternativas com sinais negativos invertem as polaridades dos terminais. As demais trocam os eixos das derivações e violam a relação algébrica exigida entre I, II e III."
   },
   {
+    "id": "10773f25a6",
     "system": "cardio",
     "topic": "Eletrocardiograma",
     "type": "mc",
@@ -1254,6 +1346,7 @@ const QUESTIONS = [
     "expl": "O ECG padrão avalia os eventos elétricos por curto período, geralmente em repouso, e pode perder anormalidades raras, mas importantes. Guyton descreve o ECG ambulatorial como útil quando sintomas como síncope, quase síncope, tonturas, dor cardíaca ou batimentos irregulares sugerem arritmia transitória. Para eventos prováveis em 24 a 48 horas, o registro contínuo é adequado; para eventos pouco frequentes, usam-se equipamentos intermitentes por semanas ou meses. Em alguns casos, um gravador implantável de alça pode ser colocado sob a pele do tórax e monitorar intermitentemente por <b>2 a 3 anos</b>. O ECG padrão único, aVR isolada e derivações precordiais isoladas não resolvem o problema central, que é registrar o ECG no momento exato do sintoma. O monitor contínuo de 24 a 48 horas pode ser insuficiente se o episódio ocorre apenas a cada vários meses."
   },
   {
+    "id": "5c45e1b20d",
     "system": "cardio",
     "topic": "Eletrocardiograma",
     "type": "mc",
@@ -1269,6 +1362,7 @@ const QUESTIONS = [
     "expl": "Após a despolarização ventricular, a repolarização começa cerca de 0,15 s depois e se completa em aproximadamente 0,35 s, formando a onda T. Embora o septo e as áreas endocárdicas se despolarizem primeiro, elas não costumam repolarizar primeiro, pois têm período de contração mais longo. A maior parte da superfície externa dos ventrículos, especialmente próxima ao ápice, repolariza antes, enquanto as áreas endocárdicas repolarizam por último. Por isso, durante a repolarização, a extremidade positiva do vetor ventricular resultante aponta para o ápice, gerando onda T positiva nas derivações bipolares dos membros, como ocorre com a maior parte do QRS normal. A alternativa que diz que o endocárdio repolariza primeiro inverte a sequência normal. As opções que chamam a onda T de despolarização, encurtam seu tempo para 0,06 s ou negam a importância da sequência vetorial contradizem a análise vetorial de Guyton."
   },
   {
+    "id": "38759754f2",
     "system": "cardio",
     "topic": "Eletrocardiograma",
     "type": "comb",
@@ -1315,6 +1409,7 @@ const QUESTIONS = [
     "expl": "A afirmativa 1 é correta porque a onda P representa despolarização atrial e precede a contração atrial. A afirmativa 2 é falsa: o QRS é onda de <b>despolarização ventricular</b>, produzida enquanto a onda de despolarização se propaga pelos ventrículos, antes e no início da contração ventricular. A afirmativa 3 é correta, pois a onda T reflete a repolarização ventricular, que ocorre em geral 0,25 a 0,35 s após a despolarização. A afirmativa 4 também é correta, já que os ventrículos permanecem contraídos até que ocorra a repolarização, aproximadamente até o fim da onda T. A afirmativa 5 é falsa porque a onda T atrial geralmente é encoberta pelo complexo QRS, que é muito maior. As combinações alternativas incluem pelo menos uma dessas falsas, principalmente confundindo QRS com repolarização ou superestimando a onda T atrial."
   },
   {
+    "id": "c5077dccbe",
     "system": "cardio",
     "topic": "Eletrocardiograma",
     "type": "comb",
@@ -1366,6 +1461,7 @@ const QUESTIONS = [
     "expl": "A derivação II é registrada com terminal negativo no braço direito e positivo na perna esquerda, e a derivação III com terminal negativo no braço esquerdo e positivo na perna esquerda. A lei de Einthoven estabelece que, em dado momento, <b>I + III = II</b>, desde que sinais positivos e negativos sejam considerados corretamente. A afirmativa 4 é falsa porque, nas derivações torácicas, o eletrodo colocado na superfície anterior do tórax é conectado ao terminal positivo, enquanto o eletrodo indiferente é ligado ao terminal negativo por conexões aos membros. A afirmativa 5 é correta: aVR ocorre quando o terminal positivo está no braço direito; aVL, no braço esquerdo; e aVF, na perna esquerda. As opções que incluem a afirmativa 4 invertem a polaridade das derivações precordiais. As opções que omitem a lei de Einthoven ou uma conexão bipolar correta perdem elementos centrais da organização das derivações."
   },
   {
+    "id": "f987d2917a",
     "system": "cardio",
     "topic": "Eletrocardiograma",
     "type": "seq",
@@ -1385,6 +1481,7 @@ const QUESTIONS = [
     "expl": "A velocidade usual de impressão é 25 mm/s, de modo que 25 mm equivalem a 1 s, 5 mm a 0,20 s e cada subdivisão fina a 0,04 s. A segunda afirmação é falsa porque 3 a 4 mV podem ocorrer quando um eletrodo é colocado diretamente sobre os ventrículos e outro distante, enquanto nas derivações dos membros o QRS costuma medir cerca de <b>1,0 a 1,5 mV</b> entre R e S. A terceira é verdadeira: Guyton cita onda P entre 0,1 e 0,3 mV e onda T entre 0,2 e 0,3 mV. A quarta é falsa porque o intervalo P-Q ou P-R normal é de cerca de <b>0,16 s</b>, medindo do início da estimulação elétrica atrial ao início da ventricular. O intervalo de cerca de 0,35 s é o Q-T, relacionado à contração ventricular. Confundir P-R com Q-T troca atraso atrioventricular por duração elétrica ventricular."
   },
   {
+    "id": "6f9717a8a6",
     "system": "cardio",
     "topic": "Eletrocardiograma",
     "type": "seq",
@@ -1404,6 +1501,7 @@ const QUESTIONS = [
     "expl": "A derivação I registra a diferença entre braço direito negativo e braço esquerdo positivo, formando um eixo horizontal de 0 grau. O vetor QRS médio normal fica por volta de +59 graus, coerente com o fluxo médio de corrente durante grande parte da despolarização, com positividade dirigida para o ápice. A terceira afirmação é falsa: quando o vetor está quase perpendicular ao eixo da derivação, a projeção é muito pequena e a voltagem registrada é baixa. A maior voltagem ocorre quando o vetor cardíaco está quase no mesmo eixo da derivação, pois praticamente toda a voltagem é projetada nesse eixo. A aVF tem eixo de aproximadamente +90 graus, enquanto II fica em torno de +60 graus, III em +120 graus, aVL em -30 graus e aVR em +210 graus. Assim, o erro conceitual central seria confundir projeção máxima com perpendicularidade."
   },
   {
+    "id": "cd78649a78",
     "system": "cardio",
     "topic": "Eletrocardiograma",
     "type": "ord",
@@ -1419,6 +1517,7 @@ const QUESTIONS = [
     "expl": "Guyton descreve o QRS como a sequência vetorial da despolarização ventricular, iniciando-se no septo e nas superfícies endocárdicas. No primeiro momento, por volta de 0,01 s, a pequena massa despolarizada gera voltagens pequenas; depois, por volta de 0,02 s, a massa envolvida aumenta e as deflexões ficam maiores. Em torno de 0,035 s, a eletronegatividade do ápice externo começa a neutralizar parte da positividade restante, reduzindo o vetor e mudando a relação entre as derivações. Por volta de 0,05 s, resta pequena área polarizada, o vetor aponta para a base do ventrículo esquerdo e pode produzir negatividade em II e III. Ao redor de 0,06 s, a despolarização ventricular está completa, e um músculo totalmente despolarizado não produz diferença de potencial de superfície. Qualquer ordem que coloque o retorno a zero antes da despolarização completa, ou o grande vetor antes da participação de massa ventricular ampla, contraria a lógica vetorial do QRS."
   },
   {
+    "id": "8580dffdc1",
     "system": "cardio",
     "topic": "Eletrocardiograma",
     "type": "ord",
@@ -1434,6 +1533,7 @@ const QUESTIONS = [
     "expl": "A onda P corresponde à despolarização atrial que se inicia no nodo sinusal e se propaga pelos átrios em direção que costuma ser positiva nas derivações I, II e III. Diferentemente dos ventrículos, os átrios não dispõem de um sistema de Purkinje para acelerar muito a condução, por isso a propagação é relativamente lenta. A região sinusal é a primeira a despolarizar e também a primeira a repolarizar, fazendo o vetor de repolarização atrial ser oposto ao vetor de despolarização. A onda T atrial aparece cerca de 0,15 s depois da onda P, mas geralmente coincide com o QRS ventricular, que tem voltagem muito maior. Ordenar a repolarização atrial antes da onda P confundiria repolarização com despolarização. Colocar a onda T atrial como positiva nas mesmas derivações da onda P também estaria errado, porque sua polaridade normal é oposta."
   },
   {
+    "id": "0ef5107ad8",
     "system": "cardio",
     "topic": "Eletrocardiograma",
     "type": "vf",
@@ -1442,6 +1542,7 @@ const QUESTIONS = [
     "expl": "A afirmação é verdadeira segundo a relação entre o potencial de ação monofásico ventricular e o ECG. Guyton enfatiza que o ECG registra correntes que fluem entre regiões com estados elétricos diferentes, não o potencial absoluto de uma fibra isolada. Por isso, quando o músculo ventricular está totalmente polarizado, não há diferença regional de potencial capaz de gerar corrente mensurável na superfície. O mesmo ocorre quando todo o músculo está completamente despolarizado, pois as regiões estão eletricamente equivalentes. O QRS surge no início do potencial de ação, durante a propagação da despolarização, e a onda T surge no final, durante a repolarização. Interpretar a linha isoelétrica como ausência de atividade celular seria incorreto; ela indica ausência de diferença de potencial regional detectável no ECG de superfície."
   },
   {
+    "id": "1acf058486",
     "system": "cardio",
     "topic": "Hemodinâmica e determinantes da pressão arterial",
     "type": "mc",
@@ -1457,6 +1558,7 @@ const QUESTIONS = [
     "expl": "Pela relação fundamental da hemodinâmica descrita por Guyton, <b>F = ΔP/R</b>, de modo que o fluxo é diretamente proporcional à diferença de pressão entre as duas extremidades do vaso e inversamente proporcional à resistência. Se P1 e P2 são ambas 100 mmHg, ΔP é zero e, portanto, não há força propulsora líquida para gerar fluxo, mesmo com pressão absoluta alta. A alternativa que atribui o fluxo à pressão absoluta está errada porque pressão sem gradiente não desloca sangue ao longo do vaso. A resistência só limita o fluxo quando existe gradiente; sem ΔP, reduzir resistência não cria fluxo. A pressão capilar funcional média de cerca de 17 mmHg e a área capilar total são relevantes para troca e velocidade, mas não substituem a necessidade de gradiente pressórico local."
   },
   {
+    "id": "30e6670afb",
     "system": "cardio",
     "topic": "Hemodinâmica e determinantes da pressão arterial",
     "type": "mc",
@@ -1472,6 +1574,7 @@ const QUESTIONS = [
     "expl": "Na lei de Poiseuille, o fluxo é proporcional a <b>r⁴</b> quando ΔP, viscosidade e comprimento permanecem constantes. Se o raio cai para metade, o fluxo passa a (1/2)⁴, isto é, 1/16 do valor inicial, enquanto a resistência aumenta 16 vezes. As alternativas que usam relação linear, quadrática ou cúbica subestimam o impacto da mudança de calibre. A alternativa que propõe aumento de fluxo inverte o efeito fisiológico, pois vasoconstrição aumenta resistência. Essa relação explica por que pequenas alterações no diâmetro arteriolar podem quase interromper o fluxo ou aumentá-lo enormemente."
   },
   {
+    "id": "c06b93f237",
     "system": "cardio",
     "topic": "Hemodinâmica e determinantes da pressão arterial",
     "type": "mc",
@@ -1487,6 +1590,7 @@ const QUESTIONS = [
     "expl": "Guyton descreve que a viscosidade do sangue normal, com hematócrito usual, é cerca de 3 vezes a da água. Quando o hematócrito sobe para 60 a 70, como na policitemia, a viscosidade pode chegar a aproximadamente 10 vezes a da água, o que reduz o fluxo se os demais fatores forem constantes. A viscosidade plasmática isolada é apenas cerca de 1,5 vez a da água e não compensa o aumento por hemácias. A ideia de que hemácias aumentariam a condutância está errada, pois elas aumentam forças friccionais contra células adjacentes e parede vascular. A lei de Poiseuille inclui a viscosidade no denominador, além do raio, comprimento e gradiente de pressão."
   },
   {
+    "id": "05f6359c40",
     "system": "cardio",
     "topic": "Hemodinâmica e determinantes da pressão arterial",
     "type": "mc",
@@ -1502,6 +1606,7 @@ const QUESTIONS = [
     "expl": "A pressão de pulso é determinada, em termos aproximados, pela razão entre débito sistólico e complacência arterial. Na arteriosclerose, as artérias ficam mais rígidas e menos complacentes, de modo que o mesmo volume ejetado causa maior aumento da pressão sistólica e maior pressão de pulso. A alternativa que fala em aumento da complacência arterial está invertida, pois maior complacência amorteceria a oscilação pressórica. A complacência venosa é relevante para reservatório e retorno venoso, mas não explica diretamente esse alargamento do pulso arterial. A resistência arteriolar e as pressões capilares influenciam o amortecimento periférico e a troca, mas o mecanismo central aqui é a baixa complacência da árvore arterial."
   },
   {
+    "id": "aff361f75f",
     "system": "cardio",
     "topic": "Hemodinâmica e determinantes da pressão arterial",
     "type": "mc",
@@ -1517,6 +1622,7 @@ const QUESTIONS = [
     "expl": "No método auscultatório, enquanto a pressão do manguito está acima da sistólica, a artéria braquial permanece colapsada durante todo o ciclo e não há sons. Quando a pressão do manguito cai logo abaixo da pressão sistólica, o sangue passa durante o pico sistólico, gerando jato turbulento e os primeiros sons de Korotkoff; esse valor estima a pressão sistólica. A mudança para som abafado ocorre próxima à pressão diastólica, embora possa superestimar a diastólica direta. O desaparecimento completo dos sons é frequentemente usado como diastólica em muitas situações, mas não como sistólica. Com o manguito totalmente vazio, não há compressão parcial suficiente para produzir o jato turbulento característico."
   },
   {
+    "id": "8635353ba6",
     "system": "cardio",
     "topic": "Hemodinâmica e determinantes da pressão arterial",
     "type": "comb",
@@ -1563,6 +1669,7 @@ const QUESTIONS = [
     "expl": "A pressão média na aorta é alta, cerca de 100 mmHg, com pulso típico de 120/80 mmHg. A circulação pulmonar recebe o mesmo débito cardíaco que a sistêmica, mas opera com pressões muito menores, incluindo pressão arterial pulmonar média de cerca de 16 mmHg e pressão capilar média de cerca de 7 mmHg. A afirmativa 3 está errada porque a resistência vascular pulmonar total é cerca de 0,14 URP, aproximadamente um sétimo da sistêmica, não igual a 1 URP. A afirmativa 5 está errada porque a pressão cai progressivamente até cerca de 0 mmHg ao atingir o final das veias cavas no átrio direito. Essa baixa resistência pulmonar é compatível com a função de expor o sangue aos gases alveolares sem necessidade de altas pressões."
   },
   {
+    "id": "f717f94666",
     "system": "cardio",
     "topic": "Hemodinâmica e determinantes da pressão arterial",
     "type": "comb",
@@ -1609,6 +1716,7 @@ const QUESTIONS = [
     "expl": "Guyton descreve autorregulação capaz de manter o fluxo relativamente constante em muitos tecidos entre pressões arteriais de cerca de 70 a 175 mmHg. Em circuitos paralelos, as condutâncias se somam, de modo que a adição de uma via reduz a resistência total; por isso, remover um leito paralelo, como membro ou rim, reduz a condutância total e aumenta a resistência periférica total. A afirmativa 2 está errada porque, em série, as resistências se somam, aumentando a resistência total. A afirmativa 5 é falsa porque vasoconstritores como norepinefrina, angiotensina II, vasopressina e endotelina podem reduzir o fluxo ao menos transitoriamente. Com o tempo, mecanismos autorregulatórios locais tendem a superar grande parte desses efeitos para ajustar o fluxo às demandas teciduais."
   },
   {
+    "id": "9ecc9d8c03",
     "system": "cardio",
     "topic": "Hemodinâmica e determinantes da pressão arterial",
     "type": "seq",
@@ -1628,6 +1736,7 @@ const QUESTIONS = [
     "expl": "No fluxo laminar, camadas de sangue deslizam umas sobre as outras, e a camada junto à parede quase não se move por aderência ao endotélio, produzindo perfil parabólico. A equação do número de Reynolds mostra relação direta com velocidade, diâmetro e densidade, e relação inversa com viscosidade. A afirmação sobre vasos pequenos está errada porque Guyton ressalta que neles o Reynolds quase nunca é alto o suficiente para causar turbulência. Já valores acima de cerca de 2.000 favorecem turbulência mesmo em vasos retos e lisos. Clinicamente, obstruções, superfícies ásperas e ejeção rápida em grandes artérias aumentam a chance de fluxo turbulento e sopros."
   },
   {
+    "id": "b9f791c058",
     "system": "cardio",
     "topic": "Hemodinâmica e determinantes da pressão arterial",
     "type": "seq",
@@ -1647,6 +1756,7 @@ const QUESTIONS = [
     "expl": "Guyton descreve as veias como os vasos mais distensíveis do sistema, cerca de oito vezes mais distensíveis que artérias comparáveis. Como as veias também contêm volume aproximadamente três vezes maior, sua complacência pode ser cerca de 24 vezes maior que a arterial correspondente. Essa alta capacitância permite que pequenos aumentos de pressão venosa armazenem 0,5 a 1,0 litro de sangue adicional. A última afirmação é falsa porque a estimulação simpática contrai veias e reduz sua capacitância, deslocando sangue para o coração. Esse mecanismo ajuda a manter a função circulatória quase normal mesmo com perda de até cerca de 25% do volume sanguíneo."
   },
   {
+    "id": "81cab1e012",
     "system": "cardio",
     "topic": "Hemodinâmica e determinantes da pressão arterial",
     "type": "ord",
@@ -1662,6 +1772,7 @@ const QUESTIONS = [
     "expl": "A velocidade média do fluxo é inversamente proporcional à área total de secção transversa, pela relação <b>v = F/A</b>. Os capilares têm enorme área total, cerca de 2.500 cm², e por isso a velocidade neles é muito baixa, aproximadamente 0,3 mm/s. As vênulas e pequenas veias têm áreas maiores que suas correspondentes arteriais, o que contribui para a grande capacidade venosa. A aorta, apesar de conduzir todo o débito cardíaco, tem área total pequena, cerca de 2,5 cm², e velocidade média alta, em torno de 33 cm/s. Uma ordenação que colocasse a aorta acima dos capilares confundiria calibre individual com área transversal total somada."
   },
   {
+    "id": "33dc1efba2",
     "system": "cardio",
     "topic": "Hemodinâmica e determinantes da pressão arterial",
     "type": "ord",
@@ -1677,6 +1788,7 @@ const QUESTIONS = [
     "expl": "Na insuficiência aórtica, o problema primário é a ausência ou fechamento incompleto da valva aórtica. Após a ejeção sistólica, o sangue que entrou na aorta reflui para o ventrículo esquerdo, reduzindo de forma marcada a pressão diastólica. Guyton destaca que a pressão aórtica pode cair até valores próximos de zero entre os batimentos em casos marcantes. A incisura do pulso aórtico depende do fechamento da valva aórtica, por isso desaparece quando esse fechamento não ocorre adequadamente. Essa sequência diferencia a insuficiência aórtica da estenose aórtica, na qual a pressão de pulso é reduzida por menor ejeção através da valva estreitada."
   },
   {
+    "id": "257a0dbcb5",
     "system": "cardio",
     "topic": "Hemodinâmica e determinantes da pressão arterial",
     "type": "vf",
@@ -1685,6 +1797,7 @@ const QUESTIONS = [
     "expl": "A afirmação é falsa porque, em frequências cardíacas normais, o coração permanece maior fração do ciclo em diástole do que em sístole. Por isso, a pressão arterial média fica mais próxima da pressão diastólica do que da sistólica. Guyton descreve que a pressão diastólica determina cerca de 60% da pressão arterial média, enquanto a sistólica contribui com cerca de 40%. A média aritmética só se torna aproximação melhor quando a frequência cardíaca é muito alta, pois a diástole passa a ocupar fração menor do ciclo. Clinicamente, isso evita interpretar uma PA de 120/80 mmHg como PAM de 100 mmHg; a PAM real aproxima-se mais de valores na faixa baixa dos 90 mmHg."
   },
   {
+    "id": "7aa7cd5fa5",
     "system": "cardio",
     "topic": "Mecanismos de regulação da pressão arterial",
     "type": "mc",
@@ -1700,6 +1813,7 @@ const QUESTIONS = [
     "expl": "O seio carotídeo contém barorreceptores abundantes na parede da carótida interna, logo acima da bifurcação, e seus sinais seguem pelo nervo de Hering para o glossofaríngeo e então ao núcleo do trato solitário. A partir daí, sinais secundários inibem o centro vasoconstritor bulbar e excitam o centro parassimpático vagal, causando vasodilatação periférica, bradicardia e menor força contrátil. A alternativa dos quimiorreceptores está errada porque eles são ativados por baixo O₂, excesso de CO₂/H⁺ e tornam-se importantes sobretudo quando a pressão cai abaixo de cerca de 80 mmHg; sua resposta excita, não inibe, o centro vasomotor. A natriurese de pressão é renal e lenta, não explica a resposta em segundos. O reflexo de Bainbridge aumenta a frequência cardíaca quando há estiramento atrial, e não a reduz. Os barorreceptores aórticos transmitem sinais pelo vago, não pelo frênico."
   },
   {
+    "id": "f39c1196f4",
     "system": "cardio",
     "topic": "Mecanismos de regulação da pressão arterial",
     "type": "mc",
@@ -1715,6 +1829,7 @@ const QUESTIONS = [
     "expl": "Guyton descreve que a área vasoconstritora bulbar envia continuamente impulsos às fibras vasoconstritoras simpáticas, em frequência aproximada de 0,5 a 2 impulsos por segundo, mantendo o <b>tônus vasomotor</b>. Quando a transmissão simpática periférica é bloqueada por anestesia espinal total, perde-se essa constrição parcial contínua e a pressão pode cair de 100 para cerca de 50 mmHg. A norepinefrina restaura a vasoconstrição por ação predominante em receptores alfa-adrenérgicos da musculatura lisa vascular, não por vasodilatação β. A adaptação barorreceptora ocorre ao longo de minutos a 1-2 dias, mas não explica a queda imediata produzida por bloqueio simpático. A aldosterona e o mecanismo renina-angiotensina têm efeitos mais lentos que não justificam esse fenômeno agudo. A referência à renina está incorreta porque o experimento envolve norepinefrina, cuja ação vasoconstritora hormonal é transitória, por cerca de 1 a 3 minutos no exemplo descrito."
   },
   {
+    "id": "c10843f46e",
     "system": "cardio",
     "topic": "Mecanismos de regulação da pressão arterial",
     "type": "mc",
@@ -1730,6 +1845,7 @@ const QUESTIONS = [
     "expl": "Na queda importante da pressão, células justaglomerulares liberam renina, que cliva o angiotensinogênio para formar angiotensina I, um decapeptídeo com pouca ação vasoconstritora. Em segundos, a enzima conversora, presente em grande parte no endotélio dos vasos pulmonares, remove dois aminoácidos e forma angiotensina II, potente vasoconstritor. Guyton ressalta que o sistema renina-angiotensina precisa de cerca de 20 minutos para se tornar ativo, sendo mais lento que os reflexos nervosos. A renina, não a angiotensina II, pode persistir no sangue por 30 minutos a 1 hora; a angiotensina II dura apenas 1 a 2 minutos por ação das angiotensinases. A angiotensina II constringe arteríolas de modo intenso e veias de modo menor, além de reter sal e água; portanto, não atua apenas via aldosterona. No experimento citado por Guyton, após hemorragia que reduz a pressão a 50 mmHg, a pressão sobe para cerca de 83 mmHg com o sistema íntegro e apenas para cerca de 60 mmHg quando bloqueado."
   },
   {
+    "id": "61cc8aaccb",
     "system": "cardio",
     "topic": "Mecanismos de regulação da pressão arterial",
     "type": "mc",
@@ -1745,6 +1861,7 @@ const QUESTIONS = [
     "expl": "Ao ficar em pé, a pressão arterial na cabeça e na parte superior do corpo tende a cair, reduzindo o estiramento dos barorreceptores carotídeos e aórticos. A menor descarga barorreceptora remove parte da inibição sobre o centro vasomotor, produzindo forte descarga simpática, constrição de arteríolas e veias, além de aumento da frequência cardíaca e da força contrátil. A alternativa que fala em aumento da descarga barorreceptora está invertida: isso ocorreria quando a pressão arterial sobe. Os quimiorreceptores tornam-se importantes principalmente quando a pressão cai abaixo de 80 mmHg, e não acima de 180 mmHg. O estiramento atrial reduz HAD no reflexo de volume e não é o mecanismo central da compensação ortostática imediata. A natriurese de pressão é relevante para controle renal de longo prazo, não para sustentação cerebral em segundos."
   },
   {
+    "id": "f0aeb3805a",
     "system": "cardio",
     "topic": "Mecanismos de regulação da pressão arterial",
     "type": "mc",
@@ -1760,6 +1877,7 @@ const QUESTIONS = [
     "expl": "Na sobrecarga de volume, Guyton descreve uma sequência: aumento do volume extracelular, aumento do volume sanguíneo, elevação da pressão média de enchimento circulatório, maior retorno venoso, aumento do débito cardíaco e elevação da pressão arterial. Com o tempo, o excesso de fluxo pelos tecidos desencadeia autorregulação local, com constrição arteriolar progressiva, retorno do débito cardíaco para perto do normal e elevação secundária da resistência periférica total. Por isso, a hipertensão tardia pode parecer de alta resistência, embora a causa inicial tenha sido acúmulo de volume. A resistência periférica total aumentada fora dos rins não mantém hipertensão crônica se a função renal e a ingestão de sal e água permanecem normais. Barorreceptores não geram aumento vagal permanente nesse quadro, e sua adaptação não substitui o papel renal. A angiotensina II pode participar de várias hipertensões, mas a hipertensão por remoção inadequada de líquido na diálise é classicamente explicada pela sobrecarga de volume e pela autorregulação."
   },
   {
+    "id": "427ac054a0",
     "system": "cardio",
     "topic": "Mecanismos de regulação da pressão arterial",
     "type": "comb",
@@ -1808,6 +1926,7 @@ const QUESTIONS = [
     "expl": "As afirmativas 1 e 2 são corretas: Guyton descreve que a estimulação simpática pode triplicar a frequência cardíaca e que a retirada súbita do controle nervoso cardiovascular pode reduzir a pressão até metade da normal em 10 a 40 segundos. A afirmativa 3 também é correta, pois no exercício vigoroso a pressão arterial costuma subir cerca de 30% a 40%, aumentando bastante o fluxo muscular quando somada à vasodilatação local. A afirmativa 4 é correta: na síncope vasovagal emocional, há vasodilatação muscular e forte sinal vagal ao coração, com bradicardia e queda pressórica. A afirmativa 5 é falsa porque a reação de alarme depende de ativação simpática vasoconstritora e cardioaceleradora, não de parassimpático como mecanismo principal de constrição arteriolar. Assim, apenas a combinação 1, 2, 3 e 4 é compatível com o texto."
   },
   {
+    "id": "3a82e95608",
     "system": "cardio",
     "topic": "Mecanismos de regulação da pressão arterial",
     "type": "comb",
@@ -1854,6 +1973,7 @@ const QUESTIONS = [
     "expl": "As afirmativas 1, 2 e 3 são verdadeiras. A angiotensina II desloca a curva de função renal para a direita por vasoconstrição renal, aumento da reabsorção tubular e estímulo à aldosterona; no exemplo quantitativo, o equilíbrio passa de cerca de 75 mmHg com angiotensina baixa para cerca de 115 mmHg com angiotensina elevada. O sistema renina-angiotensina íntegro permite grande variação na ingestão de sal com pouca mudança pressórica: aumento de 100 vezes no sal eleva a pressão apenas cerca de 4 a 6 mmHg. A afirmativa 4 é falsa porque a aldosterona aumenta reabsorção de sódio e água, expandindo volume extracelular. A afirmativa 5 é falsa porque a angiotensina II tende a contrair arteríolas renais, reduzir fluxo renal, diminuir pressão capilar peritubular e aumentar reabsorção, podendo reduzir o débito urinário para menos de um quinto do normal. Portanto, a única opção correta é 1, 2 e 3."
   },
   {
+    "id": "75bd01ad0e",
     "system": "cardio",
     "topic": "Mecanismos de regulação da pressão arterial",
     "type": "seq",
@@ -1873,6 +1993,7 @@ const QUESTIONS = [
     "expl": "A primeira afirmação é verdadeira: Guyton descreve pouca ou nenhuma estimulação dos barorreceptores carotídeos abaixo de 50 a 60 mmHg e resposta máxima perto de 180 mmHg. A segunda é falsa porque os barorreceptores aórticos operam em níveis cerca de 30 mmHg mais elevados que os carotídeos, não mais baixos. A terceira é verdadeira: o reflexo quimiorreceptor é pouco potente para controle pressórico até a pressão cair abaixo de aproximadamente 80 mmHg, quando baixo O₂ e acúmulo de CO₂/H⁺ excitam o centro vasomotor. A quarta é falsa porque a resposta isquêmica do SNC só se torna importante quando a pressão cai muito abaixo do normal, em torno de 60 mmHg ou menos, atingindo máxima estimulação em 15 a 20 mmHg. Essa resposta pode elevar a pressão média até cerca de 250 mmHg por até 10 minutos, funcionando como mecanismo emergencial, não como ajuste fisiológico cotidiano."
   },
   {
+    "id": "ef903078bc",
     "system": "cardio",
     "topic": "Mecanismos de regulação da pressão arterial",
     "type": "seq",
@@ -1892,6 +2013,7 @@ const QUESTIONS = [
     "expl": "A primeira afirmação é verdadeira e reproduz a relação quantitativa de diurese de pressão descrita por Guyton: quase zero a 50 mmHg, normal a 100 mmHg e seis a oito vezes o normal a 200 mmHg. A segunda é verdadeira porque qualquer desequilíbrio persistente entre ingestão e excreção muda o volume corporal e a pressão até o ponto de equilíbrio renal. A terceira é falsa: aumento crônico da resistência periférica total fora dos rins não mantém a pressão elevada se os rins excretam normalmente sal e água; a pressão retorna ao ponto ditado pela curva renal. A exceção importante é quando a resistência vascular intrarrenal também aumenta, deslocando a curva de função renal para pressões maiores. A quarta é verdadeira, pois a pressão cronicamente elevada reduz sistemas antinatriuréticos como simpático, angiotensina II e aldosterona, amplificando natriurese e diurese de pressão."
   },
   {
+    "id": "84903ad87f",
     "system": "cardio",
     "topic": "Mecanismos de regulação da pressão arterial",
     "type": "ord",
@@ -1906,6 +2028,7 @@ const QUESTIONS = [
     "expl": "A sequência começa pelo estímulo mecânico: barorreceptores são receptores de estiramento, especialmente abundantes no seio carotídeo e no arco aórtico. Em seguida, os sinais carotídeos seguem pelo nervo de Hering para o glossofaríngeo, enquanto os sinais aórticos seguem pelo vago, ambos alcançando o núcleo do trato solitário. Só depois ocorre a integração bulbar, com inibição do centro vasoconstritor e excitação vagal. As respostas efetoras são vasodilatação periférica, menor frequência cardíaca e menor contratilidade, que reduzem resistência periférica total e débito cardíaco. Inverter os passos colocando bradicardia antes da aferência ou vasodilatação antes da integração central confundiria receptor, centro integrador e efetor. O reflexo é particularmente eficaz ao redor de 100 mmHg, faixa em que pequenas alterações de pressão produzem grande variação de descarga."
   },
   {
+    "id": "07a9079ce7",
     "system": "cardio",
     "topic": "Mecanismos de regulação da pressão arterial",
     "type": "ord",
@@ -1920,6 +2043,7 @@ const QUESTIONS = [
     "expl": "Na hipertensão de Goldblatt de rim único, a lesão inicial é a queda da pressão de perfusão distal à estenose da artéria renal. A resposta do rim isquêmico é liberar renina, que aumenta angiotensina II e aldosterona; a renina atinge pico em cerca de 1 hora no modelo descrito. A angiotensina II eleva a pressão rapidamente por vasoconstrição arteriolar e, de modo mais sustentado, por retenção de sal e água direta e mediada por aldosterona. Em 5 a 7 dias, a expansão do líquido corporal eleva a pressão sistêmica até que a pressão renal distal seja suficiente para débito urinário normal. Colocar a normalização da renina no início seria incorreto, pois ela depende da restauração da pressão renal distal. Também seria incorreto atribuir a fase crônica apenas à vasoconstrição, pois a retenção renal de sal e água é essencial para o novo ponto de equilíbrio."
   },
   {
+    "id": "884d6961c9",
     "system": "cardio",
     "topic": "Mecanismos de regulação da pressão arterial",
     "type": "vf",
@@ -1928,6 +2052,7 @@ const QUESTIONS = [
     "expl": "A afirmação é verdadeira. Guyton descreve a reação de Cushing como uma forma especial da resposta isquêmica do SNC causada pelo aumento da pressão do LCR ao redor do cérebro. Quando a pressão do LCR se iguala à pressão arterial, as artérias cerebrais podem ser comprimidas, reduzindo o fluxo e produzindo isquemia dos centros vasomotores. Essa isquemia excita intensamente neurônios vasoconstritores e cardioaceleradores, elevando a pressão arterial sistêmica. O novo equilíbrio costuma ocorrer com a pressão arterial ligeiramente acima da pressão do LCR, permitindo que o sangue volte a fluir pelo encéfalo. Esse mecanismo protege centros vitais, mas não é mecanismo rotineiro de regulação em torno da pressão normal."
   },
   {
+    "id": "a811c5a566",
     "system": "renal",
     "topic": "Filtração glomerular",
     "type": "mc",
@@ -1943,6 +2068,7 @@ const QUESTIONS = [
     "expl": "Pelo Guyton, a FG = Kf × (PG − PB − pG + pB), e os valores normais aproximados são PG 60 mmHg, PB 18 mmHg, pG 32 mmHg e pB praticamente zero, gerando pressão efetiva de filtração de +10 mmHg. Ao elevar PB para 30 mmHg, a pressão efetiva passa a 60 − 30 − 32 = −2 mmHg, o que reduz gravemente a FG. A alternativa que afirma que PB favorece a filtração inverte o sinal da força: a pressão hidrostática na cápsula de Bowman se opõe à filtração. A pressão coloidosmótica na cápsula de Bowman é normalmente desprezível porque o filtrado é quase livre de proteínas, portanto não é o mecanismo principal. Obstruções por cálculos elevam PB e podem causar hidronefrose e lesão renal se não forem revertidas."
   },
   {
+    "id": "f64095a2df",
     "system": "renal",
     "topic": "Filtração glomerular",
     "type": "mc",
@@ -1958,6 +2084,7 @@ const QUESTIONS = [
     "expl": "O Guyton destaca que a barreira glomerular restringe proteínas por tamanho e por carga, com cargas negativas no endotélio, na membrana basal e nos podócitos. A albumina tem peso molecular de cerca de 69.000 e filtrabilidade muito baixa, aproximadamente 0,005, apesar de seu diâmetro ser menor que o tamanho estimado dos poros, porque também é negativamente carregada. Na nefropatia por lesões mínimas, a perda de cargas negativas pode ocorrer antes de alterações histológicas evidentes, favorecendo albuminúria. A alternativa sobre aumento do diâmetro da albumina é incorreta, pois isso dificultaria, e não facilitaria, a filtração. A albumina não é livremente filtrada normalmente, e a obstrução das fenestrações reduziria a filtração, não aumentaria seletivamente a proteinúria."
   },
   {
+    "id": "23cc0a1180",
     "system": "renal",
     "topic": "Filtração glomerular",
     "type": "mc",
@@ -1973,6 +2100,7 @@ const QUESTIONS = [
     "expl": "Em hipoperfusão renal, a angiotensina II ajuda a preservar a FG ao contrair preferencialmente as arteríolas eferentes, elevando ou sustentando a pressão hidrostática glomerular. Inibidores da ECA ou antagonistas da angiotensina II removem esse suporte, podendo causar queda maior que o normal da FG em estenose de artéria renal. A alternativa que atribui o efeito a constrição aferente está errada, pois os vasos pré-glomerulares são relativamente protegidos da angiotensina II por óxido nítrico e prostaglandinas em muitas condições fisiológicas. Prostaglandinas tendem a vasodilatar e proteger a FG, não a atuar como vasoconstritores principais. A pressão coloidosmótica na cápsula de Bowman é normalmente nula, e a dilatação eferente tende a reduzir, não aumentar, a pressão hidrostática glomerular."
   },
   {
+    "id": "8cf670d5a9",
     "system": "renal",
     "topic": "Filtração glomerular",
     "type": "mc",
@@ -1988,6 +2116,7 @@ const QUESTIONS = [
     "expl": "O Guyton descreve que aminoácidos são reabsorvidos no túbulo proximal em associação com Na⁺. Após refeição rica em proteínas, a maior reabsorção proximal de aminoácidos estimula reabsorção de Na⁺, reduzindo o NaCl que chega à mácula densa. A mácula densa interpreta esse menor aporte como sinal para reduzir a resistência da arteríola aferente, elevando o fluxo sanguíneo renal e a FG. As alternativas que propõem aumento de NaCl na mácula densa ou inibição da reabsorção proximal descrevem o sentido oposto do mecanismo. O fenômeno não depende primariamente de pressão arterial sistêmica, nem de redução do Kf ou aumento da pressão na cápsula de Bowman."
   },
   {
+    "id": "3965f17114",
     "system": "renal",
     "topic": "Filtração glomerular",
     "type": "mc",
@@ -2003,6 +2132,7 @@ const QUESTIONS = [
     "expl": "A constrição eferente tem efeito bifásico sobre a FG no Guyton. Em constrição moderada, a resistência ao fluxo de saída aumenta a pressão hidrostática glomerular, podendo elevar discretamente a FG. Com constrição eferente grave, especialmente acima de três vezes o normal, o fluxo sanguíneo renal cai muito, a fração de filtração aumenta e as proteínas plasmáticas se concentram nos capilares glomerulares. A pressão coloidosmótica glomerular então sobe de forma importante e passa a superar o ganho de pressão hidrostática, reduzindo a FG. Portanto, não se trata de queda linear desde o início nem de aumento indefinido da FG."
   },
   {
+    "id": "54570413a7",
     "system": "renal",
     "topic": "Filtração glomerular",
     "type": "comb",
@@ -2050,6 +2180,7 @@ const QUESTIONS = [
     "expl": "O Kf é o produto da condutividade hidráulica pela área de superfície; seu aumento eleva, e não reduz, a FG. A pressão hidrostática na cápsula de Bowman se opõe à filtração, de modo que sua elevação em obstrução do trato urinário diminui a FG. A pG aumenta quando há maior pressão coloidosmótica no plasma arterial ou quando a fração de filtração sobe, como pode ocorrer com redução do fluxo plasmático renal. A constrição aferente reduz PG e, portanto, reduz a FG. A constrição eferente moderada tende a aumentar discretamente a FG por elevar PG; apenas a constrição intensa pode reduzir a FG por aumento acentuado da pressão coloidosmótica glomerular."
   },
   {
+    "id": "84410372bb",
     "system": "renal",
     "topic": "Filtração glomerular",
     "type": "comb",
@@ -2099,6 +2230,7 @@ const QUESTIONS = [
     "expl": "Norepinefrina e epinefrina acompanham a ativação simpática e podem reduzir fluxo sanguíneo renal e FG, sobretudo em situações extremas. O óxido nítrico endotelial mantém vasodilatação renal basal; inibir sua síntese aumenta a resistência vascular renal, diminui a FG e reduz a excreção de Na⁺. A afirmativa sobre prostaglandinas está errada porque PGE2 e PGI2 tendem a vasodilatar e a amenizar a ação vasoconstritora simpática ou da angiotensina II, especialmente na arteríola aferente. A angiotensina II atua preferencialmente sobre a arteríola eferente em muitas condições fisiológicas, sustentando PG em hipoperfusão. Por isso, AINEs em depleção volumétrica ou pós-operatório podem retirar essa proteção prostaglandínica e causar queda significativa da FG."
   },
   {
+    "id": "074719e147",
     "system": "renal",
     "topic": "Filtração glomerular",
     "type": "seq",
@@ -2118,6 +2250,7 @@ const QUESTIONS = [
     "expl": "Eletrólitos como Na⁺ e pequenas moléculas orgânicas como glicose são livremente filtrados, e a inulina também tem filtrabilidade de 1,0. O cálcio e os ácidos graxos são exceções parciais, pois uma fração importante está ligada às proteínas plasmáticas; quase metade do cálcio e a maior parte dos ácidos graxos ligados não são livremente filtrados. A carga elétrica é decisiva: a membrana basal e os podócitos têm cargas negativas que restringem proteínas e outros polímeros negativos. O filtrado glomerular é essencialmente livre de proteínas e desprovido de elementos celulares, portanto hemácias e proteínas em níveis plasmáticos não são achados normais."
   },
   {
+    "id": "7932cbeb7b",
     "system": "renal",
     "topic": "Filtração glomerular",
     "type": "seq",
@@ -2137,6 +2270,7 @@ const QUESTIONS = [
     "expl": "O Guyton informa que os dois rins recebem cerca de 1.100 mL/min em um homem de 70 kg, ou aproximadamente 22% do débito cardíaco, apesar de corresponderem a apenas cerca de 0,4% do peso corporal. O córtex recebe a maior parte desse fluxo, enquanto a medula recebe apenas 1 a 2%, por meio dos vasa recta. A terceira afirmação é falsa porque o fluxo renal é muito alto e excede bastante as necessidades metabólicas, de modo que a extração arteriovenosa de oxigênio é relativamente baixa. Grande parte do O₂ consumido se relaciona à reabsorção ativa de Na⁺. Quando a FG cessa, a reabsorção de Na⁺ também cessa e resta cerca de um quarto do consumo normal, ligado ao metabolismo basal das células renais."
   },
   {
+    "id": "ad8a169742",
     "system": "renal",
     "topic": "Filtração glomerular",
     "type": "ord",
@@ -2152,6 +2286,7 @@ const QUESTIONS = [
     "expl": "A queda da pressão arterial renal inicialmente reduz PG e tende a diminuir a FG. Com menor FG, o fluxo na alça de Henle fica mais lento, permitindo maior reabsorção percentual de Na⁺ e Cl⁻ antes da mácula densa. A mácula densa então detecta menor concentração de NaCl e envia sinais para reduzir a resistência aferente e aumentar a liberação de renina pelas células justaglomerulares. A renina aumenta a formação de angiotensina II, que contrai preferencialmente a arteríola eferente e ajuda a sustentar PG. Colocar a renina antes da queda do NaCl na mácula densa inverteria o mecanismo descrito pelo Guyton, e colocar a constrição aferente como resposta também seria incorreto, pois o feedback nessa situação promove dilatação aferente."
   },
   {
+    "id": "e3fd961d6c",
     "system": "renal",
     "topic": "Filtração glomerular",
     "type": "ord",
@@ -2167,6 +2302,7 @@ const QUESTIONS = [
     "expl": "O Guyton usa a hiperglicemia do diabetes melito não controlado como exemplo de aumento da FG por alteração primária da reabsorção tubular proximal. Como a glicose é reabsorvida junto com Na⁺, maior carga de glicose aumenta a reabsorção proximal de sódio. Isso reduz a concentração de NaCl na mácula densa, embora a FG possa estar elevada como consequência final. A resposta do feedback tubuloglomerular é diminuição da resistência aferente, aumentando o fluxo sanguíneo renal e a FG. A sequência oposta, com maior NaCl na mácula densa causando dilatação aferente, é incompatível com o mecanismo descrito."
   },
   {
+    "id": "3e070d4c6c",
     "system": "renal",
     "topic": "Filtração glomerular",
     "type": "vf",
@@ -2175,6 +2311,7 @@ const QUESTIONS = [
     "expl": "A afirmação é verdadeira. O Guyton descreve que mecanismos intrínsecos renais mantêm fluxo sanguíneo renal e FG relativamente constantes durante grandes oscilações da pressão arterial. Como exemplo, variações da pressão arterial de cerca de 70 a 75 mmHg até 160 a 180 mmHg geralmente modificam a FG em menos de 10%. Essa autorregulação é crucial porque a FG normal é cerca de 180 L/dia, enquanto a excreção urinária diária é próxima de 1 a 1,5 L/dia; pequenas alterações percentuais sem compensação poderiam gerar grandes mudanças no volume urinário. O fluxo urinário ainda varia com pressão arterial por diurese e natriurese pressóricas, portanto não é mantido constante da mesma forma que a FG."
   },
   {
+    "id": "c8fcfb9590",
     "system": "renal",
     "topic": "Manejo tubular renal",
     "type": "mc",
@@ -2190,6 +2327,7 @@ const QUESTIONS = [
     "expl": "Com glicemia de 360 mg/100 mL, isto é, 3,6 mg/mL, a carga filtrada é aproximadamente 125 mL/min × 3,6 mg/mL = 450 mg/min, acima do transporte máximo médio para glicose de cerca de <b>375 mg/min</b>. A glicose é reabsorvida no túbulo proximal por transporte ativo secundário, via SGLT2 principalmente no segmento S1 e SGLT1 nos segmentos finais, usando o gradiente de Na⁺ mantido pela Na⁺/K⁺-ATPase basolateral. Não há secreção ativa fisiológica de glicose para explicar a glicosúria; o problema é saturação da reabsorção. A glicose é filtrada livremente e não passa a se ligar significativamente às proteínas plasmáticas nesse contexto. A saída basolateral da glicose ocorre por difusão facilitada via GLUT2/GLUT1, não por transporte ativo primário. O limiar renal ocorre antes do Tm global porque os néfrons não têm todos a mesma capacidade máxima, razão pela qual a alternativa que exige saturação simultânea de todos os néfrons está errada."
   },
   {
+    "id": "aa00ec986c",
     "system": "renal",
     "topic": "Manejo tubular renal",
     "type": "mc",
@@ -2205,6 +2343,7 @@ const QUESTIONS = [
     "expl": "A furosemida age no ramo ascendente espesso da alça de Henle, inibindo o cotransportador luminal <b>1-Na⁺, 2-Cl⁻, 1-K⁺</b>. Esse segmento reabsorve aproximadamente 25% das cargas filtradas de Na⁺, Cl⁻ e K⁺, é praticamente impermeável à água e normalmente gera um potencial luminal positivo de cerca de +8 mV pelo retrovazamento de K⁺. Esse potencial favorece a reabsorção paracelular de cátions como Mg²⁺ e Ca²⁺; sua redução explica a maior perda desses íons. A inibição do cotransportador Na⁺-Cl⁻ do túbulo distal inicial é típica dos tiazídicos, não da furosemida. O bloqueio dos canais luminais de Na⁺ é mecanismo de amilorida e triantereno, enquanto o antagonismo mineralocorticoide é mecanismo de espironolactona e eplerenona. O ramo ascendente espesso permanece impermeável à água; diuréticos de alça não atuam por aumentar sua permeabilidade hídrica."
   },
   {
+    "id": "c9faf9904b",
     "system": "renal",
     "topic": "Manejo tubular renal",
     "type": "mc",
@@ -2220,6 +2359,7 @@ const QUESTIONS = [
     "expl": "Na insuficiência adrenal primária há deficiência de aldosterona, hormônio que normalmente estimula a Na⁺/K⁺-ATPase basolateral e aumenta a permeabilidade luminal ao Na⁺ nas células principais. Sem essa ação, reduzem-se a reabsorção de Na⁺ e a força que sustenta a secreção de K⁺ para o lúmen tubular, favorecendo hipercalemia. A primeira alternativa descreve o efeito oposto, esperado com excesso de aldosterona, como na síndrome de Conn. As células intercaladas tipo A, não tipo B, secretam H⁺ na acidose e podem reabsorver K⁺; as tipo B têm função oposta em alcalose, secretando bicarbonato. O cotransportador Na⁺-Cl⁻ do túbulo distal inicial é alvo dos tiazídicos e não explica primariamente a hipercalemia da doença de Addison. O PNA reduz reabsorção de NaCl, especialmente em ductos coletores, e não é o principal regulador da concentração extracelular de K⁺."
   },
   {
+    "id": "9bbbb71dbf",
     "system": "renal",
     "topic": "Manejo tubular renal",
     "type": "mc",
@@ -2235,6 +2375,7 @@ const QUESTIONS = [
     "expl": "A depuração de PAH é UPAH × V / PPAH = 5,85 mg/mL × 1 mL/min / 0,01 mg/mL = <b>585 mL/min</b>, que representa o fluxo plasmático renal efetivo. Como a extração do PAH é de 90%, o fluxo plasmático renal verdadeiro é 585/0,9 = <b>650 mL/min</b>. Para converter fluxo plasmático renal em fluxo sanguíneo renal, divide-se por 1 − hematócrito: 650/(1 − 0,45) = aproximadamente <b>1.182 mL/min</b>. A opção 585 mL/min ignora a correção pela extração incompleta do PAH. A opção 650 mL/min é fluxo plasmático renal, não fluxo sanguíneo renal. O valor 125 mL/min corresponde tipicamente à TFG medida por inulina, e 0,19 é a fração de filtração aproximada quando TFG é 125 mL/min e FPR é 650 mL/min."
   },
   {
+    "id": "98d98dbbf5",
     "system": "renal",
     "topic": "Manejo tubular renal",
     "type": "mc",
@@ -2250,6 +2391,7 @@ const QUESTIONS = [
     "expl": "A angiotensina II é um dos hormônios de retenção de sódio mais potentes e atua por múltiplos mecanismos. Ela contrai preferencialmente arteríolas eferentes, reduzindo a pressão hidrostática dos capilares peritubulares e elevando a fração de filtração, o que aumenta a pressão coloidosmótica peritubular e favorece reabsorção. Além disso, estimula diretamente a Na⁺/K⁺-ATPase basolateral, a troca Na⁺-H⁺ luminal e o cotransporte Na⁺-bicarbonato basolateral, especialmente no túbulo proximal. A dilatação eferente reduziria esses efeitos peritubulares e não corresponde à ação da angiotensina II. A constrição aferente intensa tenderia a reduzir a TFG e a alternativa ainda erra ao afirmar inibição da Na⁺/K⁺-ATPase. A angiotensina II estimula, não inibe, aldosterona; já o PNA representa uma resposta à expansão de volume, não à hemorragia."
   },
   {
+    "id": "a6430784b0",
     "system": "renal",
     "topic": "Manejo tubular renal",
     "type": "comb",
@@ -2301,6 +2443,7 @@ const QUESTIONS = [
     "expl": "As afirmativas 1, 2, 3 e 5 estão corretas. O ramo descendente fino é muito permeável à água e tem pouca atividade metabólica, enquanto o ramo ascendente espesso reabsorve Na⁺, Cl⁻ e K⁺, mas é praticamente impermeável à água. O túbulo distal inicial é o segmento diluidor que reabsorve cerca de 5% do NaCl filtrado via cotransportador Na⁺-Cl⁻, alvo dos tiazídicos. As células principais reabsorvem Na⁺ e água e secretam K⁺, processo dependente da Na⁺/K⁺-ATPase basolateral e modulado pela aldosterona. A afirmativa 4 é falsa porque o túbulo distal final e o túbulo coletor cortical são quase completamente impermeáveis à ureia; a permeabilidade relevante à ureia ocorre no ducto coletor medular, com transportadores específicos. As opções que incluem a afirmativa 4 são incorretas, e a opção que omite 2 ou 5 perde mecanismos centrais da alça ascendente espessa e das células principais."
   },
   {
+    "id": "8d602983ae",
     "system": "renal",
     "topic": "Manejo tubular renal",
     "type": "comb",
@@ -2352,6 +2495,7 @@ const QUESTIONS = [
     "expl": "As afirmativas 1 a 4 estão corretas e descrevem mecanismos centrais do controle tubular. A angiotensina II age diretamente em vários segmentos, incluindo túbulo proximal, estimulando Na⁺/K⁺-ATPase, troca Na⁺-H⁺ e cotransporte Na⁺-bicarbonato, além de estimular aldosterona e alterar forças peritubulares. O PNA é liberado por distensão atrial na expansão de volume e diminui a reabsorção de NaCl, especialmente em ductos coletores, além de inibir renina e reduzir angiotensina II. O PTH aumenta a reabsorção de Ca²⁺, sobretudo no túbulo distal e provavelmente na alça de Henle, e inibe a reabsorção proximal de fosfato. A ativação simpática, mesmo em níveis baixos, aumenta a reabsorção de Na⁺ por receptores alfa-adrenérgicos e também pode aumentar renina. A afirmativa 5 é falsa porque a aldosterona aumenta, e não reduz, a secreção de K⁺; quem bloqueia diretamente canais luminais de Na⁺ são amilorida e triantereno."
   },
   {
+    "id": "bc7891f841",
     "system": "renal",
     "topic": "Manejo tubular renal",
     "type": "seq",
@@ -2371,6 +2515,7 @@ const QUESTIONS = [
     "expl": "A primeira afirmação é verdadeira: o Guyton descreve reabsorção proximal de cerca de <b>65%</b> do Na⁺ e da água filtrados, além de porcentagem ligeiramente menor de cloreto. A segunda também é verdadeira, pois o túbulo proximal é altamente permeável à água, mantendo a osmolaridade tubular quase constante apesar da grande reabsorção de solutos. A terceira é falsa: a creatinina é pouco ou praticamente nada reabsorvida, de modo que sua concentração tubular aumenta à medida que água é reabsorvida. A quarta é verdadeira, pois no início do túbulo proximal o Na⁺ entra associado ao cotransporte de glicose, aminoácidos e outros solutos orgânicos. Na metade final, o Na⁺ passa a ser reabsorvido principalmente com Cl⁻, favorecido pela concentração luminal de cloreto mais alta, em torno de 140 mEq/L em comparação com cerca de 105 mEq/L no início do túbulo proximal."
   },
   {
+    "id": "02a15d534e",
     "system": "renal",
     "topic": "Manejo tubular renal",
     "type": "seq",
@@ -2390,6 +2535,7 @@ const QUESTIONS = [
     "expl": "A inulina é livremente filtrada e não é reabsorvida nem secretada, portanto sua depuração mede a TFG, tipicamente cerca de 125 mL/min. Uma depuração menor que a da inulina indica que parte da substância filtrada foi reabsorvida, como ocorre com glicose em condições normais, Na⁺ e Cl⁻. A terceira afirmação é falsa porque a creatinina é ligeiramente secretada, e não intensamente reabsorvida; por isso sua depuração pode exceder discretamente a TFG, embora erros de medida tendam a se compensar clinicamente. O PAH é filtrado e secretado no túbulo proximal, sendo cerca de 90% removido do plasma renal em rins normais. Assim, sua depuração representa o fluxo plasmático renal efetivo, que pode ser corrigido pela taxa de extração para estimar o fluxo plasmático renal verdadeiro."
   },
   {
+    "id": "0fe61af71e",
     "system": "renal",
     "topic": "Manejo tubular renal",
     "type": "ord",
@@ -2404,6 +2550,7 @@ const QUESTIONS = [
     "expl": "A força primária vem da Na⁺/K⁺-ATPase basolateral, que reduz o Na⁺ intracelular para cerca de 12 mEq/L frente a aproximadamente 140 mEq/L no líquido tubular e gera potencial negativo intracelular. Por isso, a entrada apical de Na⁺ ocorre a favor do gradiente eletroquímico e pode acoplar-se à glicose, aminoácidos ou secreção de H⁺. Colocar a entrada apical antes da geração do gradiente seria mecanisticamente incompleto, pois o gradiente é criado pela bomba basolateral. A água não é transportada ativamente; ela acompanha osmoticamente a reabsorção de solutos, especialmente no túbulo proximal, que é altamente permeável à água. O passo final é a captação pelos capilares peritubulares, que se comportam como extremidades venosas e têm força efetiva de reabsorção aproximada de 10 mmHg. Inverter a ultrafiltração peritubular com a osmose tubular confundiria a passagem pelo epitélio com o retorno do interstício ao sangue."
   },
   {
+    "id": "81414a6403",
     "system": "renal",
     "topic": "Manejo tubular renal",
     "type": "ord",
@@ -2418,6 +2565,7 @@ const QUESTIONS = [
     "expl": "O ADH, ou vasopressina, age principalmente aumentando a permeabilidade à água no final do túbulo distal, túbulos coletores e ductos coletores. A sequência correta começa no receptor V2, passa por Gs, adenilatociclase, AMPc e ativação de proteinocinases, culminando na inserção luminal de AQP-2. AQP-2 é a aquaporina regulada pelo ADH no lado luminal; portanto, colocá-la na membrana basolateral como evento regulado seria incorreto. AQP-3 e AQP-4 ficam no lado basolateral e permitem a saída rápida de água, mas o Guyton assinala que não se acredita que sejam reguladas pelo ADH. Na ausência de ADH, esses segmentos têm baixa permeabilidade à água, produzindo grande volume de urina diluída, como no diabetes insípido. Em exposição crônica ao ADH, também aumenta a formação de AQP-2 por estímulo da transcrição gênica."
   },
   {
+    "id": "d7b90bb8f0",
     "system": "renal",
     "topic": "Manejo tubular renal",
     "type": "vf",
@@ -2426,6 +2574,7 @@ const QUESTIONS = [
     "expl": "A afirmação é falsa porque, dentro de aproximadamente <b>75 a 160 mmHg</b>, os mecanismos autorreguladores mantêm o fluxo sanguíneo renal e a TFG relativamente constantes. A natriurese e a diurese pressóricas podem ocorrer mesmo com apenas pequeno aumento da TFG. Um mecanismo importante é a redução da porcentagem de Na⁺ e água reabsorvida pelos túbulos, em parte por aumento da pressão hidrostática capilar peritubular e do líquido intersticial renal, favorecendo retrovazamento para o lúmen tubular. Outro fator é a redução da formação de angiotensina II quando a pressão arterial aumenta, diminuindo a reabsorção tubular de Na⁺ e a secreção de aldosterona. Se a autorregulação estiver alterada, como em doença renal, aumentos de pressão podem causar elevações maiores da TFG, mas isso não é a regra fisiológica descrita no Guyton."
   },
   {
+    "id": "938075e49e",
     "system": "renal",
     "topic": "Rim e a regulação do volume",
     "type": "mc",
@@ -2441,6 +2590,7 @@ const QUESTIONS = [
     "expl": "Após ingestão aguda de água, a osmolaridade do líquido extracelular cai e a secreção de ADH diminui, reduzindo a permeabilidade à água no túbulo distal final e nos ductos coletores. O rim continua reabsorvendo NaCl nesses segmentos, mas a água permanece no lúmen, permitindo urina muito diluída, até cerca de 50 mOsm/L, e podendo alcançar volumes próximos de 20 L/dia em excesso hídrico. A alternativa com aumento de ADH está errada porque ADH alto concentra a urina, não a dilui, e o ramo ascendente espesso permanece impermeável à água mesmo com ADH. A alternativa do túbulo proximal está errada porque esse segmento reabsorve água e solutos em proporções semelhantes, mantendo osmolaridade próxima de 300 mOsm/L. A ureia medular favorece concentração urinária, não diurese aquosa, e a inibição do ramo ascendente espesso prejudicaria a diluição inicial do fluido tubular."
   },
   {
+    "id": "df343f4053",
     "system": "renal",
     "topic": "Rim e a regulação do volume",
     "type": "mc",
@@ -2456,6 +2606,7 @@ const QUESTIONS = [
     "expl": "O lítio pode reduzir a capacidade dos túbulos distais e coletores de responder ao ADH, produzindo <b>diabetes insípido nefrogênico</b>. A ausência de queda rápida do volume urinário e de aumento da osmolaridade urinária dentro de cerca de 2 horas após desmopressina favorece a forma nefrogênica, porque o análogo de ADH está presente, mas o rim não responde. No diabetes insípido central, a desmopressina, que atua seletivamente em receptores V2, costuma normalizar rapidamente a eliminação urinária. ADH elevado não produz urina diluída; ele aumenta a permeabilidade à água e favorece pequeno volume de urina concentrada. O túbulo proximal mantém reabsorção quase isosmótica e não é o principal local de regulação variável por ADH, e maior recirculação de ureia tenderia a sustentar, não reduzir, a hiperosmolaridade medular."
   },
   {
+    "id": "5a7e5627ff",
     "system": "renal",
     "topic": "Rim e a regulação do volume",
     "type": "mc",
@@ -2471,6 +2622,7 @@ const QUESTIONS = [
     "expl": "Segundo o Guyton, 1 litro de água do mar a 1.200 mOsm/L impõe cerca de 1.200 mOsm de NaCl, mas o rim também precisa eliminar outros solutos, especialmente ureia, em torno de 600 mOsm/dia. Com limite humano de concentração urinária de 1.200 mOsm/L, a eliminação de 1.800 mOsm exige aproximadamente 1,5 L de urina, gerando perda líquida de cerca de 0,5 L para cada litro ingerido. A alternativa de ganho hídrico erra ao ignorar que a ureia e outros solutos ocupam parte da capacidade osmótica urinária. O balanço neutro só seria verdadeiro se o rim tivesse de eliminar apenas os 1.200 mOsm ingeridos, o que não ocorre. A ureia pode ter baixa pressão osmótica efetiva em estado estável através de membranas celulares, mas contribui de modo importante para osmolaridade urinária e medular; o rim não suspende sua excreção obrigatória para excretar apenas NaCl."
   },
   {
+    "id": "ae9cfea188",
     "system": "renal",
     "topic": "Rim e a regulação do volume",
     "type": "mc",
@@ -2486,6 +2638,7 @@ const QUESTIONS = [
     "expl": "A depuração osmolar é calculada por Cosm = Uosm × V / Posm; portanto, 100 × 6 / 300 = 2 mL/min. A depuração de água livre é CH2O = V - Cosm, logo 6 - 2 = +4 mL/min, valor positivo compatível com excreção de água em excesso em relação aos solutos. A alternativa com 18 mL/min inverte a relação matemática e ainda interpreta erroneamente urina hiposmótica como conservação hídrica. CH2O igual a zero ocorreria quando a urina fosse isosmótica ao plasma, o que não se aplica a Uosm de 100 mOsm/L. A opção de 0,5 mL/min não segue a fórmula, e CH2O negativo só ocorre quando Uosm é maior que Posm, como na formação de urina concentrada."
   },
   {
+    "id": "30e4a2de9d",
     "system": "renal",
     "topic": "Rim e a regulação do volume",
     "type": "mc",
@@ -2501,6 +2654,7 @@ const QUESTIONS = [
     "expl": "A formação de urina concentrada requer tanto níveis elevados de ADH quanto interstício medular hiperosmótico. Vasodilatação ou grandes aumentos da pressão arterial podem elevar o fluxo sanguíneo medular, lavando solutos da medula e reduzindo a capacidade máxima de concentração urinária mesmo na presença de ADH. Os vasa recta preservam a hiperosmolaridade por troca por contracorrente, mas não a geram por transporte ativo de NaCl. O ramo ascendente espesso permanece praticamente impermeável à água mesmo com ADH, e a ureia relevante para a medula é reabsorvida sobretudo no ducto coletor medular interno por transportadores UT-A1 e UT-A3. Portanto, é incorreto dizer que o ADH isoladamente determina a concentração máxima; o gradiente medular é limite essencial."
   },
   {
+    "id": "241b5ef7b9",
     "system": "renal",
     "topic": "Rim e a regulação do volume",
     "type": "comb",
@@ -2548,6 +2702,7 @@ const QUESTIONS = [
     "expl": "As afirmativas 1, 2 e 4 são corretas. Em antidiurese, a ureia representa cerca de 40% a 50% da osmolaridade medular, ou 500 a 600 mOsm/L, e sua difusão a partir dos ductos coletores medulares internos é facilitada pelos transportadores UT-A1 e UT-A3 ativados por ADH. No túbulo proximal, 40% a 50% da ureia filtrada é reabsorvida, mas a concentração de ureia no líquido tubular pode subir porque a água é mais permeável. A afirmativa 3 é falsa porque o ramo espesso, o túbulo distal e o coletor cortical são relativamente impermeáveis à ureia. A afirmativa 5 é falsa: dieta rica em proteína aumenta produção de ureia e melhora a capacidade de concentração, enquanto desnutrição ou baixa proteína reduzem ureia medular."
   },
   {
+    "id": "fb83e8d08e",
     "system": "renal",
     "topic": "Rim e a regulação do volume",
     "type": "comb",
@@ -2595,6 +2750,7 @@ const QUESTIONS = [
     "expl": "As afirmativas 1, 2 e 4 são corretas. O Guyton destaca que poucos mmHg de elevação pressórica podem duplicar diurese de pressão e natriurese de pressão, e que o equilíbrio crônico ocorre quando ingestão e excreção renal de sal e água se igualam. A curva crônica é mais íngreme que a aguda porque a pressão elevada reduz atividade simpática e hormônios antinatriuréticos, como angiotensina II e aldosterona, ampliando a excreção renal. A afirmativa 3 é falsa porque aumento de resistência periférica total fora dos rins tende a ser corrigido por diurese/natriurese se a função renal e a ingestão não mudarem. A afirmativa 5 é falsa: na sobrecarga de volume, o volume extracelular e sanguíneo aumentam, elevam retorno venoso e débito cardíaco inicialmente; a resistência periférica total aumenta secundariamente por autorregulação."
   },
   {
+    "id": "c085f8cd4f",
     "system": "renal",
     "topic": "Rim e a regulação do volume",
     "type": "seq",
@@ -2614,6 +2770,7 @@ const QUESTIONS = [
     "expl": "A primeira afirmação é verdadeira: o túbulo proximal reabsorve cerca de 65% dos eletrólitos filtrados e, pela alta permeabilidade à água via AQP-1, mantém o fluido quase isosmótico ao plasma. A segunda é falsa porque o ramo ascendente espesso é praticamente impermeável à água mesmo na presença de grande quantidade de ADH; ele dilui o líquido tubular ao remover NaCl sem água. A terceira é verdadeira, pois ADH baixo impede reabsorção expressiva de água nos segmentos distais, enquanto a reabsorção continuada de solutos produz urina muito diluída, até cerca de 50 mOsm/L. A quarta é verdadeira: com ADH alto, os ductos coletores medulares internos equilibram água com o interstício hiperosmótico e podem formar urina de 1.200 a 1.400 mOsm/L. Clinicamente, esses princípios explicam tanto a diurese aquosa após ingestão de água quanto a antidiurese na desidratação."
   },
   {
+    "id": "c84143da8b",
     "system": "renal",
     "topic": "Rim e a regulação do volume",
     "type": "seq",
@@ -2633,6 +2790,7 @@ const QUESTIONS = [
     "expl": "A primeira afirmação é verdadeira porque variação de apenas cerca de 1% na osmolaridade plasmática já pode elevar ADH. A segunda também é verdadeira: a perda sanguínea geralmente precisa atingir aproximadamente 10% para alterar o ADH de forma apreciável, mas reduções adicionais ativam intensamente reflexos cardiovasculares. A terceira é falsa; o mecanismo da sede é ativado com aumento de sódio de apenas cerca de 2 mEq/L acima do normal, não 20 mEq/L. A quarta é verdadeira e corresponde à regulação não osmótica do ADH: náusea pode ser estímulo muito potente, nicotina e morfina estimulam, e álcool inibe a liberação de ADH. Esses controles integrados explicam por que hipovolemia grave pode produzir ADH alto mesmo sem hiperosmolaridade."
   },
   {
+    "id": "5fa5d6f2ad",
     "system": "renal",
     "topic": "Rim e a regulação do volume",
     "type": "ord",
@@ -2647,6 +2805,7 @@ const QUESTIONS = [
     "expl": "O estímulo inicial é a elevação da osmolaridade, que causa murchamento dos osmorreceptores; colocar a liberação renal de água antes dessa etapa inverteria causa e resposta. Os núcleos supraópticos são via central dominante, sintetizando cerca de cinco sextos do ADH liberado, enquanto os paraventriculares contribuem com o sexto restante. A liberação na hipófise posterior depende dos potenciais de ação e da entrada de Ca²⁺ nas terminações nervosas, portanto não precede a ativação hipotalâmica. O efeito renal do ADH ocorre nos segmentos distais e coletores, não no ramo ascendente espesso, e aumenta a permeabilidade à água. O resultado final é conservação de água, baixo volume urinário e urina concentrada, corrigindo a hiperosmolaridade extracelular inicial."
   },
   {
+    "id": "7216d5f2bf",
     "system": "renal",
     "topic": "Rim e a regulação do volume",
     "type": "ord",
@@ -2662,6 +2821,7 @@ const QUESTIONS = [
     "expl": "O processo começa com filtrado que deixou o túbulo proximal ainda quase isosmótico, porque água e solutos foram reabsorvidos em proporções semelhantes. O ramo ascendente espesso é o segmento que adiciona NaCl ao interstício sem acompanhamento de água, logo deve preceder a geração do gradiente transversal. Esse gradiente isolado é limitado a cerca de 200 mOsm/L e não explica sozinho a medula a 1.200-1.400 mOsm/L. A permeabilidade do ramo descendente à água permite equilíbrio osmótico com a medula, e o fluxo contínuo reposiciona fluido concentrado para o ramo ascendente. A multiplicação repetida, não um único transporte, é o que retém solutos progressivamente na medula."
   },
   {
+    "id": "7708a12e06",
     "system": "renal",
     "topic": "Rim e a regulação do volume",
     "type": "vf",
@@ -2680,6 +2840,26 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
 
 let chosenCount = 20;   // questões por teste (0 = todas)
 
+/* ---------- progresso persistido (localStorage) ---------- */
+const LS_KEY = 'revfisio_v1';
+function loadStore(){
+  try{ const s = JSON.parse(localStorage.getItem(LS_KEY)); if(s && typeof s==='object'){ s.q=s.q||{}; s.m=s.m||{}; return s; } }catch(e){}
+  return { q:{}, m:{} };
+}
+function saveStore(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(store)); }catch(e){} }
+let store = loadStore();
+// estatística de uma questão: {s:vezes vista, c:acertos, w:erros, lw:1 se última foi erro}
+function qStat(id){ return store.q[id] || {s:0,c:0,w:0,lw:0}; }
+function recordResult(id, correct){
+  const q = qStat(id);
+  q.s++; if(correct){ q.c++; q.lw=0; } else { q.w++; q.lw=1; }
+  store.q[id]=q; saveStore();
+}
+function isMarked(id){ return !!store.m[id]; }
+function toggleMark(id){ if(store.m[id]) delete store.m[id]; else store.m[id]=1; saveStore(); }
+function wrongIds(){ return QUESTIONS.filter(q=> (store.q[q.id]||{}).lw===1).map(q=>q.id); }
+function markedIds(){ return QUESTIONS.filter(q=> store.m[q.id]).map(q=>q.id); }
+
 function romanize(n){ return ['I','II','III','IV','V','VI','VII','VIII','IX','X'][n-1] || String(n); }
 function listPt(arr){
   arr = arr.slice();
@@ -2693,39 +2873,98 @@ function seqStr(boolArr){ return boolArr.map(b=>b?'V':'F').join(' – '); }
 
 let session = null;
 
-/* metadata counts on start screen */
-(function fillMeta(){
+/* contadores da tela inicial */
+function fillMeta(){
   const c = QUESTIONS.filter(q=>q.system==='cardio').length;
   const r = QUESTIONS.filter(q=>q.system==='renal').length;
   $('#meta-cardio').textContent = '6 temas · ' + c + ' questões';
   $('#meta-renal').textContent  = '3 temas · ' + r + ' questões';
   $('#meta-full').textContent   = (c+r) + ' questões';
-})();
+}
+/* painel de revisão inteligente (progresso salvo) */
+function renderStartStats(){
+  const nW = wrongIds().length, nM = markedIds().length;
+  $('#n-wrong').textContent = nW;
+  $('#n-marked').textContent = nM;
+  $('#mode-wrong').disabled = nW===0;
+  $('#mode-marked').disabled = nM===0;
+  // estatística agregada
+  let resp=0, ac=0;
+  QUESTIONS.forEach(q=>{ const s=store.q[q.id]; if(s){ resp+=s.s; ac+=s.c; } });
+  const distintas = Object.keys(store.q).length;
+  const pct = resp? Math.round(ac/resp*100) : 0;
+  $('#stat-row').innerHTML =
+    '<div class="stat"><div class="v">'+distintas+'</div><div class="k">questões praticadas</div></div>'+
+    '<div class="stat"><div class="v">'+resp+'</div><div class="k">respostas dadas</div></div>'+
+    '<div class="stat"><div class="v">'+(resp?pct+'%':'—')+'</div><div class="k">acerto geral</div></div>';
+  $('#clear-progress').style.display = (resp||nM) ? '' : 'none';
+}
+fillMeta();
+
+function prepQ(q){
+  const it = Object.assign({}, q);
+  if(q.type==='comb'){
+    it._opts = shuffle(q.options.map(nums => ({ nums, ok: setEq(nums, q.correct) })));
+  } else if(q.type==='mc'){
+    it._opts = shuffle(q.options.map((text,idx) => ({ text, ok: idx===q.correct })));
+  } else if(q.type==='ord'){
+    it._shuf = shuffle(q.items.map((text,idx) => ({ orig:idx, text })));
+  }
+  return it;
+}
+
+function sessionScope(mode){
+  if(mode==='wrong')    return QUESTIONS.filter(q=> (store.q[q.id]||{}).lw===1);
+  if(mode==='marked')   return QUESTIONS.filter(q=> store.m[q.id]);
+  if(mode==='adaptive') return QUESTIONS.slice();
+  return QUESTIONS.filter(q => mode==='full' ? true : q.system===mode);
+}
+
+/* peso de um tema no modo adaptativo: erros na sessão pesam mais; soma erros históricos */
+function topicWeight(topic){
+  return 1 + 2*(session.sessWrong[topic]||0) + (session.histWrong[topic]||0);
+}
+function weightedPick(pool){
+  let total=0; const ws=pool.map(q=>{ const x=topicWeight(q.topic); total+=x; return x; });
+  let r=Math.random()*total;
+  for(let i=0;i<pool.length;i++){ r-=ws[i]; if(r<=0) return pool[i]; }
+  return pool[pool.length-1];
+}
+function pickAdaptiveNext(){
+  if(!session.pool.length) return null;
+  const lastResp = session.responses[session.idx];
+  const lastItem = session.items[session.idx];
+  // reforço imediato: errou agora -> próxima do mesmo tema, se houver no pool
+  if(lastResp && !lastResp.correct && lastItem){
+    const same = session.pool.filter(q=>q.topic===lastItem.topic);
+    if(same.length){ const ch=same[Math.floor(Math.random()*same.length)]; session.pool=session.pool.filter(q=>q!==ch); return ch; }
+  }
+  const ch = weightedPick(session.pool);
+  session.pool = session.pool.filter(q=>q!==ch);
+  return ch;
+}
 
 function buildSession(mode){
-  let items = QUESTIONS.filter(q => mode==='full' ? true : q.system===mode);
-  items = shuffle(items);
-  if(chosenCount>0 && items.length>chosenCount) items = items.slice(0, chosenCount);
-  // prepara cópia com opções/itens embaralhados
-  items = items.map(q=>{
-    const it = Object.assign({}, q);
-    if(q.type==='comb'){
-      const opts = q.options.map(nums => ({ nums, ok: setEq(nums, q.correct) }));
-      it._opts = shuffle(opts);
-    } else if(q.type==='mc'){
-      it._opts = shuffle(q.options.map((text,idx) => ({ text, ok: idx===q.correct })));
-    } else if(q.type==='ord'){
-      it._shuf = shuffle(q.items.map((text,idx) => ({ orig:idx, text })));
-    }
-    return it;
-  });
-  session = { mode, items, idx:0, responses:new Array(items.length).fill(null) };
+  const adaptive = (mode==='adaptive');
+  let pool = shuffle(sessionScope(mode)).map(prepQ);
+  if(adaptive){
+    const histWrong={};
+    QUESTIONS.forEach(q=>{ if((store.q[q.id]||{}).lw===1) histWrong[q.topic]=(histWrong[q.topic]||0)+1; });
+    const target = chosenCount>0 ? Math.min(chosenCount, pool.length) : pool.length;
+    session = { mode, idx:0, adaptive:true, pool, items:[], responses:[], total:target, sessWrong:{}, histWrong };
+    const first = pickAdaptiveNext();
+    if(first){ session.items.push(first); session.responses.push(null); }
+  } else {
+    if(chosenCount>0 && pool.length>chosenCount) pool = pool.slice(0, chosenCount);
+    session = { mode, idx:0, adaptive:false, items:pool, responses:new Array(pool.length).fill(null), total:pool.length };
+  }
 }
 
 function show(screen){
   ['start','quiz','result','review'].forEach(s=> $('#screen-'+s).classList.toggle('hidden', s!==screen));
   $('#progress-zone').classList.toggle('hidden', !(screen==='quiz'));
   $('#home-btn').classList.toggle('hidden', screen==='start');
+  if(screen==='start') renderStartStats();
   window.scrollTo({top:0, behavior: reduceMotion ? 'auto':'smooth'});
 }
 
@@ -2750,14 +2989,24 @@ function buildEcgPath(n, w=1000, h=46){
   return d;
 }
 function initEcg(){
-  const d = buildEcgPath(session.items.length);
+  const d = buildEcgPath(Math.max(1, session.total));
   $('#ecg-base').setAttribute('d', d);
   $('#ecg-prog').setAttribute('d', d);
   $('#ecg-rect').setAttribute('width', 0);
 }
 function updateEcg(){
-  const frac = (session.idx + (session.responses[session.idx] ? 1 : 0)) / session.items.length;
+  const frac = (session.idx + (session.responses[session.idx] ? 1 : 0)) / Math.max(1, session.total);
   $('#ecg-rect').setAttribute('width', Math.max(0, Math.min(1000, frac*1000)));
+}
+
+function updateMarkBtn(){
+  const it = session.items[session.idx];
+  if(!it) return;
+  const on = isMarked(it.id);
+  const b = $('#q-mark');
+  b.textContent = on ? '★' : '☆';
+  b.classList.toggle('on', on);
+  b.setAttribute('aria-pressed', on ? 'true':'false');
 }
 
 /* ---------- render question ---------- */
@@ -2768,8 +3017,9 @@ function renderQuestion(){
   $('#q-topic').textContent = it.topic;
   $('#q-type').textContent = TYPE_LABEL[it.type];
   $('#c-cur').textContent = session.idx+1;
-  $('#c-tot').textContent = session.items.length;
-  $('#c-blk').textContent = session.mode==='full' ? 'Revisão completa' : SYS_LABEL[session.mode];
+  $('#c-tot').textContent = session.total;
+  $('#c-blk').textContent = ({full:'Revisão completa', wrong:'Refazendo erradas', marked:'Questões marcadas', adaptive:'Modo adaptativo'})[session.mode] || SYS_LABEL[session.mode] || '';
+  updateMarkBtn();
   updateEcg();
 
   $('#q-feedback').innerHTML = '';
@@ -2887,8 +3137,20 @@ function feedbackBox(correct, extraHTML, expl){
 }
 
 function afterAnswer(){
+  // registra resultado no progresso persistido
+  const it = session.items[session.idx];
+  const resp = session.responses[session.idx];
+  if(it && resp){
+    recordResult(it.id, resp.correct);
+    if(session.adaptive && !resp.correct) session.sessWrong[it.topic] = (session.sessWrong[it.topic]||0)+1;
+  }
+  // modo adaptativo: gera a próxima questão (reforçando o tema errado) até atingir a meta
+  if(session.adaptive && session.items.length < session.total && session.pool.length){
+    const nx = pickAdaptiveNext();
+    if(nx){ session.items.push(nx); session.responses.push(null); }
+  }
   updateEcg();
-  const last = session.idx === session.items.length-1;
+  const last = (session.idx >= session.total-1) || (session.idx >= session.items.length-1);
   const a = $('#q-action');
   a.classList.remove('hidden');
   a.disabled = false;
@@ -3020,7 +3282,7 @@ function gradeOrd(body){
 
 /* ---------- results ---------- */
 function showResults(){
-  const total = session.items.length;
+  const total = session.responses.filter(r=>r).length || session.items.length;
   const hits = session.responses.filter(r=>r && r.correct).length;
   const pct = Math.round(hits/total*100);
 
@@ -3105,7 +3367,14 @@ function buildReview(){
 }
 
 /* ---------- wiring ---------- */
-function startMode(mode){ buildSession(mode); initEcg(); renderQuestion(); show('quiz'); }
+function startMode(mode){
+  buildSession(mode);
+  if(!session.items.length){
+    alert('Nenhuma questão disponível para este modo ainda. Responda algumas questões primeiro.');
+    show('start'); return;
+  }
+  initEcg(); renderQuestion(); show('quiz');
+}
 
 $$('.size-chip').forEach(b=> b.addEventListener('click', ()=>{
   $$('.size-chip').forEach(x=> x.classList.remove('active'));
@@ -3115,6 +3384,16 @@ $$('.size-chip').forEach(b=> b.addEventListener('click', ()=>{
 
 $$('.syscard').forEach(b=> b.addEventListener('click', ()=> startMode(b.dataset.mode)));
 $('.start-all').addEventListener('click', e=> startMode(e.currentTarget.dataset.mode));
+
+$('#mode-adaptive').addEventListener('click', ()=> startMode('adaptive'));
+$('#mode-wrong').addEventListener('click', ()=> startMode('wrong'));
+$('#mode-marked').addEventListener('click', ()=> startMode('marked'));
+$('#q-mark').addEventListener('click', ()=>{ const it=session&&session.items[session.idx]; if(it){ toggleMark(it.id); updateMarkBtn(); } });
+$('#clear-progress').addEventListener('click', ()=>{
+  if(confirm('Apagar todo o seu progresso salvo (acertos, erros e questões marcadas) neste navegador?')){
+    store={q:{},m:{}}; saveStore(); renderStartStats();
+  }
+});
 
 // q-action faz "Conferir" (seq, ord); avanço é setado em afterAnswer via onclick
 $('#q-action').addEventListener('click', ()=>{
@@ -3137,6 +3416,7 @@ document.addEventListener('keydown', e=>{
   if($('#screen-quiz').classList.contains('hidden')) return;
   const it = session.items[session.idx];
   const answered = !!session.responses[session.idx];
+  if(e.key.toLowerCase()==='m'){ if(it){ toggleMark(it.id); updateMarkBtn(); } return; }
   if((e.key==='Enter'||e.key==='ArrowRight') && answered){ e.preventDefault(); $('#q-action').click(); return; }
   if(answered) return;
   const body = $('#q-body');
@@ -3155,6 +3435,8 @@ document.addEventListener('keydown', e=>{
     if(n>=1 && n<=items.length) items[n-1].click();
   }
 });
+
+renderStartStats();   // inicializa o painel de revisão inteligente
 </script>
 </body>
 </html>
