@@ -3,7 +3,8 @@
 Ferramenta de estudo (quiz) de fisiologia médica, com **108 questões** de nível
 prova de residência/concurso, com cenários clínicos e farmacológicos, elaboradas
 a partir do conteúdo do **Guyton & Hall — Tratado de Fisiologia Médica (13ª ed.)**
-e com **explicação detalhada** em cada questão (mecanismo, valores, por que cada
+e tendo como referência de nível e estilo os **simulados de fisiologia** fornecidos,
+com **explicação detalhada** em cada questão (mecanismo, valores, por que cada
 alternativa erra e correlação clínica).
 
 🔗 **Acesse online:** https://edinaldoof.github.io/revisao-fisiologia/
