@@ -1,9 +1,10 @@
 # Revisão de Fisiologia — Cardiovascular & Renal
 
-Ferramenta de estudo (quiz) de fisiologia médica, com **139 questões** de revisão
-de nível para estudante de medicina, elaboradas a partir do conteúdo do
-**Guyton & Hall — Tratado de Fisiologia Médica (13ª ed.)**, verificadas contra o
-livro e com explicações detalhadas.
+Ferramenta de estudo (quiz) de fisiologia médica, com **108 questões** de nível
+prova de residência/concurso, com cenários clínicos e farmacológicos, elaboradas
+a partir do conteúdo do **Guyton & Hall — Tratado de Fisiologia Médica (13ª ed.)**
+e com **explicação detalhada** em cada questão (mecanismo, valores, por que cada
+alternativa erra e correlação clínica).
 
 🔗 **Acesse online:** https://edinaldoof.github.io/revisao-fisiologia/
 
